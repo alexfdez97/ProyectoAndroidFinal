@@ -5,13 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 
 public class Escena implements IEscena {
 
     private int anchoPantalla, altoPantalla;
     private Context context;
-    private int idEscena;
+    protected int idEscena;
     protected Bitmap fondo;
     protected Paint pntBotonMenu;
 
@@ -66,6 +67,14 @@ public class Escena implements IEscena {
         this.idEscena = idEscena;
     }
 
+    public boolean esPulsado(Rect boton, MotionEvent event) {
+        if (boton.contains((int)event.getX(), (int)event.getY())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void actualizarFisica() {
 
@@ -77,7 +86,10 @@ public class Escena implements IEscena {
     }
 
     @Override
-    public int onTouchEvent(MotionEvent event) {
-        return -1;
+    public int onTouchPersonalizado(MotionEvent event) {
+//        int indicePuntero = event.getActionIndex();
+//        int punteroID = event.getPointerId(indicePuntero);
+//        int accion = event.getActionMasked();
+        return idEscena;
     }
 }

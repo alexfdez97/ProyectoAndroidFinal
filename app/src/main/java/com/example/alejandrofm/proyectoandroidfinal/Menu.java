@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class Menu extends Escena {
@@ -32,7 +33,15 @@ public class Menu extends Escena {
     }
 
     @Override
-    public int onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+    public int onTouchPersonalizado(MotionEvent event) {
+        int indicePuntero = event.getActionIndex();
+        int punteroID = event.getPointerId(indicePuntero);
+        int accion = event.getActionMasked();
+        if (accion == MotionEvent.ACTION_UP) {
+            if (esPulsado(btnJugar, event)) {
+                Log.i("pulsa", "pulsacion en boton");
+            }
+        }
+        return idEscena;
     }
 }

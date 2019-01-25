@@ -6,5 +6,5 @@ import android.view.MotionEvent;
 public interface IEscena {
     public void actualizarFisica();
     public void dibujar(Canvas c);
-    public int onTouchEvent(MotionEvent event);
+    public int onTouchPersonalizado(MotionEvent event);
 }

@@ -46,7 +46,7 @@ public class Arena extends SurfaceView implements SurfaceHolder.Callback {
 //    }
 //
 //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
+//    public boolean onTouchPersonalizado(MotionEvent event) {
 //        int accion = event.getAction();
 //        float x = event.getX(), y = event.getY();
 //        switch (accion) {

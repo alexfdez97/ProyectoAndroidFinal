@@ -2,6 +2,8 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -53,6 +55,15 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        synchronized (surfaceHolder) {
+            int nuevaEscena = escenaActual.onTouchPersonalizado(event);
+        }
+        return true;
+    }
+
 
     class Hilo extends Thread {
         public Hilo() {
