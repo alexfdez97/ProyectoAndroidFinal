@@ -2,19 +2,28 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.MotionEvent;
 
-public class Escena {
+public class Escena implements IEscena {
 
-    int anchoPantalla, altoPantalla;
-    Context context;
-    Bitmap fondo;
-    int idEscena;
+    private int anchoPantalla, altoPantalla;
+    private Context context;
+    private int idEscena;
+    protected Bitmap fondo;
+    protected Paint pntBotonMenu;
 
     public Escena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.context = context;
         this.idEscena = idEscena;
+        if (idEscena == 1) {
+            pntBotonMenu = new Paint();
+            pntBotonMenu.setColor(Color.GREEN);
+        }
     }
 
     public int getAnchoPantalla() {
@@ -55,5 +64,20 @@ public class Escena {
 
     public void setIdEscena(int idEscena) {
         this.idEscena = idEscena;
+    }
+
+    @Override
+    public void actualizarFisica() {
+
+    }
+
+    @Override
+    public void dibujar(Canvas c) {
+
+    }
+
+    @Override
+    public int onTouchEvent(MotionEvent event) {
+        return -1;
     }
 }

@@ -11,7 +11,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cargarLandscape();
+        Juego juego = new Juego(this);
+        juego.setKeepScreenOn(true);
+        setContentView(juego);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cargarLandscape();
+    }
+
+    private void cargarLandscape() {
         View decorView = getWindow().getDecorView();
         int opciones = View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -20,13 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(opciones);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        Arena arena = new Arena(this);
-        arena.setKeepScreenOn(true);
-
-        setContentView(arena);
     }
 }
