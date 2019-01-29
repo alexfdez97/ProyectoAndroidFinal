@@ -35,7 +35,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         anchoPantalla = width;
         altoPantalla = height;
-        escenaActual = new Menu(width, height, context, 1);
+        escenaActual = new Menu(width, height, context, 0);
 //        hilo.setSurfaceSize(width, height);
         hilo.setFuncionando(true);
         if (hilo.getState() == Thread.State.NEW) {
@@ -60,6 +60,17 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         synchronized (surfaceHolder) {
             int nuevaEscena = escenaActual.onTouchPersonalizado(event);
+            Log.i("escena", "nueva escena "+nuevaEscena+" "+escenaActual.idEscena);
+            if (nuevaEscena != escenaActual.idEscena) {
+                switch (nuevaEscena) {
+                    case 0:
+                        escenaActual = new Menu(anchoPantalla, altoPantalla, context, 0);
+                        break;
+                    case 1:
+                        escenaActual = new Arena(anchoPantalla, altoPantalla, context, 1);
+                        break;
+                }
+            }
         }
         return true;
     }

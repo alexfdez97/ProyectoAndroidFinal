@@ -39,7 +39,16 @@ public class Menu extends Escena {
         int accion = event.getActionMasked();
         if (accion == MotionEvent.ACTION_UP) {
             if (esPulsado(btnJugar, event)) {
-                Log.i("pulsa", "pulsacion en boton");
+                return 1;
+            }
+            if (esPulsado(btnOpciones, event)) {
+                return 2;
+            }
+            if (esPulsado(btnAyuda, event)) {
+                return 3;
+            }
+            if (esPulsado(btnCreditos, event)) {
+                return 4;
             }
         }
         return idEscena;

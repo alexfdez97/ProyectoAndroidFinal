@@ -21,7 +21,7 @@ public class Escena implements IEscena {
         this.altoPantalla = altoPantalla;
         this.context = context;
         this.idEscena = idEscena;
-        if (idEscena == 1) {
+        if (idEscena == 0) {
             pntBotonMenu = new Paint();
             pntBotonMenu.setColor(Color.GREEN);
         }
