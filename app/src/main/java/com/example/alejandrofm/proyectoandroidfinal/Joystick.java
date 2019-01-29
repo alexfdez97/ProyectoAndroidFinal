@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class Joystick {
     private Bitmap joyVacio, joyFlechas;
     private Utils utils;
     private float jVacioX, jVacioY, jFlechasX, jFlechasY;
+    private float xTemp, yTemp;
 
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
@@ -24,9 +26,18 @@ public class Joystick {
 
     public void dibujaJoystick(Canvas c) {
         c.drawBitmap(joyVacio, jVacioX - joyVacio.getWidth() / 2, jVacioY - joyVacio.getHeight() / 2, null);
-//        if (jFlechasX < jVacioX && jFlechasY < jVacioY) {
+//        if (
+//                (jVacioX - joyVacio.getWidth() / 2) < (jFlechasX - joyFlechas.getWidth() / 2) && (jVacioX + joyVacio.getWidth() / 2) - (joyFlechas.getWidth()) > (jFlechasX - joyFlechas.getWidth() / 2)
+//                &&
+//                        (jVacioY - joyVacio.getHeight() / 2) < (jFlechasY - joyFlechas.getHeight() / 2) && (jVacioY + joyVacio.getHeight() / 2) - (joyFlechas.getHeight()) > (jFlechasY - joyFlechas.getHeight() / 2)
+//                ) {
             c.drawBitmap(joyFlechas, jFlechasX - joyFlechas.getWidth() / 2, jFlechasY - joyFlechas.getHeight() / 2, null);
+//            xTemp = jFlechasX;
+//            yTemp = jFlechasY;
+//        } else {
+//            c.drawBitmap(joyFlechas, xTemp - joyFlechas.getWidth() / 2, yTemp - joyFlechas.getHeight() / 2, null);
 //        }
+        Log.i("vX", "Vacio: "+(jVacioX + joyVacio.getWidth() / 2) + " Flechas: " + jFlechasX);
     }
 
     public float getjVacioX() {
@@ -50,7 +61,13 @@ public class Joystick {
     }
 
     public void setjFlechasX(float jFlechasX) {
-        this.jFlechasX = jFlechasX;
+        if (jVacioX - joyVacio.getWidth() / 2 > jFlechasX) {
+            this.jFlechasX = jVacioX - joyVacio.getWidth() + joyFlechas.getWidth();
+        } else if (jVacioX + joyVacio.getWidth() / 2 < jFlechasX) {
+            this.jFlechasX = jVacioX + joyVacio.getWidth() - joyFlechas.getWidth();
+        } else {
+            this.jFlechasX = jFlechasX;
+        }
     }
 
     public float getjFlechasY() {
@@ -58,6 +75,12 @@ public class Joystick {
     }
 
     public void setjFlechasY(float jFlechasY) {
-        this.jFlechasY = jFlechasY;
+        if (jVacioY - joyVacio.getHeight() / 2 > jFlechasY) {
+            this.jFlechasY = jVacioY - joyVacio.getHeight() + joyFlechas.getHeight();
+        } else if (jVacioY + joyVacio.getHeight() / 2 < jFlechasY) {
+            this.jFlechasY = jVacioY + joyVacio.getHeight() - joyFlechas.getHeight();
+        } else {
+            this.jFlechasY = jFlechasY;
+        }
     }
 }
