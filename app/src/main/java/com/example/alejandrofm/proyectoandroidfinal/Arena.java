@@ -20,41 +20,46 @@ public class Arena extends Escena {
 
     @Override
     public int onTouchPersonalizado(MotionEvent event) {
-        int pointerCount = event.getPointerCount();
-
-        for (int i = 0; i < pointerCount; i++) {
-            float x = event.getX(i);
-            float y = event.getY(i);
-            int action = event.getActionMasked();
-
-            switch (action) {
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    if (x < getAnchoPantalla() / 2) {
-                        jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
-                        jIzquierdo.setPulsado(true);
-                    } else {
-                        jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
-                        jDerecho.setPulsado(true);
-                    }
-                    break;
-                case MotionEvent.ACTION_POINTER_UP:
-                    if (jIzquierdo != null) {
-                        jIzquierdo.setPulsado(false);
-                    }
-                    if (jDerecho != null) {
-                        jDerecho.setPulsado(false);
-                    }
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (x < getAnchoPantalla() / 2 && jIzquierdo != null) {
+        float x = event.getX(event.getActionIndex());
+        float y = event.getY(event.getActionIndex());
+        int id = event.getPointerId(event.getActionIndex());
+        event.getX(event.getActionIndex());
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+            case MotionEvent.ACTION_DOWN:
+                if (x < getAnchoPantalla() / 2) {
+                    jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
+                    jIzquierdo.setIdPuntero(id);
+                    jIzquierdo.setPulsado(true);
+                } else {
+                    jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
+                    jDerecho.setIdPuntero(id);
+                    jDerecho.setPulsado(true);
+                }
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_UP:
+                if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
+                    jIzquierdo.setPulsado(false);
+                    jIzquierdo = null;
+                }
+                if (jDerecho != null && jDerecho.getIdPuntero() == id) {
+                    jDerecho.setPulsado(false);
+                    jDerecho = null;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                for (int i = 0; i < event.getPointerCount(); i++) {
+                    if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
                         jIzquierdo.setjFlechasX(event.getX(i));
                         jIzquierdo.setjFlechasY(event.getY(i));
-                    } else if (jDerecho != null) {
+                    }
+                    if (jDerecho != null && jDerecho.getIdPuntero() == i) {
                         jDerecho.setjFlechasX(event.getX(i));
                         jDerecho.setjFlechasY(event.getY(i));
                     }
-                    break;
-            }
+                }
+                break;
         }
         return -1;
     }
@@ -62,10 +67,12 @@ public class Arena extends Escena {
     @Override
     public void dibujar(Canvas c) {
         c.drawBitmap(fondo, 0, 0, null);
-        if (jIzquierdo != null && jDerecho != null) {
+        if (jIzquierdo != null) {
             if (jIzquierdo.isPulsado()) {
                 jIzquierdo.dibujaJoystick(c);
             }
+        }
+        if (jDerecho != null) {
             if (jDerecho.isPulsado()) {
                 jDerecho.dibujaJoystick(c);
             }

@@ -11,6 +11,15 @@ public class Joystick {
     private Utils utils;
     private float jVacioX, jVacioY, jFlechasX, jFlechasY;
     private boolean pulsado = false;
+    private int idPuntero;
+
+//    public boolean sale(){
+//        int dx=(int)Math.abs(jVacioX+joyVacio.getWidth()/2-jFlechasX-joyFlechas.getWidth()/2);
+//        int dy=(int)Math.abs(jVacioY+joyVacio.getHeight()/2-jFlechasY-joyFlechas.getHeight()/2);
+//        Double hipo=Math.hypot(dx,dy);
+//        if (hipo>joyVacio.getHeight()/2 || hipo>joyVacio.getWidth()/2 ) return true;
+//        return false;
+//    }
 
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
@@ -79,5 +88,13 @@ public class Joystick {
 
     public void setPulsado(boolean pulsado) {
         this.pulsado = pulsado;
+    }
+
+    public int getIdPuntero() {
+        return idPuntero;
+    }
+
+    public void setIdPuntero(int idPuntero) {
+        this.idPuntero = idPuntero;
     }
 }
