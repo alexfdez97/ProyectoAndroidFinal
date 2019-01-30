@@ -10,7 +10,7 @@ public class Joystick {
     private Bitmap joyVacio, joyFlechas;
     private Utils utils;
     private float jVacioX, jVacioY, jFlechasX, jFlechasY;
-    private float xTemp, yTemp;
+    private boolean pulsado = false;
 
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
@@ -26,18 +26,7 @@ public class Joystick {
 
     public void dibujaJoystick(Canvas c) {
         c.drawBitmap(joyVacio, jVacioX - joyVacio.getWidth() / 2, jVacioY - joyVacio.getHeight() / 2, null);
-//        if (
-//                (jVacioX - joyVacio.getWidth() / 2) < (jFlechasX - joyFlechas.getWidth() / 2) && (jVacioX + joyVacio.getWidth() / 2) - (joyFlechas.getWidth()) > (jFlechasX - joyFlechas.getWidth() / 2)
-//                &&
-//                        (jVacioY - joyVacio.getHeight() / 2) < (jFlechasY - joyFlechas.getHeight() / 2) && (jVacioY + joyVacio.getHeight() / 2) - (joyFlechas.getHeight()) > (jFlechasY - joyFlechas.getHeight() / 2)
-//                ) {
-            c.drawBitmap(joyFlechas, jFlechasX - joyFlechas.getWidth() / 2, jFlechasY - joyFlechas.getHeight() / 2, null);
-//            xTemp = jFlechasX;
-//            yTemp = jFlechasY;
-//        } else {
-//            c.drawBitmap(joyFlechas, xTemp - joyFlechas.getWidth() / 2, yTemp - joyFlechas.getHeight() / 2, null);
-//        }
-        Log.i("vX", "Vacio: "+(jVacioX + joyVacio.getWidth() / 2) + " Flechas: " + jFlechasX);
+        c.drawBitmap(joyFlechas, jFlechasX - joyFlechas.getWidth() / 2, jFlechasY - joyFlechas.getHeight() / 2, null);
     }
 
     public float getjVacioX() {
@@ -82,5 +71,13 @@ public class Joystick {
         } else {
             this.jFlechasY = jFlechasY;
         }
+    }
+
+    public boolean isPulsado() {
+        return pulsado;
+    }
+
+    public void setPulsado(boolean pulsado) {
+        this.pulsado = pulsado;
     }
 }
