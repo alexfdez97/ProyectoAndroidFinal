@@ -2,8 +2,8 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.util.Log;
 
 public class Joystick {
@@ -12,14 +12,9 @@ public class Joystick {
     private float jVacioX, jVacioY, jFlechasX, jFlechasY;
     private boolean pulsado = false;
     private int idPuntero;
-
-//    public boolean sale(){
-//        int dx=(int)Math.abs(jVacioX+joyVacio.getWidth()/2-jFlechasX-joyFlechas.getWidth()/2);
-//        int dy=(int)Math.abs(jVacioY+joyVacio.getHeight()/2-jFlechasY-joyFlechas.getHeight()/2);
-//        Double hipo=Math.hypot(dx,dy);
-//        if (hipo>joyVacio.getHeight()/2 || hipo>joyVacio.getWidth()/2 ) return true;
-//        return false;
-//    }
+    private float radioJVacio, radioHipotenusa;
+    private float constraintX, constraintY;
+//    private int dx, dy;
 
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
@@ -31,6 +26,7 @@ public class Joystick {
         this.jVacioY = jVacioY;
         this.jFlechasX = jVacioX;
         this.jFlechasY = jVacioY;
+        radioJVacio = joyVacio.getWidth() / 2;
     }
 
     public void dibujaJoystick(Canvas c) {
@@ -38,47 +34,46 @@ public class Joystick {
         c.drawBitmap(joyFlechas, jFlechasX - joyFlechas.getWidth() / 2, jFlechasY - joyFlechas.getHeight() / 2, null);
     }
 
-    public float getjVacioX() {
-        return jVacioX;
-    }
+//    public boolean sale(){
+//        dx = (int)Math.abs(jVacioX + joyVacio.getWidth() / 2 - jFlechasX - joyFlechas.getWidth() / 2);
+//        dy = (int)Math.abs(jVacioY + joyVacio.getHeight() / 2 - jFlechasY - joyFlechas.getHeight() / 2);
+//        Double hipo = Math.hypot(dx,dy);
+//        if (hipo > joyVacio.getHeight() / 2 || hipo > joyVacio.getWidth() / 2 ) return true;
+//        return false;
+//    }
+//
+//    public boolean saleX() {
+//        if (hipotenusa() > joyVacio.getHeight() / 2) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean saleY() {
+//        if (hipotenusa() > joyVacio.getWidth() / 2) {
+//            return true;
+//        }
+//        return false;
+//    }
 
-    public void setjVacioX(float jVacioX) {
-        this.jVacioX = jVacioX;
-    }
+//    public double hipotenusa(){
+//        dx = (int)Math.abs(jVacioX + joyVacio.getWidth() / 2 - jFlechasX - joyFlechas.getWidth() / 2);
+//        dy = (int)Math.abs(jVacioY + joyVacio.getHeight() / 2 - jFlechasY - joyFlechas.getHeight() / 2);
+//        Double hipo = Math.hypot(dx,dy);
+//        return hipo;
+//    }
 
-    public float getjVacioY() {
-        return jVacioY;
-    }
-
-    public void setjVacioY(float jVacioY) {
-        this.jVacioY = jVacioY;
-    }
-
-    public float getjFlechasX() {
-        return jFlechasX;
-    }
-
-    public void setjFlechasX(float jFlechasX) {
-        if (jVacioX - joyVacio.getWidth() / 2 > jFlechasX) {
-            this.jFlechasX = jVacioX - joyVacio.getWidth() + joyFlechas.getWidth();
-        } else if (jVacioX + joyVacio.getWidth() / 2 < jFlechasX) {
-            this.jFlechasX = jVacioX + joyVacio.getWidth() - joyFlechas.getWidth();
-        } else {
+    public void setCoordsJFlecas(float jFlechasX, float jFlechasY) {
+        float desplazamiento = (float)Math.sqrt(Math.pow(jVacioX - jFlechasX, 2) + Math.pow(jVacioY - jFlechasY, 2));
+        radioHipotenusa = radioJVacio / desplazamiento;
+        constraintX = jVacioX + (jFlechasX - jVacioX) * radioHipotenusa;
+        constraintY = jVacioY + (jFlechasY - jVacioY) * radioHipotenusa;
+        if (desplazamiento < radioJVacio) {
             this.jFlechasX = jFlechasX;
-        }
-    }
-
-    public float getjFlechasY() {
-        return jFlechasY;
-    }
-
-    public void setjFlechasY(float jFlechasY) {
-        if (jVacioY - joyVacio.getHeight() / 2 > jFlechasY) {
-            this.jFlechasY = jVacioY - joyVacio.getHeight() + joyFlechas.getHeight();
-        } else if (jVacioY + joyVacio.getHeight() / 2 < jFlechasY) {
-            this.jFlechasY = jVacioY + joyVacio.getHeight() - joyFlechas.getHeight();
-        } else {
             this.jFlechasY = jFlechasY;
+        } else {
+            this.jFlechasX = constraintX;
+            this.jFlechasY = constraintY;
         }
     }
 

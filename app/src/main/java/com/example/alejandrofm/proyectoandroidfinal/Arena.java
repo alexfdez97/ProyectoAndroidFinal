@@ -51,12 +51,14 @@ public class Arena extends Escena {
             case MotionEvent.ACTION_MOVE:
                 for (int i = 0; i < event.getPointerCount(); i++) {
                     if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
-                        jIzquierdo.setjFlechasX(event.getX(i));
-                        jIzquierdo.setjFlechasY(event.getY(i));
+//                        jIzquierdo.setjFlechasX(event.getX(i));
+//                        jIzquierdo.setjFlechasY(event.getY(i));
+                        jIzquierdo.setCoordsJFlecas(event.getX(i), event.getY(i));
                     }
                     if (jDerecho != null && jDerecho.getIdPuntero() == i) {
-                        jDerecho.setjFlechasX(event.getX(i));
-                        jDerecho.setjFlechasY(event.getY(i));
+//                        jDerecho.setjFlechasX(event.getX(i));
+//                        jDerecho.setjFlechasY(event.getY(i));
+                        jDerecho.setCoordsJFlecas(event.getX(i), event.getY(i));
                     }
                 }
                 break;
