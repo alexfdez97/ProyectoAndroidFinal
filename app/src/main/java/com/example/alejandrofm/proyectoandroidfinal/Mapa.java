@@ -11,7 +11,9 @@ public class Mapa {
 
     public Mapa(Context context, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
-        suelo = utils.getBitmapFromAssets("");
+        suelo = utils.getBitmapFromAssets("mapa/sueloMapa.png");
+        suelo = Bitmap.createBitmap(suelo, 0, 0, 48, 48);
+        suelo = Bitmap.createScaledBitmap(suelo, anchoPantalla * 1 / 6, altoPantalla * 1/4, false);
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
     }

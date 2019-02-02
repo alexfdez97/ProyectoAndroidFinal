@@ -19,9 +19,9 @@ public class Joystick {
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
         joyVacio = utils.getBitmapFromAssets("joystick/joyVacio.png");
-        joyVacio = Bitmap.createScaledBitmap(joyVacio, anchoPantalla * 1/8, anchoPantalla * 1/8, false);
+        joyVacio = Bitmap.createScaledBitmap(joyVacio, altoPantalla * 1/6, altoPantalla * 1/6, false);
         joyFlechas = utils.getBitmapFromAssets("joystick/joyFlechas.png");
-        joyFlechas = Bitmap.createScaledBitmap(joyFlechas, anchoPantalla * 1/18, anchoPantalla * 1/18, false);
+        joyFlechas = Bitmap.createScaledBitmap(joyFlechas, altoPantalla * 1/14, altoPantalla * 1/14, false);
         this.jVacioX = jVacioX;
         this.jVacioY = jVacioY;
         this.jFlechasX = jVacioX;
@@ -63,7 +63,7 @@ public class Joystick {
 //        return hipo;
 //    }
 
-    public void setCoordsJFlecas(float jFlechasX, float jFlechasY) {
+    public void setCoordsJFlechas(float jFlechasX, float jFlechasY) {
         float desplazamiento = (float)Math.sqrt(Math.pow(jVacioX - jFlechasX, 2) + Math.pow(jVacioY - jFlechasY, 2));
         radioHipotenusa = radioJVacio / desplazamiento;
         constraintX = jVacioX + (jFlechasX - jVacioX) * radioHipotenusa;

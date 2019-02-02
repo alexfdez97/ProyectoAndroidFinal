@@ -3,19 +3,21 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.MotionEvent;
 
 public class Arena extends Escena {
 
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
+    private Mapa mapa;
 
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         utils = new Utils(context);
         fondo = utils.getBitmapFromAssets("asphalt.png");
         fondo = Bitmap.createScaledBitmap(fondo, anchoPantalla, altoPantalla, false);
+        mapa = new Mapa(context, anchoPantalla, altoPantalla);
     }
 
     @Override
@@ -53,12 +55,12 @@ public class Arena extends Escena {
                     if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
 //                        jIzquierdo.setjFlechasX(event.getX(i));
 //                        jIzquierdo.setjFlechasY(event.getY(i));
-                        jIzquierdo.setCoordsJFlecas(event.getX(i), event.getY(i));
+                        jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
                     }
                     if (jDerecho != null && jDerecho.getIdPuntero() == i) {
 //                        jDerecho.setjFlechasX(event.getX(i));
 //                        jDerecho.setjFlechasY(event.getY(i));
-                        jDerecho.setCoordsJFlecas(event.getX(i), event.getY(i));
+                        jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
                     }
                 }
                 break;
@@ -68,7 +70,9 @@ public class Arena extends Escena {
 
     @Override
     public void dibujar(Canvas c) {
-        c.drawBitmap(fondo, 0, 0, null);
+//        c.drawBitmap(fondo, 0, 0, null);
+        c.drawColor(Color.BLACK);
+        mapa.dibujaMapa(c);
         if (jIzquierdo != null) {
             if (jIzquierdo.isPulsado()) {
                 jIzquierdo.dibujaJoystick(c);
