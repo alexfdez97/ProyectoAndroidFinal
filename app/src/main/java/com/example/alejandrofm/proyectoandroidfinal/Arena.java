@@ -10,6 +10,7 @@ public class Arena extends Escena {
 
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
+    private Protagonista protagonista;
     private Mapa mapa;
 
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
@@ -18,6 +19,7 @@ public class Arena extends Escena {
         fondo = utils.getBitmapFromAssets("asphalt.png");
         fondo = Bitmap.createScaledBitmap(fondo, anchoPantalla, altoPantalla, false);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
+        protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
     }
 
     @Override
@@ -73,6 +75,8 @@ public class Arena extends Escena {
 //        c.drawBitmap(fondo, 0, 0, null);
         c.drawColor(Color.BLACK);
         mapa.dibujaMapa(c);
+        protagonista.dibujarPersonaje(c);
+        protagonista.cambiaFrame();
         if (jIzquierdo != null) {
             if (jIzquierdo.isPulsado()) {
                 jIzquierdo.dibujaJoystick(c);
