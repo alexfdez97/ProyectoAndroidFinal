@@ -60,7 +60,6 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         synchronized (surfaceHolder) {
             int nuevaEscena = escenaActual.onTouchPersonalizado(event);
-            Log.i("escena", "nueva escena "+nuevaEscena+" "+escenaActual.idEscena);
             if (nuevaEscena != escenaActual.idEscena) {
                 switch (nuevaEscena) {
                     case 0:

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class Arena extends Escena {
@@ -35,10 +36,12 @@ public class Arena extends Escena {
                     jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jIzquierdo.setIdPuntero(id);
                     jIzquierdo.setPulsado(true);
+                    protagonista.setjIzquierdo(jIzquierdo);
                 } else {
                     jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jDerecho.setIdPuntero(id);
                     jDerecho.setPulsado(true);
+                    protagonista.setjDerecho(jDerecho);
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
@@ -55,13 +58,9 @@ public class Arena extends Escena {
             case MotionEvent.ACTION_MOVE:
                 for (int i = 0; i < event.getPointerCount(); i++) {
                     if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
-//                        jIzquierdo.setjFlechasX(event.getX(i));
-//                        jIzquierdo.setjFlechasY(event.getY(i));
                         jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
                     }
                     if (jDerecho != null && jDerecho.getIdPuntero() == i) {
-//                        jDerecho.setjFlechasX(event.getX(i));
-//                        jDerecho.setjFlechasY(event.getY(i));
                         jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
                     }
                 }
@@ -72,11 +71,9 @@ public class Arena extends Escena {
 
     @Override
     public void dibujar(Canvas c) {
-//        c.drawBitmap(fondo, 0, 0, null);
         c.drawColor(Color.BLACK);
         mapa.dibujaMapa(c);
         protagonista.dibujarPersonaje(c);
-        protagonista.cambiaFrame();
         if (jIzquierdo != null) {
             if (jIzquierdo.isPulsado()) {
                 jIzquierdo.dibujaJoystick(c);
