@@ -25,11 +25,13 @@ public class Menu extends Escena {
 
     @Override
     public void dibujar(Canvas c) {
-        c.drawBitmap(fondo, 0, 0, null);
-        c.drawRect(btnJugar, pntBotonMenu);
-        c.drawRect(btnOpciones, pntBotonMenu);
-        c.drawRect(btnAyuda, pntBotonMenu);
-        c.drawRect(btnCreditos, pntBotonMenu);
+        try {
+            c.drawBitmap(fondo, 0, 0, null);
+            c.drawRect(btnJugar, pntBotonMenu);
+            c.drawRect(btnOpciones, pntBotonMenu);
+            c.drawRect(btnAyuda, pntBotonMenu);
+            c.drawRect(btnCreditos, pntBotonMenu);
+        } catch (NullPointerException ex) {}
     }
 
     @Override

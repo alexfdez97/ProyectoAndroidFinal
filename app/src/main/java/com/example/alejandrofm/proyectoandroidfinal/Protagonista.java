@@ -37,11 +37,12 @@ public class Protagonista extends Personaje {
     }
 
     public void caminar(Joystick.Direccion direccion) {
-        float velocidad = jIzquierdo.getDesplazamiento() / 10;
+        float velocidad = jIzquierdo.getDesplazamiento() / 20;
+        Log.i("velocidad", "velocidad: " + velocidad);
         if (velocidad > 4.5) {
             velocidad = (float)4.5;
         }
-        Log.i("velocidad", ""+velocidad);
+        Log.i("velocidad", "velocidad: " + velocidad);
         switch (direccion) {
             case NORTE:
                 posY -= velocidad;

@@ -5,17 +5,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.util.Log;
 
 public class Personaje {
     protected int posX, posY, velocidad, vida;
     protected Bitmap[] sprite;
     protected Utils utils;
+    protected Joystick.Direccion direccionAnterior;
     private int anchoPantalla, altoPantalla;
     private int indice = 0;
     private int tmpCambioFrame = 200;
     private long tiempoActual;
-    private Joystick.Direccion direccionAnterior;
 
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
         this.posX = x;
@@ -63,11 +62,12 @@ public class Personaje {
         Matrix matrix = new Matrix();
         matrix.postRotate(calculoRotacion(direccion, direccionAnterior));
         rotarBitmap(matrix);
-        direccionAnterior = direccion;
+        if (direccion != Joystick.Direccion.NINGUNA) {
+            direccionAnterior = direccion;
+        }
     }
 
     public void rotarBitmap(Matrix matrix) {
-        Log.i("grados", "roto");
         for (int i = 0; i < sprite.length; i++) {
             sprite[i] = Bitmap.createBitmap(sprite[i], 0, 0, sprite[i].getWidth(), sprite[i].getHeight(), matrix, true);
         }

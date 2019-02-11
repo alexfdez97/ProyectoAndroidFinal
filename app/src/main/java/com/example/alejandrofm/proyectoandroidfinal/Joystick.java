@@ -4,13 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.location.Location;
-import android.util.Log;
 
 public class Joystick {
     public enum Direccion {
-        NORTE, SUR, ESTE, OESTE, NORESTE, NOROESTE, SURESTE, SUROESTE, NINGUNA
+        NORTE, SUR, ESTE, OESTE, NINGUNA
     }
     private Direccion direccion = Direccion.NINGUNA;
     private Bitmap joyVacio, joyFlechas;
@@ -26,27 +23,15 @@ public class Joystick {
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
         joyVacio = utils.getBitmapFromAssets("joystick/flatDark06.png");
-        joyVacio = Bitmap.createScaledBitmap(joyVacio, altoPantalla * 1/6, altoPantalla * 1/6, false);
+        joyVacio = Bitmap.createScaledBitmap(joyVacio, altoPantalla * 1/4, altoPantalla * 1/4, false);
         joyFlechas = utils.getBitmapFromAssets("joystick/flatDark00.png");
-        joyFlechas = Bitmap.createScaledBitmap(joyFlechas, altoPantalla * 1/12, altoPantalla * 1/12, false);
+        joyFlechas = Bitmap.createScaledBitmap(joyFlechas, altoPantalla * 1/10, altoPantalla * 1/10, false);
         this.jVacioX = jVacioX;
         this.jVacioY = jVacioY;
         this.jFlechasX = jVacioX;
         this.jFlechasY = jVacioY;
         radioJVacio = joyVacio.getWidth() / 2;
     }
-
-//    public float calcularDistancia(float x1, float y1, float x2, float y2)
-//    {
-//        float dLat = (float) Math.toRadians(x2 - x1);
-//        float dLon = (float) Math.toRadians(y2 - y1);
-//        float a =
-//                (float) (Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(x1))
-//                        * Math.cos(Math.toRadians(x2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2));
-//        float c = (float) (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-////        float d = earthRadius * c;
-//        return d;
-//    }
 
     public void dibujaJoystick(Canvas c) {
         Paint alphaPaint = new Paint();
@@ -62,10 +47,6 @@ public class Joystick {
         constraintX = jVacioX + (jFlechasX - jVacioX) * radioHipotenusa;
         constraintY = jVacioY + (jFlechasY - jVacioY) * radioHipotenusa;
         grados = (float)Math.abs(Math.toDegrees(Math.atan2(constraintY - jVacioY, constraintX - jVacioX)));
-//        grados = (float)(Math.toDegrees(Math.atan2(constraintY - 360, 360 - constraintY)) + 360) % 360;
-        Log.i("grados", "Grados: " + grados);
-//        Log.i("grados", "Desplazamiento: " + desplazamiento);
-//        Log.i("grados", "Hipotenusa: " + radioHipotenusa);
 
         if (desplazamiento < radioJVacio) {
             this.jFlechasX = jFlechasX;

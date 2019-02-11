@@ -14,15 +14,24 @@ public class Arena extends Escena {
     private Protagonista protagonista;
     private Mapa mapa;
 
+    /**
+     * Constructor de Arena, declara el Mapa y el Protagonista
+     * @param anchoPantalla es el ancho de la pantalla del dispositivo
+     * @param altoPantalla es el alto de la pantalla del dispositivo
+     * @param context es el contexto de la aplicación
+     * @param idEscena es el id de la Escena actual
+     */
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
-        utils = new Utils(context);
-        fondo = utils.getBitmapFromAssets("asphalt.png");
-        fondo = Bitmap.createScaledBitmap(fondo, anchoPantalla, altoPantalla, false);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
         protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
     }
 
+    /**
+     * Gestiona los eventos OnTouch en esta escena, declara y manda parámetros a los joystick en los que se basan los controles del juego.
+     * @param event el evento que se le pasa desde la clase principal
+     * @return Siempre devuelve -1 porque no cambia la escena
+     */
     @Override
     public int onTouchPersonalizado(MotionEvent event) {
         float x = event.getX(event.getActionIndex());
@@ -69,6 +78,10 @@ public class Arena extends Escena {
         return -1;
     }
 
+    /**
+     * Dibuja en el Canvas
+     * @param c es el canvas
+     */
     @Override
     public void dibujar(Canvas c) {
         c.drawColor(Color.BLACK);
