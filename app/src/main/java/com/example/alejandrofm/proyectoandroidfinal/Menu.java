@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 public class Menu extends Escena {
 
     private Rect btnJugar, btnOpciones, btnAyuda, btnCreditos;
+    private Boton botJugar, botOpciones, botAyuda, botCreditos;
     private Utils utils;
 
     public Menu(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
@@ -21,14 +22,18 @@ public class Menu extends Escena {
         btnOpciones = new Rect(anchoPantalla * 2/6, altoPantalla * 7/12, anchoPantalla * 4/6, altoPantalla * 9/12);
         btnAyuda = new Rect(anchoPantalla * 1/12, altoPantalla * 21/26, anchoPantalla * 3/12, altoPantalla * 24/26);
         btnCreditos = new Rect(anchoPantalla * 9/12, altoPantalla * 21/26, anchoPantalla * 11/12, altoPantalla * 24/26);
+        botJugar = new Boton("Jugar", anchoPantalla, altoPantalla, context);
+        botOpciones = new Boton("Opciones", anchoPantalla, altoPantalla, context);
     }
 
     @Override
     public void dibujar(Canvas c) {
         try {
             c.drawBitmap(fondo, 0, 0, null);
-            c.drawRect(btnJugar, pntBotonMenu);
-            c.drawRect(btnOpciones, pntBotonMenu);
+            botJugar.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 3/12, c);
+//            c.drawRect(btnJugar, pntBotonMenu);
+            botOpciones.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 7/12, c);
+//            c.drawRect(btnOpciones, pntBotonMenu);
             c.drawRect(btnAyuda, pntBotonMenu);
             c.drawRect(btnCreditos, pntBotonMenu);
         } catch (NullPointerException ex) {}

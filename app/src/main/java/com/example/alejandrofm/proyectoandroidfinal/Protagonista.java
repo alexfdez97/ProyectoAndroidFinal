@@ -13,12 +13,15 @@ public class Protagonista extends Personaje {
         super(x, y, anchoPantalla, altoPantalla, context);
         this.jIzquierdo = jIzquierdo;
         this.jDerecho = jDerecho;
-        sprite = new Bitmap[20];
-        for (int i = 0; i < 20; i++) {
-            Bitmap bitmap = utils.getBitmapFromAssets("protagonista/handgun/idle/survivor-idle_handgun_" + i + ".png");
-            bitmap = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
-            sprite[i] = bitmap;
-        }
+        idleRight = cargarSprite("idle", "handgun");
+        sprite = idleRight;
+        idleUp = rotarSprite(idleRight, -90);
+        idleDown = rotarSprite(idleRight, 90);
+        idleLeft = rotarSprite(idleRight, 180);
+        moveRight = cargarSprite("move", "handgun");
+        moveUp = rotarSprite(moveRight, -90);
+        moveDown = rotarSprite(moveRight, 90);
+        moveLeft = rotarSprite(moveRight, 180);
     }
 
     @Override
@@ -27,6 +30,8 @@ public class Protagonista extends Personaje {
         if (jIzquierdo != null) {
             if (jIzquierdo.isPulsado()) {
                 caminar(jIzquierdo.getDireccion());
+            } else {
+                move = false;
             }
         }
         if (jDerecho != null) {
@@ -38,6 +43,7 @@ public class Protagonista extends Personaje {
 
     public void caminar(Joystick.Direccion direccion) {
         float velocidad = jIzquierdo.getDesplazamiento() / 20;
+        move = true;
         Log.i("velocidad", "velocidad: " + velocidad);
         if (velocidad > 4.5) {
             velocidad = (float)4.5;

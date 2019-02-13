@@ -8,12 +8,21 @@ import android.graphics.Matrix;
 
 public class Personaje {
     protected int posX, posY, velocidad, vida;
-    protected Bitmap[] sprite;
+    protected Bitmap[] sprite = new Bitmap[20];
+    protected Bitmap[] moveUp = new Bitmap[20];
+    protected Bitmap[] moveDown = new Bitmap[20];
+    protected Bitmap[] moveLeft = new Bitmap[20];
+    protected Bitmap[] moveRight = new Bitmap[20];
+    protected Bitmap[] idleUp = new Bitmap[20];
+    protected Bitmap[] idleDown = new Bitmap[20];
+    protected Bitmap[] idleLeft = new Bitmap[20];
+    protected Bitmap[] idleRight = new Bitmap[20];
     protected Utils utils;
     protected Joystick.Direccion direccionAnterior;
+    protected boolean move;
     private int anchoPantalla, altoPantalla;
-    private int indice = 0;
-    private int tmpCambioFrame = 200;
+    private int indiceFrame = 0;
+    private int tmpCambioFrame = 60;
     private long tiempoActual;
 
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
@@ -22,10 +31,12 @@ public class Personaje {
         utils = new Utils(context);
         tiempoActual = System.currentTimeMillis();
         direccionAnterior = Joystick.Direccion.ESTE;
+        this.anchoPantalla = anchoPantalla;
+        this.altoPantalla = altoPantalla;
     }
 
     public void dibujarPersonaje(Canvas c) {
-        c.drawBitmap(sprite[indice], posX, posY, null);
+        c.drawBitmap(sprite[indiceFrame], posX, posY, null);
         cambiaFrame();
     }
 
@@ -33,9 +44,9 @@ public class Personaje {
         if (sprite != null) {
             if (System.currentTimeMillis() - tiempoActual > tmpCambioFrame) {
                 tiempoActual = System.currentTimeMillis();
-                indice++;
-                if (indice > sprite.length -1) {
-                    indice = 0;
+                indiceFrame++;
+                if (indiceFrame > sprite.length -1) {
+                    indiceFrame = 0;
                 }
             }
         }
@@ -59,72 +70,64 @@ public class Personaje {
     }
 
     public void rotar(Joystick.Direccion direccion) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(calculoRotacion(direccion, direccionAnterior));
-        rotarBitmap(matrix);
+        rotarPersonaje(direccion);
         if (direccion != Joystick.Direccion.NINGUNA) {
             direccionAnterior = direccion;
         }
     }
 
-    public void rotarBitmap(Matrix matrix) {
-        for (int i = 0; i < sprite.length; i++) {
-            sprite[i] = Bitmap.createBitmap(sprite[i], 0, 0, sprite[i].getWidth(), sprite[i].getHeight(), matrix, true);
+    protected Bitmap[] cargarSprite(String tipo, String arma) {
+        Bitmap bitmap;
+        Bitmap[] asset = new Bitmap[20];
+        for (int i = 0; i < 20; i++) {
+            bitmap = utils.getBitmapFromAssets("protagonista/" + arma +"/" + tipo +"/survivor-" + tipo + "_" + arma + "_" + i + ".png");
+            asset[i] = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
         }
+        return asset;
     }
 
-    public int calculoRotacion(Joystick.Direccion direccionNueva, Joystick.Direccion direccionAnterior) {
-            switch (direccionAnterior) {
+    protected Bitmap[] rotarSprite(Bitmap[] base, int grados) {
+        Bitmap bitmap[] = new Bitmap[20];
+        Matrix matrix = new Matrix();
+        matrix.postRotate(grados);
+        for (int i = 0; i < base.length; i++) {
+            bitmap[i] = Bitmap.createBitmap(base[i], 0, 0, base[i].getWidth(), base[i].getHeight(), matrix, true);
+        }
+        return bitmap;
+    }
+
+    protected void rotarPersonaje(Joystick.Direccion direccion) {
+        if (move) {
+            switch (direccion) {
                 case NORTE:
-                    switch (direccionNueva) {
-                        case NORTE:
-                            return 0;
-                        case SUR:
-                            return 180;
-                        case ESTE:
-                            return 90;
-                        case OESTE:
-                            return -90;
-                    }
+                    sprite = moveUp;
                     break;
                 case SUR:
-                    switch (direccionNueva) {
-                        case NORTE:
-                            return 180;
-                        case SUR:
-                            return 0;
-                        case ESTE:
-                            return -90;
-                        case OESTE:
-                            return 90;
-                    }
-                    break;
-                case ESTE:
-                    switch (direccionNueva) {
-                        case NORTE:
-                            return -90;
-                        case SUR:
-                            return 90;
-                        case ESTE:
-                            return 0;
-                        case OESTE:
-                            return 180;
-                    }
+                    sprite = moveDown;
                     break;
                 case OESTE:
-                    switch (direccionNueva) {
-                        case NORTE:
-                            return 90;
-                        case SUR:
-                            return -90;
-                        case ESTE:
-                            return 180;
-                        case OESTE:
-                            return 0;
-                    }
+                    sprite = moveLeft;
+                    break;
+                case ESTE:
+                    sprite = moveRight;
                     break;
             }
-            return 0;
+        } else {
+            switch (direccion) {
+                case NORTE:
+                    sprite = idleUp;
+                    break;
+                case SUR:
+                    sprite = idleDown;
+                    break;
+                case OESTE:
+                    sprite = idleLeft;
+                    break;
+                case ESTE:
+                    sprite = idleRight;
+                    break;
+            }
+        }
     }
 
     public int getPosX() {

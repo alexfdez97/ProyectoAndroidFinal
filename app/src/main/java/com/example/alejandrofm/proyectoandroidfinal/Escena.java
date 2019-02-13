@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 
 public class Escena implements IEscena {
 
-    private int anchoPantalla, altoPantalla;
+    protected int anchoPantalla, altoPantalla;
     private Context context;
     protected int idEscena;
     protected Bitmap fondo;
