@@ -84,18 +84,20 @@ public class Arena extends Escena {
      */
     @Override
     public void dibujar(Canvas c) {
-        c.drawColor(Color.BLACK);
-        mapa.dibujaMapa(c);
-        protagonista.dibujarPersonaje(c);
-        if (jIzquierdo != null) {
-            if (jIzquierdo.isPulsado()) {
-                jIzquierdo.dibujaJoystick(c);
+        try  {
+            c.drawColor(Color.BLACK);
+            mapa.dibujaMapa(c);
+            protagonista.dibujarPersonaje(c);
+            if (jIzquierdo != null) {
+                if (jIzquierdo.isPulsado()) {
+                    jIzquierdo.dibujaJoystick(c);
+                }
             }
-        }
-        if (jDerecho != null) {
-            if (jDerecho.isPulsado()) {
-                jDerecho.dibujaJoystick(c);
+            if (jDerecho != null) {
+                if (jDerecho.isPulsado()) {
+                    jDerecho.dibujaJoystick(c);
+                }
             }
-        }
+        } catch (NullPointerException ex) { }
     }
 }
