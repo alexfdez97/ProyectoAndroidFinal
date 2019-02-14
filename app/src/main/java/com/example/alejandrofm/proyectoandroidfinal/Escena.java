@@ -67,14 +67,6 @@ public class Escena implements IEscena {
         this.idEscena = idEscena;
     }
 
-    public boolean esPulsado(Rect boton, MotionEvent event) {
-        if (boton.contains((int)event.getX(), (int)event.getY())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public void actualizarFisica() {
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +16,9 @@ public class Boton {
     private Bitmap botonPulsado;
     private Bitmap botonBase;
     private Bitmap imagenTexto;
-    //TODO Controlar la pulsación del botón
-    private boolean pulsado;
+    private boolean pulsado = false;
     private int anchoPantalla, altoPantalla;
+    private int x, y;
 
     /**
      * Inicializa Boton
@@ -42,7 +43,13 @@ public class Boton {
      * @param canvas el canvas donde se dibuja
      */
     public void dibujarBoton(int x, int y, Canvas canvas) {
-        canvas.drawBitmap(botonBase, x, y, null);
+        this.x = x;
+        this.y = y;
+        if (pulsado) {
+            canvas.drawBitmap(botonPulsado, x, y, null);
+        } else {
+            canvas.drawBitmap(botonBase, x, y, null);
+        }
         canvas.drawBitmap(imagenTexto, (x + (botonBase.getWidth() / 2)) - (imagenTexto.getWidth() / 2), (y + botonBase.getHeight() / 2) - (imagenTexto.getHeight() / 2), null);
     }
 
@@ -122,5 +129,53 @@ public class Boton {
         comboImage.drawBitmap(s, c.getWidth(), 0f, null);
 
         return cs;
+    }
+
+    /**
+     * Comprueba si el Boton está pulsado y cambia el bitmap si es así
+     * @param event el evento onTouch
+     * @return TRUE si está pulsado, FALSE si no
+     */
+    public boolean isPulsado(MotionEvent event) {
+        float eventX = event.getX();
+        float eventY = event.getY();
+        if ((eventX > x && eventY > y) && (eventX < x + getWidth() && eventY < y + getHeight())) {
+            setPulsado(true);
+        } else {
+            setPulsado(false);
+        }
+        return pulsado;
+    }
+
+    public boolean isPulsado() {
+        return pulsado;
+    }
+
+    public void setPulsado(boolean pulsado) {
+        this.pulsado = pulsado;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return botonBase.getWidth();
+    }
+
+    public int getHeight() {
+        return botonBase.getHeight();
     }
 }
