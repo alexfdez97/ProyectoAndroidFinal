@@ -1,6 +1,7 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -10,14 +11,14 @@ public class Menu extends Escena {
     private Boton btnJugar, btnOpciones;
     private Bitmap btnAyuda, btnRecords, btnCreditos;
     private Utils utils;
+    private Parallax parallax;
 
     public Menu(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         utils = new Utils(context);
-        fondo = utils.getBitmapFromAssets("parallax/dia/sky.png");
-        fondo = Bitmap.createScaledBitmap(fondo, anchoPantalla, altoPantalla, false);
-        btnJugar = new Boton("Jugar", anchoPantalla, altoPantalla, context);
-        btnOpciones = new Boton("Opciones", anchoPantalla, altoPantalla, context);
+        parallax = new Parallax(true, anchoPantalla, altoPantalla, context);
+        btnJugar = new Boton(context.getResources().getString(R.string.strPlay), anchoPantalla, altoPantalla, context);
+        btnOpciones = new Boton(context.getResources().getString(R.string.strOptions), anchoPantalla, altoPantalla, context);
         btnAyuda = utils.getBitmapFromAssets("menu/help.png");
         btnAyuda = Bitmap.createScaledBitmap(btnAyuda, altoPantalla * 1/9, altoPantalla * 1/9, false);
         btnRecords = utils.getBitmapFromAssets("menu/trophy.png");
@@ -29,7 +30,8 @@ public class Menu extends Escena {
     @Override
     public void dibujar(Canvas c) {
         try {
-            c.drawBitmap(fondo, 0, 0, null);
+//            c.drawBitmap(fondo, 0, 0, null);
+            parallax.dibujaParallax(c);
             btnJugar.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 3/12, c);
             btnOpciones.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 7/12, c);
             int altoBotonesInferiores = (btnOpciones.getHeight() + btnOpciones.getY()) + (altoPantalla - (btnOpciones.getHeight() + btnOpciones.getY())) / 2 - btnAyuda.getHeight() / 2;
