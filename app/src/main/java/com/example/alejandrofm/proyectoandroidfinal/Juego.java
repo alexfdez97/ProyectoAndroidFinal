@@ -2,12 +2,16 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class Juego extends SurfaceView implements SurfaceHolder.Callback {
+public class Juego extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener {
 
     private SurfaceHolder surfaceHolder;
     private Context context;
@@ -15,13 +19,21 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
     private int altoPantalla;
     private boolean funcionando = false;
     private Escena escenaActual;
+    private Menu menu = null;
+    private Opciones opciones;
+    private Arena arena;
     private Hilo hilo;
+    private SensorManager sensorManager;
+    private Sensor sensorLuz;
+    private float luz = -1;
 
     public Juego(Context context) {
         super(context);
         this.surfaceHolder = getHolder();
         this.surfaceHolder.addCallback(this);
         this.context = context;
+        sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
+        sensorLuz = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         hilo = new Hilo();
         setFocusable(true);
     }
@@ -35,7 +47,15 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         anchoPantalla = width;
         altoPantalla = height;
-        escenaActual = new Menu(width, height, context, 0);
+        if (sensorLuz != null) {
+            sensorManager.registerListener(this, sensorLuz, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+        if (menu != null) {
+            escenaActual = menu;
+        } else {
+            menu = new Menu(width, height, context, 0);
+            escenaActual = menu;
+        }
 //        hilo.setSurfaceSize(width, height);
         hilo.setFuncionando(true);
         if (hilo.getState() == Thread.State.NEW) {
@@ -68,10 +88,25 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback {
                     case 1:
                         escenaActual = new Arena(anchoPantalla, altoPantalla, context, 1);
                         break;
+                    case 2:
+                        escenaActual = new Opciones(anchoPantalla, altoPantalla, context, 2);
                 }
             }
         }
         return true;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (luz == -1) {
+            luz = event.values[0];
+            menu.setLuz(luz);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
 

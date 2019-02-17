@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class Menu extends Escena {
@@ -12,6 +13,7 @@ public class Menu extends Escena {
     private Bitmap btnAyuda, btnRecords, btnCreditos;
     private Utils utils;
     private Parallax parallax;
+    private float luz;
 
     public Menu(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
@@ -30,7 +32,6 @@ public class Menu extends Escena {
     @Override
     public void dibujar(Canvas c) {
         try {
-//            c.drawBitmap(fondo, 0, 0, null);
             parallax.dibujaParallax(c);
             btnJugar.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 3/12, c);
             btnOpciones.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 7/12, c);
@@ -65,5 +66,12 @@ public class Menu extends Escena {
                 break;
         }
         return idEscena;
+    }
+
+    public void setLuz(float luz) {
+        this.luz = luz;
+        if (luz < 2) {
+            parallax = new Parallax(false, anchoPantalla, altoPantalla, getContext());
+        }
     }
 }

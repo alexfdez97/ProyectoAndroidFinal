@@ -50,15 +50,11 @@ public class Parallax {
             ladoNube = 0;
         }
         float velNube = (float)Math.random() * 2;
-        Log.i("nube", "index: " + indexNube);
-        Log.i("nube", "lado:" + ladoNube);
-        Log.i("nube", "velocidad:" + velNube);
         nubesEnPantalla.add(new Nube(nubes[indexNube], Nube.LadoInicio.intToNube(ladoNube), velNube, anchoPantalla, altoPantalla));
     }
 
     private void crearNubes() {
         int cantidadNubes = (int)(Math.random() * (8 - 4)) + 4;
-        Log.i("nube", "cantidad:" + cantidadNubes);
         for (int i = 0; i < cantidadNubes; i++) {
             crearUnaNube();
         }

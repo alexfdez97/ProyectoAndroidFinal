@@ -2,7 +2,6 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 
 public class Nube {
 
@@ -45,7 +44,6 @@ public class Nube {
         } else {
             posX = anchoPantalla;
         }
-        Log.i("nube", "altoPantalla: " + altoPantalla);
         posY = (float)(Math.random() * (altoPantalla - 0));
         this.velocidad = velocidad;
     }
