@@ -50,12 +50,22 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         if (sensorLuz != null) {
             sensorManager.registerListener(this, sensorLuz, SensorManager.SENSOR_DELAY_NORMAL);
         }
-        if (menu != null) {
-            escenaActual = menu;
-        } else {
+//        if (menu != null) {
+//            escenaActual = menu;
+//        } else {
+//            menu = new Menu(width, height, context, 0);
+//            escenaActual = menu;
+//        }
+
+        if (menu == null) {
             menu = new Menu(width, height, context, 0);
             escenaActual = menu;
         }
+
+        if (opciones == null) {
+            opciones = new Opciones(width, height, context, 2);
+        }
+
 //        hilo.setSurfaceSize(width, height);
         hilo.setFuncionando(true);
         if (hilo.getState() == Thread.State.NEW) {
@@ -89,7 +99,8 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                         escenaActual = new Arena(anchoPantalla, altoPantalla, context, 1);
                         break;
                     case 2:
-                        escenaActual = new Opciones(anchoPantalla, altoPantalla, context, 2);
+                        opciones.setParallax(menu.getParallax());
+                        escenaActual = opciones;
                 }
             }
         }

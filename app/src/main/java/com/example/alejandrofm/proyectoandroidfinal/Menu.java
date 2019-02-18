@@ -56,9 +56,11 @@ public class Menu extends Escena {
                 break;
             case MotionEvent.ACTION_UP:
                 if (btnJugar.isPulsado(event)) {
+                    btnJugar.setPulsado(false);
                     return 1;
                 }
                 if (btnOpciones.isPulsado(event)) {
+                    btnOpciones.setPulsado(false);
                     return 2;
                 }
                 btnJugar.setPulsado(false);
@@ -73,5 +75,9 @@ public class Menu extends Escena {
         if (luz < 2) {
             parallax = new Parallax(false, anchoPantalla, altoPantalla, getContext());
         }
+    }
+
+    public Parallax getParallax() {
+        return parallax;
     }
 }

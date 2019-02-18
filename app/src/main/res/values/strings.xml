@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProyectoAndroidFinal</string>
+    <string name="app_name" translatable="false">Zombrite</string>
     <string name="strPlay">Play</string>
     <string name="strOptions">Options</string>
 </resources>

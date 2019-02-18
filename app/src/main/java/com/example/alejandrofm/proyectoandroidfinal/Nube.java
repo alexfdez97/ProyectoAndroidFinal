@@ -34,7 +34,7 @@ public class Nube {
     private Bitmap nube;
     private float velocidad;
 
-    public Nube(Bitmap nube, LadoInicio lado, float velocidad, int anchoPantalla, int altoPantalla) {
+    public Nube(Bitmap nube, LadoInicio lado, float altura, float velocidad, int anchoPantalla, int altoPantalla) {
         this.nube = nube;
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -44,7 +44,7 @@ public class Nube {
         } else {
             posX = anchoPantalla;
         }
-        posY = (float)(Math.random() * (altoPantalla - 0));
+        posY = altura;
         this.velocidad = velocidad;
     }
 
