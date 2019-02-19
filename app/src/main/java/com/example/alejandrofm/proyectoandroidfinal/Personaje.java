@@ -20,7 +20,7 @@ public class Personaje {
     protected Utils utils;
     protected Joystick.Direccion direccionAnterior;
     protected boolean move;
-    private int anchoPantalla, altoPantalla;
+    protected int anchoPantalla, altoPantalla;
     private int indiceFrame = 0;
     private int tmpCambioFrame = 60;
     private long tiempoActual;
@@ -76,15 +76,15 @@ public class Personaje {
         }
     }
 
-    protected Bitmap[] cargarSprite(String tipo, String arma) {
-        Bitmap bitmap;
-        Bitmap[] asset = new Bitmap[20];
-        for (int i = 0; i < 20; i++) {
-            bitmap = utils.getBitmapFromAssets("protagonista/" + arma +"/" + tipo +"/survivor-" + tipo + "_" + arma + "_" + i + ".png");
-            asset[i] = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
-        }
-        return asset;
-    }
+//    protected Bitmap[] cargarSpriteProtagonista(String tipo, String arma) {
+//        Bitmap bitmap;
+//        Bitmap[] asset = new Bitmap[20];
+//        for (int i = 0; i < 20; i++) {
+//            bitmap = utils.getBitmapFromAssets("protagonista/" + arma +"/" + tipo +"/survivor-" + tipo + "_" + arma + "_" + i + ".png");
+//            asset[i] = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
+//        }
+//        return asset;
+//    }
 
     protected Bitmap[] rotarSprite(Bitmap[] base, int grados) {
         Bitmap bitmap[] = new Bitmap[20];

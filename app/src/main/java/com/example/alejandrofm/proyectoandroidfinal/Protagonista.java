@@ -13,12 +13,12 @@ public class Protagonista extends Personaje {
         super(x, y, anchoPantalla, altoPantalla, context);
         this.jIzquierdo = jIzquierdo;
         this.jDerecho = jDerecho;
-        idleRight = cargarSprite("idle", "handgun");
+        idleRight = cargarSpriteProtagonista("idle", "handgun");
         sprite = idleRight;
         idleUp = rotarSprite(idleRight, -90);
         idleDown = rotarSprite(idleRight, 90);
         idleLeft = rotarSprite(idleRight, 180);
-        moveRight = cargarSprite("move", "handgun");
+        moveRight = cargarSpriteProtagonista("move", "handgun");
         moveUp = rotarSprite(moveRight, -90);
         moveDown = rotarSprite(moveRight, 90);
         moveLeft = rotarSprite(moveRight, 180);
@@ -63,6 +63,16 @@ public class Protagonista extends Personaje {
                 posX -= velocidad;
                 break;
         }
+    }
+
+    protected Bitmap[] cargarSpriteProtagonista(String tipo, String arma) {
+        Bitmap bitmap;
+        Bitmap[] asset = new Bitmap[20];
+        for (int i = 0; i < 20; i++) {
+            bitmap = utils.getBitmapFromAssets("protagonista/" + arma +"/" + tipo +"/survivor-" + tipo + "_" + arma + "_" + i + ".png");
+            asset[i] = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
+        }
+        return asset;
     }
 
     public Joystick getjIzquierdo() {
