@@ -3,15 +3,27 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class Mapa {
     private Bitmap asfalto, bordilloBot, bordilloTop, mapa;
     private Bitmap[] superficies = new Bitmap[6];
+    private Bitmap[] cristales = new Bitmap[3];
     private Utils utils;
     private int anchoPantalla, altoPantalla;
 
     public Mapa(Context context, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
+        this.anchoPantalla = anchoPantalla;
+        this.altoPantalla = altoPantalla;
+        mapa = generarMapa();
+    }
+
+    public void dibujaMapa(Canvas c) {
+        c.drawBitmap(mapa, 0, 0 , null);
+    }
+
+    private void cargarBitmaps() {
         int proporcion = altoPantalla * 1/6;
         superficies[0] = utils.getBitmapFromAssets("mapa/acera_3.png");
         superficies[0] = Bitmap.createScaledBitmap(superficies[0], proporcion, proporcion, false);
@@ -31,16 +43,17 @@ public class Mapa {
         bordilloBot = Bitmap.createScaledBitmap(bordilloBot, proporcion, proporcion, false);
         bordilloTop = utils.getBitmapFromAssets("mapa/bordilloTop.png");
         bordilloTop = Bitmap.createScaledBitmap(bordilloTop, proporcion, proporcion, false);
-        this.anchoPantalla = anchoPantalla;
-        this.altoPantalla = altoPantalla;
-        mapa = generarMapa();
-    }
-
-    public void dibujaMapa(Canvas c) {
-        c.drawBitmap(mapa, 0, 0 , null);
+        int proporcionCristales = altoPantalla * 1/16;
+        cristales[0] = utils.getBitmapFromAssets("mapa/cristales_1.png");
+        cristales[0] = Bitmap.createScaledBitmap(cristales[0], proporcionCristales, proporcionCristales, false);
+        cristales[1] = utils.getBitmapFromAssets("mapa/cristales_2.png");
+        cristales[1] = Bitmap.createScaledBitmap(cristales[1], proporcionCristales, proporcionCristales, false);
+        cristales[2] = utils.getBitmapFromAssets("mapa/cristales_3.png");
+        cristales[2] = Bitmap.createScaledBitmap(cristales[2], proporcionCristales, proporcionCristales, false);
     }
 
     private Bitmap generarMapa() {
+        cargarBitmaps();
         Bitmap bitmap =  Bitmap.createBitmap(anchoPantalla, altoPantalla, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
         Bitmap superior = superficies[(int)(Math.random() * (5))];
@@ -81,6 +94,14 @@ public class Mapa {
                 alto += inferior.getHeight();
                 ancho = 0;
             }
+        }
+
+        int cantidad = (int)(Math.random() * 10);
+        for (int i = 0; i < cantidad; i++) {
+            float x = (float)(Math.random() * anchoPantalla);
+            float y = (float)(Math.random() * altoPantalla);
+            int index = (int)(Math.random() * 3);
+            c.drawBitmap(cristales[index], x, y, null);
         }
         return bitmap;
     }
