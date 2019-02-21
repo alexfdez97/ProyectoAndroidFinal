@@ -12,6 +12,12 @@ public class Mapa {
     private Utils utils;
     private int anchoPantalla, altoPantalla;
 
+    /**
+     * El mapa
+     * @param context el contexto de la aplicación
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     */
     public Mapa(Context context, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
         this.anchoPantalla = anchoPantalla;
@@ -19,10 +25,17 @@ public class Mapa {
         mapa = generarMapa();
     }
 
+    /**
+     * Dibuja el mapa
+     * @param c el canvas
+     */
     public void dibujaMapa(Canvas c) {
         c.drawBitmap(mapa, 0, 0 , null);
     }
 
+    /**
+     * Carga los bitmaps de la clase en memoria
+     */
     private void cargarBitmaps() {
         int proporcion = altoPantalla * 1/6;
         superficies[0] = utils.getBitmapFromAssets("mapa/acera_3.png");
@@ -52,6 +65,10 @@ public class Mapa {
         cristales[2] = Bitmap.createScaledBitmap(cristales[2], proporcionCristales, proporcionCristales, false);
     }
 
+    /**
+     * Genera un mapa aleatorio y lo guarda en un Bitmap según el alto y el ancho de la pantalla.
+     * @return el Bitmap de el mapa
+     */
     private Bitmap generarMapa() {
         cargarBitmaps();
         Bitmap bitmap =  Bitmap.createBitmap(anchoPantalla, altoPantalla, Bitmap.Config.ARGB_8888);
@@ -60,7 +77,6 @@ public class Mapa {
         Bitmap inferior = superficies[(int)(Math.random() * (5))];
         int alto = 0;
         int ancho = 0;
-        boolean fin = false;
         while (alto < altoPantalla * 1/6) {
             c.drawBitmap(superior, ancho, alto, null);
             ancho += superior.getWidth();
