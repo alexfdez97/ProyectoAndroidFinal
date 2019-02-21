@@ -34,6 +34,10 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         this.context = context;
         sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         sensorLuz = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        if (sensorLuz == null) {
+            luz = (float)Math.random() * 4;
+            Log.i("luz", luz+"");
+        }
         hilo = new Hilo();
         setFocusable(true);
     }
@@ -50,15 +54,10 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         if (sensorLuz != null) {
             sensorManager.registerListener(this, sensorLuz, SensorManager.SENSOR_DELAY_NORMAL);
         }
-//        if (menu != null) {
-//            escenaActual = menu;
-//        } else {
-//            menu = new Menu(width, height, context, 0);
-//            escenaActual = menu;
-//        }
 
         if (menu == null) {
             menu = new Menu(width, height, context, 0);
+            menu.setLuz(luz);
             escenaActual = menu;
         }
 
@@ -113,6 +112,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             luz = event.values[0];
             menu.setLuz(luz);
         }
+        Log.i("luz", luz+"");
     }
 
     @Override

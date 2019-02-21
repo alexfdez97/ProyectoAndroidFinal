@@ -32,8 +32,7 @@ public class Parallax {
         nubes[0] = utils.getBitmapFromAssets("parallax/clouds_1.png");
         nubes[0] = Bitmap.createScaledBitmap(nubes[0], anchoPantalla * 1/5, altoPantalla * 1/4, false);
         nubes[1] = utils.getBitmapFromAssets("parallax/clouds_2.png");
-        nubes[1] = Bitmap.createScaledBitmap(nubes[1], anchoPantalla * 1/5, altoPantalla * 1/4, false);
-        nubes[1] = utils.getBitmapFromAssets("parallax/clouds_2.png");
+        nubes[1] = Bitmap.createScaledBitmap(nubes[1], anchoPantalla * 1/3, altoPantalla * 1/2, false);
         crearNubes();
     }
 
@@ -53,21 +52,24 @@ public class Parallax {
         } else {
             indexNube = 0;
         }
-        Log.i("index", indexNube + "");
         int ladoNube;
         if (Math.random() > 0.5) {
             ladoNube = 1;
         } else {
             ladoNube = 0;
         }
-        float velNube = (float)Math.random() * 2;
-        float alturaNube = (float)(Math.random() * altoPantalla);
+        double ref = 0;
+        for (int i = anchoPantalla; i > 0; i -= 360) {
+            ref += 0.5;
+        }
+        float velNube = (float)Math.random() * (float)ref;
+
+        float alturaNube = (float)(Math.random() * (altoPantalla * 3/4) - nubes[indexNube].getHeight());
         nubesEnPantalla.add(new Nube(nubes[indexNube], Nube.LadoInicio.intToNube(ladoNube), alturaNube, velNube, anchoPantalla, altoPantalla));
     }
 
     private void crearNubes() {
         int cantidadNubes = (int)(Math.random() * (8 - 4)) + 4;
-        Log.i("cant", "cantidad" + cantidadNubes);
         for (int i = 0; i < cantidadNubes; i++) {
             crearUnaNube();
         }

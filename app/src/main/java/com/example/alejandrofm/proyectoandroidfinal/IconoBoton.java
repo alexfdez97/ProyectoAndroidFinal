@@ -63,6 +63,9 @@ public class IconoBoton {
             case CREDITOS:
                 icono = utils.getBitmapFromAssets("menu/info.png");
                 break;
+            case VOLVER:
+                icono = utils.getBitmapFromAssets("menu/rollback.png");
+                break;
         }
         icono = Bitmap.createScaledBitmap(icono, proporcion, proporcion, false);
     }
