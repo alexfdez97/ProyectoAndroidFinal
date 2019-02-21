@@ -56,30 +56,25 @@ public class Menu extends Escena {
                 break;
             case MotionEvent.ACTION_UP:
                 if (btnJugar.isPulsado(event)) {
-//                    btnJugar.setPulsado(false);
+                    btnJugar.setPulsado(false);
                     return 1;
                 }
                 if (btnOpciones.isPulsado(event)) {
-//                    btnOpciones.setPulsado(false);
+                    btnOpciones.setPulsado(false);
                     return 2;
                 }
                 if (btnAyuda.isPulsado(event)) {
-//                    btnAyuda.setPulsado(false);
+                    btnAyuda.setPulsado(false);
                     return 0;
                 }
                 if (btnRecords.isPulsado(event)) {
-//                    btnRecords.setPulsado(false);
+                    btnRecords.setPulsado(false);
                     return 0;
                 }
                 if (btnCreditos.isPulsado(event)) {
-//                    btnCreditos.setPulsado(false);
+                    btnCreditos.setPulsado(false);
                     return 0;
                 }
-                btnJugar.setPulsado(false);
-                btnOpciones.setPulsado(false);
-                btnRecords.setPulsado(false);
-                btnCreditos.setPulsado(false);
-                btnAyuda.setPulsado(false);
                 break;
         }
         return idEscena;

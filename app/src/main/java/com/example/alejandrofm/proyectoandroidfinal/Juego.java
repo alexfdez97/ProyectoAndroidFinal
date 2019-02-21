@@ -36,7 +36,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         sensorLuz = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if (sensorLuz == null) {
             luz = (float)Math.random() * 4;
-            Log.i("luz", luz+"");
+            Log.i("luz2", luz+"");
         }
         hilo = new Hilo();
         setFocusable(true);
@@ -57,7 +57,9 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
 
         if (menu == null) {
             menu = new Menu(width, height, context, 0);
-            menu.setLuz(luz);
+            if (luz != -1) {
+                menu.setLuz(luz);
+            }
             escenaActual = menu;
         }
 
@@ -92,7 +94,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             if (nuevaEscena != escenaActual.idEscena) {
                 switch (nuevaEscena) {
                     case 0:
-                        escenaActual = new Menu(anchoPantalla, altoPantalla, context, 0);
+                        escenaActual = menu;
                         break;
                     case 1:
                         escenaActual = new Arena(anchoPantalla, altoPantalla, context, 1);
