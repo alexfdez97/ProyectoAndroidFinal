@@ -1,14 +1,16 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 public class Arena extends Escena {
 
+    private ArrayList<Joystick> joysticksActivos = new ArrayList<>();
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
     private Protagonista protagonista;
@@ -37,7 +39,6 @@ public class Arena extends Escena {
         float x = event.getX(event.getActionIndex());
         float y = event.getY(event.getActionIndex());
         int id = event.getPointerId(event.getActionIndex());
-        event.getX(event.getActionIndex());
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_POINTER_DOWN:
             case MotionEvent.ACTION_DOWN:
@@ -45,11 +46,13 @@ public class Arena extends Escena {
                     jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jIzquierdo.setIdPuntero(id);
                     jIzquierdo.setPulsado(true);
+                    joysticksActivos.add(jIzquierdo);
                     protagonista.setjIzquierdo(jIzquierdo);
                 } else {
                     jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jDerecho.setIdPuntero(id);
                     jDerecho.setPulsado(true);
+                    joysticksActivos.add(jDerecho);
                     protagonista.setjDerecho(jDerecho);
                 }
                 break;
@@ -57,22 +60,38 @@ public class Arena extends Escena {
             case MotionEvent.ACTION_UP:
                 if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
                     jIzquierdo.setPulsado(false);
+                    joysticksActivos.remove(jDerecho);
                     jIzquierdo = null;
                 }
                 if (jDerecho != null && jDerecho.getIdPuntero() == id) {
                     jDerecho.setPulsado(false);
+                    joysticksActivos.remove(jDerecho);
                     jDerecho = null;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                for (int i = 0; i < event.getPointerCount(); i++) {
-                    if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
-                        jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
+//                if (event.getPointerCount() == 1) {
+//                    if (jIzquierdo != null) {
+//                        if (event.getPointerId(event.getActionIndex()) == jIzquierdo.getIdPuntero()) {
+//                            jIzquierdo.setCoordsJFlechas(event.getX(jIzquierdo.getIdPuntero()), event.getY(jIzquierdo.getIdPuntero()));
+//                        }
+//                    }
+//
+//                    if (jDerecho != null) {
+//                        if (event.getPointerId(event.getActionIndex()) == jDerecho.getIdPuntero()) {
+//                            jDerecho.setCoordsJFlechas(event.getX(jDerecho.getIdPuntero()), event.getY(jDerecho.getIdPuntero()));
+//                        }
+//                    }
+//                } else {
+                    for (int i = 0; i < event.getPointerCount(); i++) {
+                        if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
+                            jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
+                        }
+                        if (jDerecho != null && jDerecho.getIdPuntero() == i) {
+                            jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
+                        }
                     }
-                    if (jDerecho != null && jDerecho.getIdPuntero() == i) {
-                        jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
-                    }
-                }
+//                }
                 break;
         }
         return -1;

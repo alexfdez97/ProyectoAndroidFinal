@@ -8,13 +8,13 @@ import android.view.MotionEvent;
 public class IconoBoton {
 
     public enum Tipo {
-        RECORDS, AYUDA, CREDITOS, VOLVER
+        RECORDS, AYUDA, CREDITOS, VOLVER, SPEAKERON, SPEAKEROFF
     }
+    Tipo tipo;
     private Utils utils;
     private Bitmap botonPulsado;
     private Bitmap botonBase;
     private Bitmap icono;
-    private Bitmap bmpFinal;
     private boolean pulsado;
     private int altoPantalla, anchoPantalla;
     private int posX, posY;
@@ -30,16 +30,11 @@ public class IconoBoton {
     public void dibujarIconoBoton(int posX, int posY, Canvas c) {
         this.posX = posX;
         this.posY = posY;
-//        Bitmap boton = botonBase;
-//        if (pulsado) {
-//            boton = botonPulsado;
-//        }
         if (pulsado) {
             c.drawBitmap(botonPulsado, posX, posY, null);
         } else {
             c.drawBitmap(botonBase, posX, posY, null);
         }
-//        c.drawBitmap(boton, posX, posY, null);
         c.drawBitmap(icono, posX + botonBase.getWidth() / 2 - icono.getWidth() / 2, posY + botonBase.getHeight() / 2 - icono.getHeight() / 2, null);
     }
 
@@ -66,7 +61,14 @@ public class IconoBoton {
             case VOLVER:
                 icono = utils.getBitmapFromAssets("menu/rollback.png");
                 break;
+            case SPEAKERON:
+                icono = utils.getBitmapFromAssets("menu/speaker.png");
+                break;
+            case SPEAKEROFF:
+                icono = utils.getBitmapFromAssets("menu/speaker-off.png");
+                break;
         }
+        this.tipo = tipo;
         icono = Bitmap.createScaledBitmap(icono, proporcion, proporcion, false);
     }
 
@@ -78,6 +80,10 @@ public class IconoBoton {
         } else {
             setPulsado(false);
         }
+        return pulsado;
+    }
+
+    public boolean isPulsado() {
         return pulsado;
     }
 
@@ -107,5 +113,13 @@ public class IconoBoton {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    public void cambiarIcono(Tipo tipo) {
+        cargarTipo(tipo);
+    }
+
+    public Tipo getTipo() {
+        return this.tipo;
     }
 }

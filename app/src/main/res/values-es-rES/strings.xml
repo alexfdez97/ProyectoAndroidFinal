@@ -2,4 +2,7 @@
 <resources>
     <string name="strPlay">Jugar</string>
     <string name="strOptions">Opciones</string>
+    <string name="strReset">Resetear records</string>
+    <string name="strMusic">Musica</string>
+    <string name="strEffects">Efectos</string>
 </resources>

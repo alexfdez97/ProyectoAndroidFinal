@@ -55,23 +55,23 @@ public class Menu extends Escena {
                 btnCreditos.isPulsado(event);
                 break;
             case MotionEvent.ACTION_UP:
-                if (btnJugar.isPulsado(event)) {
+                if (btnJugar.isPulsado() && btnJugar.isPulsado(event)) {
                     btnJugar.setPulsado(false);
                     return 1;
                 }
-                if (btnOpciones.isPulsado(event)) {
+                if (btnOpciones.isPulsado() && btnOpciones.isPulsado(event)) {
                     btnOpciones.setPulsado(false);
                     return 2;
                 }
-                if (btnAyuda.isPulsado(event)) {
+                if (btnAyuda.isPulsado() && btnAyuda.isPulsado(event)) {
                     btnAyuda.setPulsado(false);
                     return 0;
                 }
-                if (btnRecords.isPulsado(event)) {
+                if (btnRecords.isPulsado() && btnRecords.isPulsado(event)) {
                     btnRecords.setPulsado(false);
                     return 0;
                 }
-                if (btnCreditos.isPulsado(event)) {
+                if (btnCreditos.isPulsado() && btnCreditos.isPulsado(event)) {
                     btnCreditos.setPulsado(false);
                     return 0;
                 }

@@ -2,4 +2,7 @@
     <string name="app_name" translatable="false">Zombrite</string>
     <string name="strPlay">Play</string>
     <string name="strOptions">Options</string>
+    <string name="strReset">Reset records</string>
+    <string name="strMusic">Music</string>
+    <string name="strEffects">Effects</string>
 </resources>

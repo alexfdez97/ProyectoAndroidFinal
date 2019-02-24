@@ -3,7 +3,6 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -67,7 +66,6 @@ public class Boton {
         char c = 'a';
         for (int i = 0; i < 26; i++) {
             if (i % 8 == 0 && i > 0) {
-                Log.i("test", "i: " + i);
                 tempY += 23;
                 tempX = 158;
             }
@@ -75,6 +73,7 @@ public class Boton {
             tempX += 16;
             c++;
         }
+        letras.put(' ', Bitmap.createBitmap(16, 20, Bitmap.Config.ARGB_8888));
     }
 
     /**
@@ -104,31 +103,31 @@ public class Boton {
 
     /**
      * Función que combina dos imagenes, se utiliza para unir las imágenes de los carácteres almacenados en la Hashtable
-     * @param c el primer bitmap
-     * @param s el segundo bitmap
-     * @return la unión de 'c' y 's'
+     * @param bmp1 el primer bitmap
+     * @param bmp2 el segundo bitmap
+     * @return bmpUnion la unión de 'bmp1' y 'bmp2'
      */
-    private Bitmap combinarImagenes(Bitmap c, Bitmap s) {
-        Bitmap cs = null;
+    private Bitmap combinarImagenes(Bitmap bmp1, Bitmap bmp2) {
+        Bitmap bmpUnion = null;
 
         int ancho, alto = 0;
 
-        if(c.getWidth() > s.getWidth()) {
-            ancho = c.getWidth() + s.getWidth();
-            alto = c.getHeight();
+        if(bmp1.getWidth() > bmp2.getWidth()) {
+            ancho = bmp1.getWidth() + bmp2.getWidth();
+            alto = bmp1.getHeight();
         } else {
-            ancho = s.getWidth() + s.getWidth();
-            alto = c.getHeight();
+            ancho = bmp2.getWidth() + bmp2.getWidth();
+            alto = bmp1.getHeight();
         }
 
-        cs = Bitmap.createBitmap(ancho, alto, Bitmap.Config.ARGB_8888);
+        bmpUnion = Bitmap.createBitmap(ancho, alto, Bitmap.Config.ARGB_8888);
 
-        Canvas comboImage = new Canvas(cs);
+        Canvas comboImage = new Canvas(bmpUnion);
 
-        comboImage.drawBitmap(c, 0f, 0f, null);
-        comboImage.drawBitmap(s, c.getWidth(), 0f, null);
+        comboImage.drawBitmap(bmp1, 0f, 0f, null);
+        comboImage.drawBitmap(bmp2, bmp1.getWidth(), 0f, null);
 
-        return cs;
+        return bmpUnion;
     }
 
     /**
