@@ -5,4 +5,6 @@
     <string name="strReset">Reset records</string>
     <string name="strMusic">Music</string>
     <string name="strEffects">Effects</string>
+    <string name="strHealth">Health</string>
+    <string name="strPuntuation">Puntuation</string>
 </resources>

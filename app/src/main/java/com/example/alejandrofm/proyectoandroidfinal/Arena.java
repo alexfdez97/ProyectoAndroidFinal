@@ -3,7 +3,6 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -11,10 +10,13 @@ import java.util.ArrayList;
 public class Arena extends Escena {
 
     private ArrayList<Joystick> joysticksActivos = new ArrayList<>();
+    private ArrayList<Zombie> zombies = new ArrayList<>();
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
     private Protagonista protagonista;
     private Mapa mapa;
+    private Texto txtHealth, txtPuntuation;
+    private HealthBar hBar;
 
     /**
      * Constructor de Arena, declara el Mapa y el Protagonista
@@ -27,6 +29,11 @@ public class Arena extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
         protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
+        txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla * 2/4, altoPantalla * 2/4, context);
+        txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla * 2/4, altoPantalla * 2/4, context);
+        hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
+
+        zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, context));
     }
 
     /**
@@ -107,6 +114,10 @@ public class Arena extends Escena {
             c.drawColor(Color.BLACK);
             mapa.dibujaMapa(c);
             protagonista.dibujarPersonaje(c);
+            txtHealth.dibujarTexto(anchoPantalla * 1/80, altoPantalla * 1/80, c);
+            hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
+//            txtPuntuation.dibujarTexto();
+//            dibujaZombies(c);
             if (jIzquierdo != null) {
                 if (jIzquierdo.isPulsado()) {
                     jIzquierdo.dibujaJoystick(c);
@@ -118,5 +129,11 @@ public class Arena extends Escena {
                 }
             }
         } catch (NullPointerException ex) { }
+    }
+
+    private void dibujaZombies(Canvas c) {
+        for (Zombie zombie:zombies) {
+            zombie.dibujarPersonaje(c);
+        }
     }
 }
