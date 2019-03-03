@@ -15,8 +15,9 @@ public class Arena extends Escena {
     private Joystick jIzquierdo, jDerecho;
     private Protagonista protagonista;
     private Mapa mapa;
-    private Texto txtHealth, txtPuntuation;
+    private Texto txtHealth, txtPuntuation, txtPointsCounter;
     private HealthBar hBar;
+    private int puntuation = 0;
 
     /**
      * Constructor de Arena, declara el Mapa y el Protagonista
@@ -29,10 +30,10 @@ public class Arena extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
         protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
-        txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla * 2/4, altoPantalla * 2/4, context);
-        txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla * 2/4, altoPantalla * 2/4, context);
+        txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla, altoPantalla, context);
+        txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
+        txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
-
         zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, context));
     }
 
@@ -116,7 +117,8 @@ public class Arena extends Escena {
             protagonista.dibujarPersonaje(c);
             txtHealth.dibujarTexto(anchoPantalla * 1/80, altoPantalla * 1/80, c);
             hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
-//            txtPuntuation.dibujarTexto();
+            txtPuntuation.dibujarTexto(hBar.getX() + hBar.getWidth() + anchoPantalla * 1/20, altoPantalla * 1/80, c);
+            txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1/80, altoPantalla * 1/80, c);
 //            dibujaZombies(c);
             if (jIzquierdo != null) {
                 if (jIzquierdo.isPulsado()) {
@@ -128,6 +130,14 @@ public class Arena extends Escena {
                     jDerecho.dibujaJoystick(c);
                 }
             }
+        } catch (NullPointerException ex) { }
+    }
+
+    @Override
+    public void actualizarFisica() {
+        try  {
+//            puntuation++;
+//            txtPointsCounter.setTexto(String.format("%06d", puntuation));
         } catch (NullPointerException ex) { }
     }
 

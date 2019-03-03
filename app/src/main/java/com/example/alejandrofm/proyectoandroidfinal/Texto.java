@@ -3,6 +3,7 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,12 +14,15 @@ public class Texto {
     private Utils utils;
     private Bitmap bmpTexto;
     private int x, y;
+    private int anchoPantalla, altoPantalla;
 
     public Texto(String texto, int anchoPantalla, int altoPantalla, Context context) {
         utils = new Utils(context);
+        this.anchoPantalla = anchoPantalla;
+        this.altoPantalla = altoPantalla;
         cargarBitmaps();
         bmpTexto = textoAImagen(texto);
-        bmpTexto = Bitmap.createScaledBitmap(bmpTexto, (anchoPantalla * 1/4) * 2/3, (altoPantalla * 1/6) * 2/3, false);
+        bmpTexto = Bitmap.createScaledBitmap(bmpTexto, texto.length() * (anchoPantalla * 1/40), (altoPantalla * 1/10) * 2/3, false);
     }
 
     public void dibujarTexto(int posX, int posY, Canvas c) {
@@ -77,14 +81,36 @@ public class Texto {
         char c = 'a';
         for (int i = 0; i < 26; i++) {
             if (i % 8 == 0 && i > 0) {
-                tempY += 23;
+                tempY += 24;
                 tempX = 158;
             }
-            letras.put(c, Bitmap.createBitmap(tileset, tempX, tempY, 16, 20));
+            letras.put(c, Bitmap.createBitmap(tileset, tempX, tempY, 16, 24));
             tempX += 16;
             c++;
         }
+        tempX = 302;
+        tempY = 10;
+        char num = '1';
+        for (int j = 0; j < 10; j++) {
+            if (j % 5 == 0 && j > 0) {
+                tempY += 24;
+                tempX = 302;
+            }
+            if (j < 9) {
+                letras.put(num, Bitmap.createBitmap(tileset, tempX, tempY, 16, 24));
+                Log.i("pasa", num + "");
+            } else {
+                letras.put('0', Bitmap.createBitmap(tileset, tempX, tempY, 16, 24));
+            }
+            tempX += 16;
+            num++;
+        }
         letras.put(' ', Bitmap.createBitmap(16, 20, Bitmap.Config.ARGB_8888));
+    }
+
+    public void setTexto(String texto) {
+        bmpTexto = textoAImagen(texto);
+        bmpTexto = Bitmap.createScaledBitmap(bmpTexto, texto.length() * (anchoPantalla * 1/40), (altoPantalla * 1/10) * 2/3, false);
     }
 
     public int getWidth() {

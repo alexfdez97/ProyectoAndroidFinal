@@ -114,7 +114,6 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             luz = event.values[0];
             menu.setLuz(luz);
         }
-        Log.i("luz", luz+"");
     }
 
     @Override
@@ -138,7 +137,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                     }
                     c = surfaceHolder.lockCanvas();
                     synchronized (surfaceHolder) {
-//                        escenaActual.actualizarFisica();
+                        escenaActual.actualizarFisica();
                         escenaActual.dibujar(c);
                     }
                 } finally {

@@ -10,6 +10,7 @@ public class HealthBar {
     private Bitmap[] healthsBmps = new Bitmap[4];
     private Utils utils;
     private int anchoPantalla, altoPantalla;
+    private int posX, posY;
 
     public HealthBar(int health, int anchoPantalla, int altoPantalla, Context context) {
         this.anchoPantalla = anchoPantalla;
@@ -30,6 +31,8 @@ public class HealthBar {
     }
 
     public void dibujaBar(int posX, int posY, Canvas c) {
+        this.posX = posX;
+        this.posY = posX;
         if (vida > 75) {
             c.drawBitmap(healthsBmps[3], posX, posY, null);
         } else if (vida > 50) {
@@ -51,5 +54,13 @@ public class HealthBar {
 
     public int getWidth() {
         return healthsBmps[0].getWidth();
+    }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY() {
+        return posY;
     }
 }
