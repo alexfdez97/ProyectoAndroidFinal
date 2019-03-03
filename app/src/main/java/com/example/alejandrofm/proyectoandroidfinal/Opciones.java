@@ -20,7 +20,7 @@ public class Opciones extends Escena {
         txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla, altoPantalla, context);
         txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla, altoPantalla, context);
         btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
-        btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, context);
+        btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
     }
 
     @Override
@@ -44,8 +44,10 @@ public class Opciones extends Escena {
                     btnMusic.setPulsado(false);
                     if (btnMusic.getTipo() == IconoBoton.Tipo.SPEAKERON) {
                         btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
+                        return 50;
                     } else {
                         btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
+                        return 51;
                     }
                 }
                 if (btnEfect.isPulsado() && btnEfect.isPulsado(event)) {

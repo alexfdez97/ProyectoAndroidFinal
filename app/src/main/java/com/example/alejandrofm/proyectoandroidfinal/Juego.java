@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,6 +27,8 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     private SensorManager sensorManager;
     private Sensor sensorLuz;
     private float luz = -1;
+    private MediaPlayer menuMusic;
+    private boolean music = true, effects = true;
 
     public Juego(Context context) {
         super(context);
@@ -40,11 +43,20 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         }
         hilo = new Hilo();
         setFocusable(true);
+        menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
+        if (escenaActual != null) {
+            if (music && escenaActual.getIdEscena() != 1) {
+                menuMusic.start();
+            }
+        } else {
+            if (music) {
+                menuMusic.start();
+            }
+        }
     }
 
     @Override
@@ -80,6 +92,9 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         hilo.setFuncionando(false);
+        if (music) {
+            menuMusic.pause();
+        }
         try {
             hilo.join();
         } catch (InterruptedException e) {
@@ -95,13 +110,24 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                 switch (nuevaEscena) {
                     case 0:
                         escenaActual = menu;
+                        if (music) {
+                            menuMusic.start();
+                        }
                         break;
                     case 1:
                         escenaActual = new Arena(anchoPantalla, altoPantalla, context, 1);
+                        menuMusic.pause();
                         break;
                     case 2:
                         opciones.setParallax(menu.getParallax());
                         escenaActual = opciones;
+                        break;
+                    case 50:
+                        menuMusic.pause();
+                        break;
+                    case 51:
+                        menuMusic.start();
+                        break;
                 }
             }
         }
