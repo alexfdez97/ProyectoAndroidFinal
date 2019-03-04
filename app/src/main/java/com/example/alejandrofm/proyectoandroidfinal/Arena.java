@@ -18,6 +18,9 @@ public class Arena extends Escena {
     private Texto txtHealth, txtPuntuation, txtPointsCounter;
     private HealthBar hBar;
     private int puntuation = 0;
+    private ArrayList<Bala> balas = new ArrayList<>();
+    private long currentTime, lastBala;
+    private Context context;
 
     /**
      * Constructor de Arena, declara el Mapa y el Protagonista
@@ -28,6 +31,7 @@ public class Arena extends Escena {
      */
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
+        this.context = context;
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
         protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
         txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla, altoPantalla, context);
@@ -35,6 +39,9 @@ public class Arena extends Escena {
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
         zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, context));
+
+        currentTime = System.currentTimeMillis();
+        lastBala = currentTime + 2000;
     }
 
     /**
@@ -97,6 +104,13 @@ public class Arena extends Escena {
                         }
                         if (jDerecho != null && jDerecho.getIdPuntero() == i) {
                             jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
+                            if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
+                                if (Math.abs(lastBala - currentTime) >= 1000) {
+                                    balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
+                                    lastBala = System.currentTimeMillis();
+                                }
+                            }
+                            currentTime = System.currentTimeMillis();
                         }
                     }
 //                }
@@ -114,6 +128,7 @@ public class Arena extends Escena {
         try  {
             c.drawColor(Color.BLACK);
             mapa.dibujaMapa(c);
+            dibujaBalas(c);
             protagonista.dibujarPersonaje(c);
             txtHealth.dibujarTexto(anchoPantalla * 1/80, altoPantalla * 1/80, c);
             hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
@@ -138,6 +153,10 @@ public class Arena extends Escena {
         try  {
 //            puntuation++;
 //            txtPointsCounter.setTexto(String.format("%06d", puntuation));
+            for (Bala bala:balas) {
+                bala.mueveBala();
+            }
+//            compruebaBalas();
         } catch (NullPointerException ex) { }
     }
 
@@ -146,4 +165,25 @@ public class Arena extends Escena {
             zombie.dibujarPersonaje(c);
         }
     }
+
+    private void dibujaBalas(Canvas c) {
+        for (Bala bala:balas) {
+            bala.dibujarBala(c);
+        }
+    }
+
+    private void compruebaBalas() {
+        for (Bala bala : balas) {
+            if (bala.getX() > anchoPantalla) {
+                balas.remove(bala);
+            } else if (bala.getX() < anchoPantalla + bala.getWidth()) {
+                balas.remove(bala);
+            } else if (bala.getY() > altoPantalla) {
+                balas.remove(bala);
+            } else if (bala.getY() < altoPantalla + bala.getHeight()) {
+                balas.remove(bala);
+            }
+        }
+    }
+
 }

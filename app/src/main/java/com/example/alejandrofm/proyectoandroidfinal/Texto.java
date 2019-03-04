@@ -117,6 +117,10 @@ public class Texto {
         return bmpTexto.getWidth();
     }
 
+    public int getHeight() {
+        return bmpTexto.getHeight();
+    }
+
     public int getX() {
         return this.x;
     }

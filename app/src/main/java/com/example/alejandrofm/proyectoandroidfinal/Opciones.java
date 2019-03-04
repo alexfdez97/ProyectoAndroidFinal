@@ -74,11 +74,11 @@ public class Opciones extends Escena {
             this.parallax.dibujaParallax(c);
             btnRollback.dibujarIconoBoton(0 + btnRollback.getWidth() / 2, 0 + btnRollback.getHeight() / 2, c);
             btnResetRecords.dibujarBoton(anchoPantalla * 1/3, altoPantalla * 3/4, c);
-            txtEfectos.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 1/4, c);
-            txtMusica.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 2/4, c);
+            txtEfectos.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 1/4 + (btnEfect.getHeight() / 2), c);
+            txtMusica.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 2/4 + (btnMusic.getHeight() / 2), c);
             int xIconos = btnResetRecords.getX() + btnResetRecords.getWidth() - btnEfect.getWidth();
-            btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
-            btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
+            btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY() - (btnEfect.getHeight() / 2), c);
+            btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY() - (btnMusic.getHeight() / 2), c);
         } catch (NullPointerException ex) { }
     }
 

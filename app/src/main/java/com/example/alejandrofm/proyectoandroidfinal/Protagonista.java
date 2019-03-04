@@ -8,6 +8,7 @@ import android.util.Log;
 public class Protagonista extends Personaje {
 
     private Joystick jIzquierdo, jDerecho;
+    private int armaPosX, armaPosY;
 
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
         super(x, y, anchoPantalla, altoPantalla, context);
@@ -87,5 +88,33 @@ public class Protagonista extends Personaje {
 
     public void setjDerecho(Joystick jDerecho) {
         this.jDerecho = jDerecho;
+    }
+
+    public int getArmaX() {
+        switch (jDerecho.getDireccion()) {
+            case ESTE:
+                return this.getPosX() + this.getWidth() - this.getWidth() * 2/10;
+            case NORTE:
+                return this.getPosX() + this.getWidth() - this.getWidth() * 3/11;
+            case SUR:
+                return this.getPosX() + this.getWidth() * 2/10;
+            case OESTE:
+                return this.getPosX() + this.getWidth() * 2/10;
+        }
+        return this.getPosX();
+    }
+
+    public int getArmaY() {
+        switch (jDerecho.getDireccion()) {
+            case ESTE:
+                return this.getPosY() + this.getHeight() - this.getHeight() * 5/18;
+            case NORTE:
+                return this.getPosY() + this.getHeight() * 1/10;
+            case SUR:
+                return this.getPosY() + this.getHeight() - this.getHeight() * 1/10;
+            case OESTE:
+                return this.getPosY() + this.getHeight() * 3/13;
+        }
+        return this.getPosY();
     }
 }

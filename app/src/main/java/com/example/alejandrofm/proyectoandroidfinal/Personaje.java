@@ -193,4 +193,12 @@ public class Personaje {
     public void setTiempoActual(long tiempoActual) {
         this.tiempoActual = tiempoActual;
     }
+
+    public int getWidth() {
+        return sprite[0].getWidth();
+    }
+
+    public int getHeight() {
+        return sprite[0].getHeight();
+    }
 }

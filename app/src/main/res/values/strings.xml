@@ -7,4 +7,7 @@
     <string name="strEffects">Effects</string>
     <string name="strHealth">Health</string>
     <string name="strPuntuation">Puntuation</string>
+    <string name="strMenu">Menu</string>
+    <string name="strRollback">Return</string>
+    <string name="strExit">Exit</string>
 </resources>
