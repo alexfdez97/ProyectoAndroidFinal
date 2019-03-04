@@ -11,16 +11,18 @@ import android.view.MotionEvent;
 public class Escena implements IEscena {
 
     protected int anchoPantalla, altoPantalla;
-    private Context context;
+    protected Context context;
     protected int idEscena;
     protected Bitmap fondo;
     protected Paint pntBotonMenu;
+    protected Utils utils;
 
     public Escena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.context = context;
         this.idEscena = idEscena;
+        this.utils = new Utils(context);
         if (idEscena == 0) {
             pntBotonMenu = new Paint();
             pntBotonMenu.setColor(Color.GREEN);

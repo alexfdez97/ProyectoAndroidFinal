@@ -93,13 +93,13 @@ public class Protagonista extends Personaje {
     public int getArmaX() {
         switch (jDerecho.getDireccion()) {
             case ESTE:
-                return this.getPosX() + this.getWidth() - this.getWidth() * 2/10;
+                return this.getPosX() + this.getWidth() - this.getWidth() * 2/20;
             case NORTE:
                 return this.getPosX() + this.getWidth() - this.getWidth() * 3/11;
             case SUR:
                 return this.getPosX() + this.getWidth() * 2/10;
             case OESTE:
-                return this.getPosX() + this.getWidth() * 2/10;
+                return this.getPosX() + this.getWidth() * 2/20;
         }
         return this.getPosX();
     }

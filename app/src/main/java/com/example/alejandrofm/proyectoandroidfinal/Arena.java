@@ -1,8 +1,10 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -17,10 +19,13 @@ public class Arena extends Escena {
     private Mapa mapa;
     private Texto txtHealth, txtPuntuation, txtPointsCounter;
     private HealthBar hBar;
+    private Bitmap fogonazos[] = new Bitmap[4];
     private int puntuation = 0;
     private ArrayList<Bala> balas = new ArrayList<>();
     private long currentTime, lastBala;
     private Context context;
+    private boolean fuego = false;
+    private Matrix matrix = new Matrix();
 
     /**
      * Constructor de Arena, declara el Mapa y el Protagonista
@@ -32,6 +37,7 @@ public class Arena extends Escena {
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         this.context = context;
+        utils = new Utils(context);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
         protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
         txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla, altoPantalla, context);
@@ -39,7 +45,7 @@ public class Arena extends Escena {
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
         zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, context));
-
+        cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
     }
@@ -107,7 +113,9 @@ public class Arena extends Escena {
                             if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
                                 if (Math.abs(lastBala - currentTime) >= 1000) {
                                     balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
+
                                     lastBala = System.currentTimeMillis();
+                                    fuego = true;
                                 }
                             }
                             currentTime = System.currentTimeMillis();
@@ -129,6 +137,10 @@ public class Arena extends Escena {
             c.drawColor(Color.BLACK);
             mapa.dibujaMapa(c);
             dibujaBalas(c);
+            if (fuego) {
+                dibujaFogonazo(c);
+                fuego = false;
+            }
             protagonista.dibujarPersonaje(c);
             txtHealth.dibujarTexto(anchoPantalla * 1/80, altoPantalla * 1/80, c);
             hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
@@ -163,6 +175,36 @@ public class Arena extends Escena {
     private void dibujaZombies(Canvas c) {
         for (Zombie zombie:zombies) {
             zombie.dibujarPersonaje(c);
+        }
+    }
+
+    private void dibujaFogonazo(Canvas c) {
+        if (jDerecho != null) {
+            switch (jDerecho.getDireccion()) {
+                case ESTE:
+                    c.drawBitmap(fogonazos[0], protagonista.getArmaX(), protagonista.getArmaY() - fogonazos[0].getHeight() / 2, null);
+                    break;
+                case OESTE:
+                    c.drawBitmap(fogonazos[3], protagonista.getArmaX() - fogonazos[3].getWidth(), protagonista.getArmaY() - fogonazos[3].getHeight() / 2, null);
+                    break;
+                case NORTE:
+                    c.drawBitmap(fogonazos[2], protagonista.getArmaX() - fogonazos[2].getWidth() / 2, protagonista.getArmaY() - fogonazos[2].getHeight(), null);
+                    break;
+                case SUR:
+                    c.drawBitmap(fogonazos[1], protagonista.getArmaX() - fogonazos[1].getWidth() /  2, protagonista.getArmaY(), null);
+                    break;
+            }
+        }
+    }
+
+    private void cargaFogonazos() {
+        int grados = 0;
+        for (int i = 0; i < fogonazos.length; i++) {
+            fogonazos[i] = utils.getBitmapFromAssets("efectos/fogonazo.png");
+            fogonazos[i] = Bitmap.createScaledBitmap(fogonazos[i], altoPantalla * 1/10, altoPantalla * 1/10, false);
+            matrix.postRotate(grados);
+            fogonazos[i] = Bitmap.createBitmap(fogonazos[i], 0, 0, fogonazos[i].getWidth(), fogonazos[i].getHeight(), matrix, true);
+            grados += 90;
         }
     }
 

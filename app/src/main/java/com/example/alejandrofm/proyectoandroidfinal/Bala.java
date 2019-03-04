@@ -18,7 +18,7 @@ public class Bala {
     private Bitmap bala;
     private int posX;
     private int posY;
-    private int velocidadBala = 10;
+    private int velocidadBala = 20;
     private int anchoPantalla, altoPantalla;
 
     public Bala(TipoMunicion tipo, Joystick.Direccion direccion, int posX, int posY, int anchoPantalla, int altoPantalla, Context context) {

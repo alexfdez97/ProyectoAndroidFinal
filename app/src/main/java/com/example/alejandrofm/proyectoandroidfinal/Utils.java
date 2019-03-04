@@ -1,6 +1,7 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -24,4 +25,11 @@ public class Utils {
         }
     }
 
+    public boolean[] cargarPreferencias() {
+        boolean prefs[] = new boolean[2];
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        prefs[0] = sharedPreferences.getBoolean("musica", true);
+        prefs[1] = sharedPreferences.getBoolean("efectos", true);
+        return prefs;
+    }
 }

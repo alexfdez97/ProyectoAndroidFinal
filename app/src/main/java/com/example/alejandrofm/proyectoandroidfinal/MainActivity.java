@@ -6,6 +6,9 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean music = true;
+    private boolean effects = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +33,21 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(opciones);
+    }
+
+    public boolean isMusic() {
+        return music;
+    }
+
+    public void setMusic(boolean music) {
+        this.music = music;
+    }
+
+    public boolean isEffects() {
+        return effects;
+    }
+
+    public void setEffects(boolean effects) {
+        this.effects = effects;
     }
 }

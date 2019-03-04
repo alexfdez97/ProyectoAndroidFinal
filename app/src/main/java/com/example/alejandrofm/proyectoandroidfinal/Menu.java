@@ -15,6 +15,7 @@ public class Menu extends Escena {
     private Utils utils;
     private Parallax parallax;
     private float luz;
+    private MediaPlayer menuMusic;
 
     public Menu(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
@@ -25,6 +26,7 @@ public class Menu extends Escena {
         btnAyuda = new IconoBoton(IconoBoton.Tipo.AYUDA, anchoPantalla, altoPantalla, context);
         btnRecords = new IconoBoton(IconoBoton.Tipo.RECORDS, anchoPantalla, altoPantalla, context);
         btnCreditos = new IconoBoton(IconoBoton.Tipo.CREDITOS, anchoPantalla, altoPantalla, context);
+        menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
     }
 
     @Override

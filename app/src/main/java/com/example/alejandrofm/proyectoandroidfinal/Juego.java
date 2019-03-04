@@ -27,6 +27,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     private Sensor sensorLuz;
     private float luz = -1;
     private MediaPlayer menuMusic;
+    private Utils utils;
     private boolean music = true, effects = true;
 
     public Juego(Context context) {
@@ -34,6 +35,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         this.surfaceHolder = getHolder();
         this.surfaceHolder.addCallback(this);
         this.context = context;
+        utils = new Utils(context);
         sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         sensorLuz = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         if (sensorLuz == null) {
@@ -42,6 +44,10 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         hilo = new Hilo();
         setFocusable(true);
         menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
+        menuMusic.start();
+        boolean prefs[] = utils.cargarPreferencias();
+        music = prefs[0];
+        effects = prefs[1];
     }
 
     @Override
@@ -49,10 +55,14 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         if (escenaActual != null) {
             if (music && escenaActual.getIdEscena() != 1) {
                 menuMusic.start();
+            } else {
+                menuMusic.pause();
             }
         } else {
             if (music) {
                 menuMusic.start();
+            } else {
+                menuMusic.pause();
             }
         }
     }
@@ -125,6 +135,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                         music = false;
                         break;
                     case 51:
+                        Log.i("media", "" + (menuMusic == null));
                         menuMusic.start();
                         music = true;
                         break;

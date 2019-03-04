@@ -1,6 +1,7 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
@@ -19,8 +20,36 @@ public class Opciones extends Escena {
         btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, context);
         txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla, altoPantalla, context);
         txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla, altoPantalla, context);
-        btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
-        btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
+        boolean prefs[] = utils.cargarPreferencias();
+        if (prefs[0]) {
+            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
+        } else {
+            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, context);
+        }
+        if (prefs[1]) {
+            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
+        } else {
+            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, context);
+        }
+    }
+
+    private void guardarPreferencias() {
+        SharedPreferences preferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if (btnMusic.getTipo() == IconoBoton.Tipo.SPEAKERON) {
+            editor.putBoolean("musica", true);
+        } else {
+            editor.putBoolean("musica", false);
+        }
+
+        if (btnEfect.getTipo() == IconoBoton.Tipo.SPEAKERON) {
+            editor.putBoolean("efectos", true);
+        } else {
+            editor.putBoolean("efectos", false);
+        }
+
+        editor.commit();
     }
 
     @Override
@@ -38,6 +67,7 @@ public class Opciones extends Escena {
             case MotionEvent.ACTION_UP:
                 if (btnRollback.isPulsado() && btnRollback.isPulsado(event)) {
                     btnRollback.setPulsado(false);
+                    guardarPreferencias();
                     return 0;
                 }
                 if (btnMusic.isPulsado() && btnMusic.isPulsado(event)) {
