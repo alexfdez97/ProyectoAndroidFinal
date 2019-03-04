@@ -44,6 +44,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         hilo = new Hilo();
         setFocusable(true);
         menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
+        menuMusic.setLooping(true);
         menuMusic.start();
         boolean prefs[] = utils.cargarPreferencias();
         music = prefs[0];

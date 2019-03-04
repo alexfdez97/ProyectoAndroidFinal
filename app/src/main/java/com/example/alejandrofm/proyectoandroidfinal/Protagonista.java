@@ -50,16 +50,24 @@ public class Protagonista extends Personaje {
         }
         switch (direccion) {
             case NORTE:
-                posY -= velocidad;
+                if (posY > 0) {
+                    posY -= velocidad;
+                }
                 break;
             case SUR:
-                posY += velocidad;
+                if (posY < altoPantalla - this.getHeight()) {
+                    posY += velocidad;
+                }
                 break;
             case ESTE:
-                posX += velocidad;
+                if (posX < anchoPantalla - this.getWidth()) {
+                    posX += velocidad;
+                }
                 break;
             case OESTE:
-                posX -= velocidad;
+                if (posX > 0) {
+                    posX -= velocidad;
+                }
                 break;
         }
     }

@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -113,7 +115,8 @@ public class Arena extends Escena {
                             if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
                                 if (Math.abs(lastBala - currentTime) >= 1000) {
                                     balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-
+                                    MediaPlayer sonidoDisparo = MediaPlayer.create(context, R.raw.gun_shot);
+                                    sonidoDisparo.start();
                                     lastBala = System.currentTimeMillis();
                                     fuego = true;
                                 }
