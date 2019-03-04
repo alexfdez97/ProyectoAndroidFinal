@@ -115,8 +115,7 @@ public class Arena extends Escena {
                             if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
                                 if (Math.abs(lastBala - currentTime) >= 1000) {
                                     balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-                                    MediaPlayer sonidoDisparo = MediaPlayer.create(context, R.raw.gun_shot);
-                                    sonidoDisparo.start();
+                                    soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
                                     lastBala = System.currentTimeMillis();
                                     fuego = true;
                                 }

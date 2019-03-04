@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 
 public class Escena implements IEscena {
@@ -14,8 +16,11 @@ public class Escena implements IEscena {
     protected Context context;
     protected int idEscena;
     protected Bitmap fondo;
-    protected Paint pntBotonMenu;
+//    protected Paint pntBotonMenu;
     protected Utils utils;
+    protected SoundPool soundPool;
+    protected int efectoDisparo;
+    final private int maxEfectos = 10;
 
     public Escena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         this.anchoPantalla = anchoPantalla;
@@ -23,10 +28,12 @@ public class Escena implements IEscena {
         this.context = context;
         this.idEscena = idEscena;
         this.utils = new Utils(context);
-        if (idEscena == 0) {
-            pntBotonMenu = new Paint();
-            pntBotonMenu.setColor(Color.GREEN);
-        }
+        this.soundPool = new SoundPool(maxEfectos, AudioManager.STREAM_MUSIC, 0);
+        this.efectoDisparo = this.soundPool.load(context, R.raw.gun_shot, 1);
+//        if (idEscena == 0) {
+//            pntBotonMenu = new Paint();
+//            pntBotonMenu.setColor(Color.GREEN);
+//        }
     }
 
     public int getAnchoPantalla() {

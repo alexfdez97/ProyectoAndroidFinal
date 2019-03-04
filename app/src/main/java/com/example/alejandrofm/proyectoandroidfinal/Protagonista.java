@@ -8,12 +8,9 @@ import android.util.Log;
 public class Protagonista extends Personaje {
 
     private Joystick jIzquierdo, jDerecho;
-    private int armaPosX, armaPosY;
 
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
         super(x, y, anchoPantalla, altoPantalla, context);
-        this.jIzquierdo = jIzquierdo;
-        this.jDerecho = jDerecho;
         idleRight = cargarSpriteProtagonista("idle", "handgun");
         sprite = idleRight;
         idleUp = rotarSprite(idleRight, -90);
@@ -69,6 +66,9 @@ public class Protagonista extends Personaje {
                     posX -= velocidad;
                 }
                 break;
+        }
+        if (direccion != Joystick.Direccion.NINGUNA) {
+            sonidoCaminar();
         }
     }
 

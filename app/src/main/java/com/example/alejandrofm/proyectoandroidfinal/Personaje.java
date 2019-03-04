@@ -5,6 +5,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.provider.MediaStore;
 
 public class Personaje {
     protected int posX, posY, velocidad, vida;
@@ -24,15 +28,24 @@ public class Personaje {
     private int indiceFrame = 0;
     private int tmpCambioFrame = 60;
     private long tiempoActual;
+    protected Context context;
+    private long ultimaReprod;
+    protected SoundPool efectos;
+    protected int sonidoCaminar;
+    final private int maximoSonidos = 1;
 
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
         this.posX = x;
         this.posY = y;
+        this.context = context;
         utils = new Utils(context);
         tiempoActual = System.currentTimeMillis();
         direccionAnterior = Joystick.Direccion.ESTE;
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
+        ultimaReprod = tiempoActual + 500;
+        this.efectos = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
+        sonidoCaminar = this.efectos.load(context, R.raw.caminando, 1);
     }
 
     public void dibujarPersonaje(Canvas c) {
@@ -49,6 +62,13 @@ public class Personaje {
                     indiceFrame = 0;
                 }
             }
+        }
+    }
+
+    protected void sonidoCaminar() {
+        if (Math.abs(tiempoActual - ultimaReprod) >= 500) {
+            efectos.play(sonidoCaminar,0.2f,0.2f,1,0,1);
+            ultimaReprod = System.currentTimeMillis();
         }
     }
 
