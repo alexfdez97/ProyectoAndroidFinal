@@ -9,8 +9,8 @@ public class Protagonista extends Personaje {
 
     private Joystick jIzquierdo, jDerecho;
 
-    public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
-        super(x, y, anchoPantalla, altoPantalla, context);
+    public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
+        super(x, y, anchoPantalla, altoPantalla, efectos, context);
         idleRight = cargarSpriteProtagonista("idle", "handgun");
         sprite = idleRight;
         idleUp = rotarSprite(idleRight, -90);
@@ -67,8 +67,10 @@ public class Protagonista extends Personaje {
                 }
                 break;
         }
-        if (direccion != Joystick.Direccion.NINGUNA) {
-            sonidoCaminar();
+        if (blEfectos) {
+            if (direccion != Joystick.Direccion.NINGUNA) {
+                sonidoCaminar();
+            }
         }
     }
 

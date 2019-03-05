@@ -16,20 +16,19 @@ public class Opciones extends Escena {
 
     public Opciones(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
-        btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, context);
-        btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, context);
+        btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
+        btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, efectos, context);
         txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla, altoPantalla, context);
         txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla, altoPantalla, context);
-        boolean prefs[] = utils.cargarPreferencias();
-        if (prefs[0]) {
-            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
+        if (musica) {
+            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
         } else {
-            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, context);
+            btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, efectos, context);
         }
-        if (prefs[1]) {
-            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, context);
+        if (efectos) {
+            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
         } else {
-            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, context);
+            btnEfect = new IconoBoton(IconoBoton.Tipo.SPEAKEROFF, anchoPantalla, altoPantalla, efectos, context);
         }
     }
 
@@ -67,16 +66,17 @@ public class Opciones extends Escena {
             case MotionEvent.ACTION_UP:
                 if (btnRollback.isPulsado() && btnRollback.isPulsado(event)) {
                     btnRollback.setPulsado(false);
-                    guardarPreferencias();
                     return 0;
                 }
                 if (btnMusic.isPulsado() && btnMusic.isPulsado(event)) {
                     btnMusic.setPulsado(false);
                     if (btnMusic.getTipo() == IconoBoton.Tipo.SPEAKERON) {
                         btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
+                        guardarPreferencias();
                         return 50;
                     } else {
                         btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
+                        guardarPreferencias();
                         return 51;
                     }
                 }
@@ -84,8 +84,12 @@ public class Opciones extends Escena {
                     btnEfect.setPulsado(false);
                     if (btnEfect.getTipo() == IconoBoton.Tipo.SPEAKERON) {
                         btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
+                        guardarPreferencias();
+                        return 52;
                     } else {
                         btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
+                        guardarPreferencias();
+                        return 53;
                     }
                 }
                 if (btnResetRecords.isPulsado() && btnResetRecords.isPulsado(event)) {
@@ -118,5 +122,14 @@ public class Opciones extends Escena {
 
     public Parallax getParallax() {
         return parallax;
+    }
+
+    @Override
+    public void setEfectos(boolean efectos) {
+        super.setEfectos(efectos);
+        btnEfect.setEfectos(efectos);
+        btnMusic.setEfectos(efectos);
+        btnResetRecords.setEfectos(efectos);
+        btnRollback.setEfectos(efectos);
     }
 }

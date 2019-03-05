@@ -3,6 +3,8 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ public class Boton {
     private boolean pulsado = false;
     private int anchoPantalla, altoPantalla;
     private int x, y;
+    private SoundPool sp;
+    private int sonidoBoton;
+    final private int maximoSonidos = 1;
+    private boolean haSonado = false;
+    private boolean efectos;
 
     /**
      * Inicializa Boton
@@ -26,13 +33,16 @@ public class Boton {
      * @param altoPantalla el alto de la pantalla
      * @param context el contexto de la aplicación
      */
-    public Boton(String texto, int anchoPantalla, int altoPantalla, Context context) {
+    public Boton(String texto, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         utils = new Utils(context);
+        this.efectos = efectos;
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         cargarBitmaps();
         imagenTexto = textoAImagen(texto);
         imagenTexto = Bitmap.createScaledBitmap(imagenTexto, botonBase.getWidth() * 3/5, botonBase.getHeight() * 3/5, false);
+        this.sp = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
+        sonidoBoton = this.sp.load(context, R.raw.button_press, 1);
     }
 
     /**
@@ -46,8 +56,13 @@ public class Boton {
         this.y = y;
         if (pulsado) {
             canvas.drawBitmap(botonPulsado, x, y, null);
+            if (efectos && !haSonado) {
+                sp.play(sonidoBoton, 0.3f, 0.3f, 1, 0, 1);
+                haSonado = true;
+            }
         } else {
             canvas.drawBitmap(botonBase, x, y, null);
+            haSonado = false;
         }
         canvas.drawBitmap(imagenTexto, (x + (botonBase.getWidth() / 2)) - (imagenTexto.getWidth() / 2), (y + botonBase.getHeight() / 2) - (imagenTexto.getHeight() / 2), null);
     }
@@ -176,5 +191,13 @@ public class Boton {
 
     public int getHeight() {
         return botonBase.getHeight();
+    }
+
+    public boolean isEfectos() {
+        return efectos;
+    }
+
+    public void setEfectos(boolean efectos) {
+        this.efectos = efectos;
     }
 }

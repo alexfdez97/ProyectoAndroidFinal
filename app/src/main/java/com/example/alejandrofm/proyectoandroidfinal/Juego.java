@@ -28,7 +28,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     private float luz = -1;
     private MediaPlayer menuMusic;
     private Utils utils;
-    private boolean music = true, effects = true;
+    private boolean music, effects;
 
     public Juego(Context context) {
         super(context);
@@ -136,9 +136,18 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                         music = false;
                         break;
                     case 51:
-                        Log.i("media", "" + (menuMusic == null));
                         menuMusic.start();
                         music = true;
+                        break;
+                    case 52:
+                        effects = false;
+                        menu.setEfectos(false);
+                        opciones.setEfectos(false);
+                        break;
+                    case 53:
+                        effects = true;
+                        menu.setEfectos(true);
+                        opciones.setEfectos(true);
                         break;
                 }
             }

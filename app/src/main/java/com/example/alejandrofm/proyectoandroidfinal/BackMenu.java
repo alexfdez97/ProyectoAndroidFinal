@@ -12,9 +12,9 @@ public class BackMenu extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
-        btnMenu = new Boton(context.getResources().getString(R.string.strMenu), anchoPantalla, altoPantalla, context);
-        btnVolver = new Boton(context.getResources().getString(R.string.strRollback), anchoPantalla, altoPantalla, context);
-        btnSalir = new Boton(context.getResources().getString(R.string.strExit), anchoPantalla, altoPantalla, context);
+        btnMenu = new Boton(context.getResources().getString(R.string.strMenu), anchoPantalla, altoPantalla, efectos, context);
+        btnVolver = new Boton(context.getResources().getString(R.string.strRollback), anchoPantalla, altoPantalla, efectos, context);
+        btnSalir = new Boton(context.getResources().getString(R.string.strExit), anchoPantalla, altoPantalla, efectos, context);
     }
 
     @Override

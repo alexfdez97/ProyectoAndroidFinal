@@ -3,6 +3,8 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 
 public class IconoBoton {
@@ -18,11 +20,19 @@ public class IconoBoton {
     private boolean pulsado;
     private int altoPantalla, anchoPantalla;
     private int posX, posY;
+    private boolean efectos;
+    private SoundPool sp;
+    private int sonidoBoton;
+    final private int maximoSonidos = 1;
+    private boolean haSonado = false;
 
-    public IconoBoton(Tipo tipo, int anchoPantalla, int altoPantalla, Context context) {
+    public IconoBoton(Tipo tipo, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.altoPantalla = altoPantalla;
         this.anchoPantalla = anchoPantalla;
         utils = new Utils(context);
+        this.efectos = efectos;
+        this.sp = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
+        sonidoBoton = this.sp.load(context, R.raw.button_press, 1);
         cargarBitmaps();
         cargarTipo(tipo);
     }
@@ -32,8 +42,13 @@ public class IconoBoton {
         this.posY = posY;
         if (pulsado) {
             c.drawBitmap(botonPulsado, posX, posY, null);
+            if (efectos && !haSonado) {
+                sp.play(sonidoBoton, 0.3f, 0.3f, 1, 0, 1);
+                haSonado = true;
+            }
         } else {
             c.drawBitmap(botonBase, posX, posY, null);
+            haSonado = false;
         }
         c.drawBitmap(icono, posX + botonBase.getWidth() / 2 - icono.getWidth() / 2, posY + botonBase.getHeight() / 2 - icono.getHeight() / 2, null);
     }
@@ -121,5 +136,13 @@ public class IconoBoton {
 
     public Tipo getTipo() {
         return this.tipo;
+    }
+
+    public boolean isEfectos() {
+        return efectos;
+    }
+
+    public void setEfectos(boolean efectos) {
+        this.efectos = efectos;
     }
 }

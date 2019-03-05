@@ -16,8 +16,8 @@ public class Escena implements IEscena {
     protected Context context;
     protected int idEscena;
     protected Bitmap fondo;
-//    protected Paint pntBotonMenu;
     protected Utils utils;
+    protected boolean efectos, musica;
     protected SoundPool soundPool;
     protected int efectoDisparo;
     final private int maxEfectos = 10;
@@ -28,12 +28,11 @@ public class Escena implements IEscena {
         this.context = context;
         this.idEscena = idEscena;
         this.utils = new Utils(context);
+        boolean prefs[] = utils.cargarPreferencias();
+        musica = prefs[0];
+        efectos = prefs[1];
         this.soundPool = new SoundPool(maxEfectos, AudioManager.STREAM_MUSIC, 0);
         this.efectoDisparo = this.soundPool.load(context, R.raw.gun_shot, 1);
-//        if (idEscena == 0) {
-//            pntBotonMenu = new Paint();
-//            pntBotonMenu.setColor(Color.GREEN);
-//        }
     }
 
     public int getAnchoPantalla() {
@@ -74,6 +73,22 @@ public class Escena implements IEscena {
 
     public void setIdEscena(int idEscena) {
         this.idEscena = idEscena;
+    }
+
+    public boolean isEfectos() {
+        return efectos;
+    }
+
+    public void setEfectos(boolean efectos) {
+        this.efectos = efectos;
+    }
+
+    public boolean isMusica() {
+        return musica;
+    }
+
+    public void setMusica(boolean musica) {
+        this.musica = musica;
     }
 
     @Override

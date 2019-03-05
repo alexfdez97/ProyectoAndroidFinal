@@ -24,6 +24,7 @@ public class Personaje {
     protected Utils utils;
     protected Joystick.Direccion direccionAnterior;
     protected boolean move;
+    protected boolean blEfectos;
     protected int anchoPantalla, altoPantalla;
     private int indiceFrame = 0;
     private int tmpCambioFrame = 60;
@@ -34,10 +35,11 @@ public class Personaje {
     protected int sonidoCaminar;
     final private int maximoSonidos = 1;
 
-    public Personaje(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
+    public Personaje(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.posX = x;
         this.posY = y;
         this.context = context;
+        this.blEfectos = efectos;
         utils = new Utils(context);
         tiempoActual = System.currentTimeMillis();
         direccionAnterior = Joystick.Direccion.ESTE;

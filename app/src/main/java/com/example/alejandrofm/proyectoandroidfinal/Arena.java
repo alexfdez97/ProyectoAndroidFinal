@@ -41,12 +41,12 @@ public class Arena extends Escena {
         this.context = context;
         utils = new Utils(context);
         mapa = new Mapa(context, anchoPantalla, altoPantalla);
-        protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, context);
+        protagonista = new Protagonista(anchoPantalla / 2, altoPantalla / 2, anchoPantalla, altoPantalla, efectos, context);
         txtHealth = new Texto(context.getString(R.string.strHealth), anchoPantalla, altoPantalla, context);
         txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
-        zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, context));
+        zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, efectos, context));
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
@@ -115,7 +115,9 @@ public class Arena extends Escena {
                             if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
                                 if (Math.abs(lastBala - currentTime) >= 1000) {
                                     balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-                                    soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
+                                    if (efectos) {
+                                        soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
+                                    }
                                     lastBala = System.currentTimeMillis();
                                     fuego = true;
                                 }

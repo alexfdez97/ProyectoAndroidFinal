@@ -21,11 +21,11 @@ public class Menu extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         utils = new Utils(context);
         parallax = new Parallax(true, anchoPantalla, altoPantalla, context);
-        btnJugar = new Boton(context.getResources().getString(R.string.strPlay), anchoPantalla, altoPantalla, context);
-        btnOpciones = new Boton(context.getResources().getString(R.string.strOptions), anchoPantalla, altoPantalla, context);
-        btnAyuda = new IconoBoton(IconoBoton.Tipo.AYUDA, anchoPantalla, altoPantalla, context);
-        btnRecords = new IconoBoton(IconoBoton.Tipo.RECORDS, anchoPantalla, altoPantalla, context);
-        btnCreditos = new IconoBoton(IconoBoton.Tipo.CREDITOS, anchoPantalla, altoPantalla, context);
+        btnJugar = new Boton(context.getResources().getString(R.string.strPlay), anchoPantalla, altoPantalla, efectos, context);
+        btnOpciones = new Boton(context.getResources().getString(R.string.strOptions), anchoPantalla, altoPantalla, efectos, context);
+        btnAyuda = new IconoBoton(IconoBoton.Tipo.AYUDA, anchoPantalla, altoPantalla, efectos, context);
+        btnRecords = new IconoBoton(IconoBoton.Tipo.RECORDS, anchoPantalla, altoPantalla, efectos, context);
+        btnCreditos = new IconoBoton(IconoBoton.Tipo.CREDITOS, anchoPantalla, altoPantalla, efectos, context);
         menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
     }
 
@@ -81,6 +81,16 @@ public class Menu extends Escena {
                 break;
         }
         return idEscena;
+    }
+
+    @Override
+    public void setEfectos(boolean efectos) {
+        super.setEfectos(efectos);
+        btnJugar.setEfectos(efectos);
+        btnOpciones.setEfectos(efectos);
+        btnAyuda.setEfectos(efectos);
+        btnRecords.setEfectos(efectos);
+        btnCreditos.setEfectos(efectos);
     }
 
     public void setLuz(float luz) {

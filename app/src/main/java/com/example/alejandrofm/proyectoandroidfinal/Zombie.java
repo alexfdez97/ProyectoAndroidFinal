@@ -6,8 +6,8 @@ import android.graphics.Canvas;
 
 public class Zombie extends Personaje {
 
-    public Zombie(int x, int y, int anchoPantalla, int altoPantalla, Context context) {
-        super(x, y, anchoPantalla, altoPantalla, context);
+    public Zombie(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
+        super(x, y, anchoPantalla, altoPantalla, efectos, context);
         idleRight = cargarSpriteZombie("idle");
         idleUp = rotarSprite(idleRight, -90);
         idleDown = rotarSprite(idleRight, 90);
