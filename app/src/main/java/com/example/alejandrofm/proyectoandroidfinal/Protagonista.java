@@ -3,11 +3,14 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 
 public class Protagonista extends Personaje {
 
     private Joystick jIzquierdo, jDerecho;
+    private Vibrator vibrator;
 
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
@@ -30,6 +33,7 @@ public class Protagonista extends Personaje {
         moveDown = rotarSprite(moveRight, 90);
         moveLeft = rotarSprite(moveRight, 180);
         sprite = idleRight;
+        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -141,6 +145,7 @@ public class Protagonista extends Personaje {
     @Override
     public void damaged() {
         super.damaged();
+        vibrator.vibrate(300);
         Log.i("vida", this.vida+"");
     }
 }

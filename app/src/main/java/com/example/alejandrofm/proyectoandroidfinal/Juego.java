@@ -57,10 +57,15 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (escenaActual != null) {
-            if (music && escenaActual.getIdEscena() != 1) {
+            if (music && escenaActual.getIdEscena() == 0) {
                 menuMusic.start();
             } else {
                 menuMusic.pause();
+            }
+            if (music && escenaActual.getIdEscena() == 1) {
+                arenaMusic.start();
+            } else {
+                arenaMusic.stop();
             }
         } else {
             if (music) {

@@ -75,7 +75,6 @@ public class Arena extends Escena {
                     jDerecho.setPulsado(true);
                     protagonista.setjDerecho(jDerecho);
                 }
-                punteros.add(new Puntero(id));
                 break;
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP:
@@ -86,11 +85,6 @@ public class Arena extends Escena {
                 if (jDerecho != null && jDerecho.getIdPuntero() == id) {
                     jDerecho.setPulsado(false);
                     jDerecho = null;
-                }
-                for (Puntero puntero:punteros) {
-                    if (puntero.getId() == id) {
-                        punteros.remove(id);
-                    }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
