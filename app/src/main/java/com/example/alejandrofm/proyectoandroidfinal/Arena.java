@@ -5,15 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Arena extends Escena {
 
-    private ArrayList<Joystick> joysticksActivos = new ArrayList<>();
+    private ArrayList<Puntero> punteros = new ArrayList<>();
     private ArrayList<Zombie> zombies = new ArrayList<>();
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
@@ -46,7 +45,7 @@ public class Arena extends Escena {
         txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
-        zombies.add(new Zombie(30 , 30, anchoPantalla, altoPantalla, efectos, context));
+        generarZombies(protagonista, 1);
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
@@ -69,66 +68,68 @@ public class Arena extends Escena {
                     jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jIzquierdo.setIdPuntero(id);
                     jIzquierdo.setPulsado(true);
-                    joysticksActivos.add(jIzquierdo);
                     protagonista.setjIzquierdo(jIzquierdo);
                 } else {
                     jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jDerecho.setIdPuntero(id);
                     jDerecho.setPulsado(true);
-                    joysticksActivos.add(jDerecho);
                     protagonista.setjDerecho(jDerecho);
                 }
+                punteros.add(new Puntero(id));
                 break;
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP:
                 if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
                     jIzquierdo.setPulsado(false);
-                    joysticksActivos.remove(jDerecho);
                     jIzquierdo = null;
                 }
                 if (jDerecho != null && jDerecho.getIdPuntero() == id) {
                     jDerecho.setPulsado(false);
-                    joysticksActivos.remove(jDerecho);
                     jDerecho = null;
+                }
+                for (Puntero puntero:punteros) {
+                    if (puntero.getId() == id) {
+                        punteros.remove(id);
+                    }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-//                if (event.getPointerCount() == 1) {
-//                    if (jIzquierdo != null) {
-//                        if (event.getPointerId(event.getActionIndex()) == jIzquierdo.getIdPuntero()) {
-//                            jIzquierdo.setCoordsJFlechas(event.getX(jIzquierdo.getIdPuntero()), event.getY(jIzquierdo.getIdPuntero()));
-//                        }
-//                    }
-//
-//                    if (jDerecho != null) {
-//                        if (event.getPointerId(event.getActionIndex()) == jDerecho.getIdPuntero()) {
-//                            jDerecho.setCoordsJFlechas(event.getX(jDerecho.getIdPuntero()), event.getY(jDerecho.getIdPuntero()));
-//                        }
-//                    }
-//                } else {
-                    for (int i = 0; i < event.getPointerCount(); i++) {
-                        if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
-                            jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
-                        }
-                        if (jDerecho != null && jDerecho.getIdPuntero() == i) {
-                            jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
-                            if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
-                                if (Math.abs(lastBala - currentTime) >= 1000) {
-                                    balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-                                    if (efectos) {
-                                        soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
-                                    }
-                                    lastBala = System.currentTimeMillis();
-                                    fuego = true;
-                                }
-                            }
-                            currentTime = System.currentTimeMillis();
-                        }
+                for (int i = 0; i < event.getPointerCount(); i++) {
+                    if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
+                        jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
                     }
-//                }
-                break;
+                    if (jDerecho != null && jDerecho.getIdPuntero() == i) {
+                        jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
+                        if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
+                            if (Math.abs(lastBala - currentTime) >= 1000) {
+                                balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
+                                if (efectos) {
+                                    soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
+                                }
+                                lastBala = System.currentTimeMillis();
+                                fuego = true;
+                            }
+                        }
+                        currentTime = System.currentTimeMillis();
+                    }
+                }
+            break;
         }
         return -1;
+    }
+
+    private void inicioRonda(Protagonista protagonista) {
+
+    }
+
+    private void generarZombies(Protagonista protagonista, int cantidad) {
+        Random random = new Random();
+        for (int i = 0; i < cantidad; i++) {
+            int velocidad = random.nextInt(4 + 1 - 1) + 1;
+            int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla) + anchoPantalla;
+            int posY = random.nextInt(altoPantalla + 500 - altoPantalla) + altoPantalla;
+            zombies.add(new Zombie(10, 10, velocidad, anchoPantalla, altoPantalla, efectos, context));
+        }
     }
 
     /**
@@ -150,7 +151,7 @@ public class Arena extends Escena {
             hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
             txtPuntuation.dibujarTexto(hBar.getX() + hBar.getWidth() + anchoPantalla * 1/20, altoPantalla * 1/80, c);
             txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1/80, altoPantalla * 1/80, c);
-//            dibujaZombies(c);
+            dibujaZombies(c);
             if (jIzquierdo != null) {
                 if (jIzquierdo.isPulsado()) {
                     jIzquierdo.dibujaJoystick(c);
@@ -172,6 +173,8 @@ public class Arena extends Escena {
             for (Bala bala:balas) {
                 bala.mueveBala();
             }
+            mueveZombies(protagonista);
+            hBar.setVida(protagonista.getVida());
 //            compruebaBalas();
         } catch (NullPointerException ex) { }
     }
@@ -179,6 +182,12 @@ public class Arena extends Escena {
     private void dibujaZombies(Canvas c) {
         for (Zombie zombie:zombies) {
             zombie.dibujarPersonaje(c);
+        }
+    }
+
+    private void mueveZombies(Protagonista protagonista) {
+        for (Zombie zombie:zombies) {
+            zombie.caminar(protagonista);
         }
     }
 
@@ -231,5 +240,4 @@ public class Arena extends Escena {
             }
         }
     }
-
 }

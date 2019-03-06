@@ -11,8 +11,17 @@ public class Protagonista extends Personaje {
 
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
+        vida = 100;
+        sprite = new Bitmap[20];
+        idleRight = new Bitmap[20];
+        idleLeft = new Bitmap[20];
+        idleDown = new Bitmap[20];
+        idleUp = new Bitmap[20];
+        moveUp = new Bitmap[20];
+        moveLeft = new Bitmap[20];
+        moveDown = new Bitmap[20];
+        moveRight = new Bitmap[20];
         idleRight = cargarSpriteProtagonista("idle", "handgun");
-        sprite = idleRight;
         idleUp = rotarSprite(idleRight, -90);
         idleDown = rotarSprite(idleRight, 90);
         idleLeft = rotarSprite(idleRight, 180);
@@ -20,6 +29,7 @@ public class Protagonista extends Personaje {
         moveUp = rotarSprite(moveRight, -90);
         moveDown = rotarSprite(moveRight, 90);
         moveLeft = rotarSprite(moveRight, 180);
+        sprite = idleRight;
     }
 
     @Override
@@ -126,5 +136,11 @@ public class Protagonista extends Personaje {
                 return this.getPosY() + this.getHeight() * 3/13;
         }
         return this.getPosY();
+    }
+
+    @Override
+    public void damaged() {
+        super.damaged();
+        Log.i("vida", this.vida+"");
     }
 }

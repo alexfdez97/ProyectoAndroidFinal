@@ -68,7 +68,7 @@ public class Menu extends Escena {
                 }
                 if (btnAyuda.isPulsado() && btnAyuda.isPulsado(event)) {
                     btnAyuda.setPulsado(false);
-                    return 0;
+                    return 3;
                 }
                 if (btnRecords.isPulsado() && btnRecords.isPulsado(event)) {
                     btnRecords.setPulsado(false);

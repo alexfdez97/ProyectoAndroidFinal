@@ -9,31 +9,33 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class Personaje {
     protected int posX, posY, velocidad, vida;
-    protected Bitmap[] sprite = new Bitmap[20];
-    protected Bitmap[] moveUp = new Bitmap[20];
-    protected Bitmap[] moveDown = new Bitmap[20];
-    protected Bitmap[] moveLeft = new Bitmap[20];
-    protected Bitmap[] moveRight = new Bitmap[20];
-    protected Bitmap[] idleUp = new Bitmap[20];
-    protected Bitmap[] idleDown = new Bitmap[20];
-    protected Bitmap[] idleLeft = new Bitmap[20];
-    protected Bitmap[] idleRight = new Bitmap[20];
+    protected Bitmap[] sprite;
+    protected Bitmap[] moveUp;
+    protected Bitmap[] moveDown;
+    protected Bitmap[] moveLeft;
+    protected Bitmap[] moveRight;
+    protected Bitmap[] idleUp;
+    protected Bitmap[] idleDown;
+    protected Bitmap[] idleLeft;
+    protected Bitmap[] idleRight;
     protected Utils utils;
     protected Joystick.Direccion direccionAnterior;
     protected boolean move;
     protected boolean blEfectos;
     protected int anchoPantalla, altoPantalla;
-    private int indiceFrame = 0;
+    protected int indiceFrame = 0;
     private int tmpCambioFrame = 60;
-    private long tiempoActual;
+    protected long tiempoActual;
     protected Context context;
     private long ultimaReprod;
     protected SoundPool efectos;
     protected int sonidoCaminar;
-    final private int maximoSonidos = 1;
+    protected int sonidoPunch;
+    final private int maximoSonidos = 10;
 
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.posX = x;
@@ -47,7 +49,8 @@ public class Personaje {
         this.altoPantalla = altoPantalla;
         ultimaReprod = tiempoActual + 500;
         this.efectos = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
-        sonidoCaminar = this.efectos.load(context, R.raw.caminando, 1);
+        sonidoCaminar = this.efectos.load(context, R.raw.caminando, 2);
+        sonidoPunch = this.efectos.load(context, R.raw.punch, 1);
     }
 
     public void dibujarPersonaje(Canvas c) {
@@ -56,6 +59,13 @@ public class Personaje {
     }
 
     public void cambiaFrame() {
+//        if (velocidad > 0) {
+//            tmpCambioFrame = tmpCambioFrame * velocidad;
+//        }
+//        if (tmpCambioFrame == 0) {
+//            tmpCambioFrame = 60;
+//        }
+//        Log.i("cambio", tmpCambioFrame+"");
         if (sprite != null) {
             if (System.currentTimeMillis() - tiempoActual > tmpCambioFrame) {
                 tiempoActual = System.currentTimeMillis();
@@ -68,13 +78,16 @@ public class Personaje {
     }
 
     protected void sonidoCaminar() {
-        if (Math.abs(tiempoActual - ultimaReprod) >= 500) {
-            efectos.play(sonidoCaminar,0.2f,0.2f,1,0,1);
-            ultimaReprod = System.currentTimeMillis();
+        if (blEfectos) {
+            if (Math.abs(tiempoActual - ultimaReprod) >= 500) {
+                efectos.play(sonidoCaminar,0.2f,0.2f,1,0,1);
+                ultimaReprod = System.currentTimeMillis();
+            }
         }
     }
 
     public void caminar(Joystick.Direccion direccion) {
+//        move = true;
         switch (direccion) {
             case NORTE:
                 posY--;
@@ -88,6 +101,9 @@ public class Personaje {
             case OESTE:
                 posX--;
                 break;
+//            case NINGUNA:
+//                move = false;
+//                break;
         }
     }
 
@@ -109,7 +125,7 @@ public class Personaje {
 //    }
 
     protected Bitmap[] rotarSprite(Bitmap[] base, int grados) {
-        Bitmap bitmap[] = new Bitmap[20];
+        Bitmap bitmap[] = new Bitmap[base.length];
         Matrix matrix = new Matrix();
         matrix.postRotate(grados);
         for (int i = 0; i < base.length; i++) {
@@ -222,5 +238,9 @@ public class Personaje {
 
     public int getHeight() {
         return sprite[0].getHeight();
+    }
+
+    public void damaged() {
+        vida--;
     }
 }
