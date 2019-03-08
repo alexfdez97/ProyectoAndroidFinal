@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Arena extends Escena {
@@ -51,7 +53,7 @@ public class Arena extends Escena {
         txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
-        generarZombies(protagonista, 1);
+//        generarZombies(protagonista, 1);
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
@@ -152,7 +154,8 @@ public class Arena extends Escena {
             int velocidad = random.nextInt(4 + 1 - 1) + 1;
             int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla) + anchoPantalla;
             int posY = random.nextInt(altoPantalla + 500 - altoPantalla) + altoPantalla;
-            zombies.add(new Zombie(posX, posY, velocidad, anchoPantalla, altoPantalla, efectos, context));
+            int vida = cantidad;
+            zombies.add(new Zombie(posX, posY, velocidad, vida, anchoPantalla, altoPantalla, efectos, context));
         }
     }
 
@@ -197,12 +200,13 @@ public class Arena extends Escena {
         try  {
 //            puntuation++;
 //            txtPointsCounter.setTexto(String.format("%06d", puntuation));
+            compruebaZombies();
             for (Bala bala:balas) {
                 bala.mueveBala();
             }
             mueveZombies(protagonista);
             hBar.setVida(protagonista.getVida());
-//            compruebaBalas();
+            compruebaColisionBalas();
         } catch (NullPointerException ex) { }
     }
 
@@ -251,6 +255,30 @@ public class Arena extends Escena {
     private void dibujaBalas(Canvas c) {
         for (Bala bala:balas) {
             bala.dibujarBala(c);
+        }
+    }
+
+    private void compruebaColisionBalas() {
+        Iterator<Zombie> zIteratos = zombies.iterator();
+        while (zIteratos.hasNext()) {
+            Zombie zombie = zIteratos.next();
+            for (Bala bala:balas) {
+                if (Rect.intersects(bala.getHitbox(), zombie.getHitbox())) {
+                    Log.i("zombiVi", zombie.getVida()+"");
+                    zombie.damaged();
+                    puntuation += 100;
+                    txtPointsCounter.setTexto(String.format("%06d", puntuation));
+                    if (zombie.getVida() <= 0) {
+                        zIteratos.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    private void compruebaZombies() {
+        if (zombies.size() == 0) {
+            inicioRonda(protagonista);
         }
     }
 

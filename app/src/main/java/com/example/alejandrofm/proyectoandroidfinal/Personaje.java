@@ -31,6 +31,7 @@ public class Personaje {
     protected int indiceFrame = 0;
     private int tmpCambioFrame = 60;
     protected long tiempoActual;
+    protected long lastGolpe;
     protected Context context;
     private long ultimaReprod;
     protected SoundPool efectos;
@@ -45,6 +46,7 @@ public class Personaje {
         this.blEfectos = efectos;
         utils = new Utils(context);
         tiempoActual = System.currentTimeMillis();
+        lastGolpe = tiempoActual + 200;
         direccionAnterior = Joystick.Direccion.ESTE;
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -244,7 +246,14 @@ public class Personaje {
         return sprite[0].getHeight();
     }
 
+    public Rect getHitbox() {
+        return hitbox;
+    }
+
     public void damaged() {
-        vida--;
+        if (Math.abs(tiempoActual - lastGolpe) >= 200) {
+            vida--;
+            lastGolpe = System.currentTimeMillis();
+        }
     }
 }

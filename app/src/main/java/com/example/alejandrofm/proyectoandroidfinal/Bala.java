@@ -122,4 +122,8 @@ public class Bala {
     public void setVelocidadBala(int velodidad) {
         this.velocidadBala = velodidad;
     }
+
+    public Rect getHitbox() {
+        return hitbox;
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 
 public class Zombie extends Personaje {
@@ -16,10 +17,11 @@ public class Zombie extends Personaje {
     private Bitmap[] atackDown = new Bitmap[9];
     private Bitmap[] atackUp = new Bitmap[9];
 
-    public Zombie(int x, int y, int velocidad, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
+    public Zombie(int x, int y, int velocidad, int vida, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
         this.velocidad = velocidad;
         this.velocidadInicial = velocidad;
+        this.vida = vida;
         sprite = new Bitmap[17];
         idleRight = new Bitmap[17];
         idleDown = new Bitmap[17];
@@ -71,66 +73,71 @@ public class Zombie extends Personaje {
             velocidad = velocidadInicial;
         }
         pasos++;
+        if (!Rect.intersects(this.hitbox, protagonista.getHitbox())) {
 
-        if (pasos < 100) {
-            if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
-                if (this.getPosX() < protagonista.getPosX()) {
-                    incrementaX();
-                } else if (this.getPosX() > protagonista.getPosX()) {
-                    decrementaX();
-                } else if (this.getPosY() < protagonista.getPosY()) {
-                    incrementaY();
-                } else if (this.getPosY() > protagonista.getPosY()) {
-                    decrementaY();
-                }
-            } else {
-                if (this.getPosX() != protagonista.getPosX()) {
+
+            if (pasos < 100) {
+                if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
                     if (this.getPosX() < protagonista.getPosX()) {
                         incrementaX();
                     } else if (this.getPosX() > protagonista.getPosX()) {
                         decrementaX();
-                    }
-                } else if (this.getPosY() != protagonista.getPosY()) {
-                    if (this.getPosY() < protagonista.getPosY()) {
+                    } else if (this.getPosY() < protagonista.getPosY()) {
                         incrementaY();
                     } else if (this.getPosY() > protagonista.getPosY()) {
                         decrementaY();
                     }
-                } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
-                    ataca(protagonista);
+                } else {
+                    if (this.getPosX() != protagonista.getPosX()) {
+                        if (this.getPosX() < protagonista.getPosX()) {
+                            incrementaX();
+                        } else if (this.getPosX() > protagonista.getPosX()) {
+                            decrementaX();
+                        }
+                    } else if (this.getPosY() != protagonista.getPosY()) {
+                        if (this.getPosY() < protagonista.getPosY()) {
+                            incrementaY();
+                        } else if (this.getPosY() > protagonista.getPosY()) {
+                            decrementaY();
+                        }
+                    } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                        ataca(protagonista);
+                    }
+                }
+            } else {
+                if (this.getPosY() != protagonista.getPosY() && this.getPosX() != protagonista.getPosX()) {
+                    if (this.getPosY() < protagonista.getPosY()) {
+                        incrementaY();
+                    } else if (this.getPosY() > protagonista.getPosY()) {
+                        decrementaY();
+                    } else if (this.getPosX() < protagonista.getPosX()) {
+                        incrementaX();
+                    } else if (this.getPosX() > protagonista.getPosX()) {
+                        decrementaX();
+                    }
+                } else {
+                    if (this.getPosY() != protagonista.getPosY()) {
+                        if (this.getPosY() < protagonista.getPosY()) {
+                            incrementaY();
+                        } else if (this.getPosY() > protagonista.getPosY()) {
+                            decrementaY();
+                        }
+                    } else if (this.getPosX() != protagonista.getPosX()) {
+                        if (this.getPosX() < protagonista.getPosX()) {
+                            incrementaX();
+                        } else if (this.getPosX() > protagonista.getPosX()) {
+                            decrementaX();
+                        }
+                    } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                        ataca(protagonista);
+                    }
+                }
+                if (pasos > 200) {
+                    pasos = 0;
                 }
             }
         } else {
-            if (this.getPosY() != protagonista.getPosY() && this.getPosX() != protagonista.getPosX()) {
-                if (this.getPosY() < protagonista.getPosY()) {
-                    incrementaY();
-                } else if (this.getPosY() > protagonista.getPosY()) {
-                    decrementaY();
-                } else if (this.getPosX() < protagonista.getPosX()) {
-                    incrementaX();
-                } else if (this.getPosX() > protagonista.getPosX()) {
-                    decrementaX();
-                }
-            } else {
-                if (this.getPosY() != protagonista.getPosY()) {
-                    if (this.getPosY() < protagonista.getPosY()) {
-                        incrementaY();
-                    } else if (this.getPosY() > protagonista.getPosY()) {
-                        decrementaY();
-                    }
-                } else if (this.getPosX() != protagonista.getPosX()) {
-                    if (this.getPosX() < protagonista.getPosX()) {
-                        incrementaX();
-                    } else if (this.getPosX() > protagonista.getPosX()) {
-                        decrementaX();
-                    }
-                } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
-                    ataca(protagonista);
-                }
-            }
-            if (pasos > 200) {
-                pasos = 0;
-            }
+            ataca(protagonista);
         }
         super.actualizaHitBox();
         Log.i("velocidad", this.velocidad+"");
