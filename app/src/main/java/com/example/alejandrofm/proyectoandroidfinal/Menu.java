@@ -17,6 +17,13 @@ public class Menu extends Escena {
     private float luz;
     private MediaPlayer menuMusic;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicación
+     * @param idEscena el id de la Escena
+     */
     public Menu(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         utils = new Utils(context);
@@ -45,7 +52,6 @@ public class Menu extends Escena {
     @Override
     public int onTouchPersonalizado(MotionEvent event) {
         int indicePuntero = event.getActionIndex();
-        int punteroID = event.getPointerId(indicePuntero);
         int accion = event.getActionMasked();
         switch (accion) {
             case MotionEvent.ACTION_DOWN:
@@ -93,6 +99,10 @@ public class Menu extends Escena {
         btnCreditos.setEfectos(efectos);
     }
 
+    /**
+     * Establece el nivel de luz
+     * @param luz la luz en lux
+     */
     public void setLuz(float luz) {
         this.luz = luz;
         if (luz < 2) {
@@ -100,6 +110,10 @@ public class Menu extends Escena {
         }
     }
 
+    /**
+     * Devuelve el Parallax
+     * @return el Parallax
+     */
     public Parallax getParallax() {
         return parallax;
     }

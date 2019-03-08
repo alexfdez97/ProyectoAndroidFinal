@@ -26,6 +26,14 @@ public class IconoBoton {
     final private int maximoSonidos = 1;
     private boolean haSonado = false;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param tipo el tipo de IconoBoton
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param efectos si los efectos están activados
+     * @param context el contexto de la aplicación
+     */
     public IconoBoton(Tipo tipo, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.altoPantalla = altoPantalla;
         this.anchoPantalla = anchoPantalla;
@@ -37,6 +45,12 @@ public class IconoBoton {
         cargarTipo(tipo);
     }
 
+    /**
+     * Dibuja el IconoBoton
+     * @param posX coordenada X donde dibuja
+     * @param posY coordenada Y donde dibuja
+     * @param c el canvas donde dibuja
+     */
     public void dibujarIconoBoton(int posX, int posY, Canvas c) {
         this.posX = posX;
         this.posY = posY;
@@ -53,6 +67,9 @@ public class IconoBoton {
         c.drawBitmap(icono, posX + botonBase.getWidth() / 2 - icono.getWidth() / 2, posY + botonBase.getHeight() / 2 - icono.getHeight() / 2, null);
     }
 
+    /**
+     * Carga los Bitmaps necesarios
+     */
     public void cargarBitmaps() {
         Bitmap base = utils.getBitmapFromAssets("menu/iconButtons.png");
         botonPulsado = Bitmap.createBitmap(base, 5, 44, 34, 32);
@@ -61,6 +78,10 @@ public class IconoBoton {
         botonBase = Bitmap.createScaledBitmap(botonBase, altoPantalla * 1/6, altoPantalla * 1/6, false);
     }
 
+    /**
+     * Carga el bitmap del tipo de IconoBoton
+     * @param tipo el tipo
+     */
     private void cargarTipo(Tipo tipo) {
         int proporcion = botonBase.getWidth() * 3/5;
         switch (tipo) {
@@ -87,6 +108,11 @@ public class IconoBoton {
         icono = Bitmap.createScaledBitmap(icono, proporcion, proporcion, false);
     }
 
+    /**
+     * Comprueba si el icono está pulsado
+     * @param event el evento que se usa para detectar la pulsación
+     * @return si el icono está pulsado
+     */
     public boolean isPulsado(MotionEvent event) {
         float eventX = event.getX();
         float eventY = event.getY();
@@ -98,6 +124,10 @@ public class IconoBoton {
         return pulsado;
     }
 
+    /**
+     * Comprueba si el icono está pulsado
+     * @return si el icono está pulsado
+     */
     public boolean isPulsado() {
         return pulsado;
     }

@@ -20,6 +20,14 @@ public class Joystick {
     private float constraintX, constraintY;
     private float grados;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param context el contexto de la aplicacion
+     * @param jVacioX la coordenada X
+     * @param jVacioY la coordenada Y
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     */
     public Joystick(Context context, float jVacioX, float jVacioY, int anchoPantalla, int altoPantalla) {
         utils = new Utils(context);
         joyVacio = utils.getBitmapFromAssets("joystick/flatDark06.png");
@@ -33,6 +41,10 @@ public class Joystick {
         radioJVacio = joyVacio.getWidth() / 2;
     }
 
+    /**
+     * Dibuja el Joystick en el Canvas
+     * @param c el canvas
+     */
     public void dibujaJoystick(Canvas c) {
         Paint alphaPaint = new Paint();
         alphaPaint.setAlpha(200);
@@ -40,6 +52,11 @@ public class Joystick {
         c.drawBitmap(joyFlechas, jFlechasX - joyFlechas.getWidth() / 2, jFlechasY - joyFlechas.getHeight() / 2, alphaPaint);
     }
 
+    /**
+     * Establece las coordenadas
+     * @param jFlechasX coordenada X
+     * @param jFlechasY coordenada Y
+     */
     public void setCoordsJFlechas(float jFlechasX, float jFlechasY) {
         desplazamiento = (float) Math.sqrt(Math.pow(jVacioX - jFlechasX, 2) + Math.pow(jVacioY - jFlechasY, 2));
         radioHipotenusa = radioJVacio / desplazamiento;

@@ -16,6 +16,13 @@ public class Parallax {
     private int anchoPantalla, altoPantalla;
     private ArrayList<Nube> nubesEnPantalla = new ArrayList<>();
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param day si es dia o de noche
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicación
+     */
     public Parallax(boolean day, int anchoPantalla, int altoPantalla,Context context) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -36,6 +43,10 @@ public class Parallax {
         crearNubes();
     }
 
+    /**
+     * Dibuja el Parallax en el Canvas
+     * @param c el canvas
+     */
     public void dibujaParallax(Canvas c) {
         c.drawBitmap(cielo, 0 , 0, null);
         for (Nube nube:nubesEnPantalla) {
@@ -45,6 +56,9 @@ public class Parallax {
         c.drawBitmap(graveyard, 0, altoPantalla / 2, null);
     }
 
+    /**
+     * Crea una nube
+     */
     private void crearUnaNube() {
         int indexNube;
         if (Math.random() > 0.5) {
@@ -68,6 +82,9 @@ public class Parallax {
         nubesEnPantalla.add(new Nube(nubes[indexNube], Nube.LadoInicio.intToNube(ladoNube), alturaNube, velNube, anchoPantalla, altoPantalla));
     }
 
+    /**
+     * Crea una cantidad aleatoria de nubes
+     */
     private void crearNubes() {
         int cantidadNubes = (int)(Math.random() * (8 - 4)) + 4;
         for (int i = 0; i < cantidadNubes; i++) {
@@ -75,6 +92,9 @@ public class Parallax {
         }
     }
 
+    /**
+     * Comprueba si las nubes salieron de la pantalla, si es así la elimina y crea una nueva
+     */
     private void comprobarNubes() {
         for (int i = 0; i < nubesEnPantalla.size(); i++) {
             Nube nube = nubesEnPantalla.get(i);

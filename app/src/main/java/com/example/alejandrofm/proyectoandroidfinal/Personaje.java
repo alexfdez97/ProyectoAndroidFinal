@@ -39,6 +39,15 @@ public class Personaje {
     protected int sonidoPunch;
     final private int maximoSonidos = 10;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param x la coordenada X
+     * @param y la coordenada Y
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param efectos indica si los efectos están activados o no
+     * @param context el contexto de la aplicación
+     */
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.posX = x;
         this.posY = y;
@@ -56,12 +65,19 @@ public class Personaje {
         sonidoPunch = this.efectos.load(context, R.raw.punch, 1);
     }
 
+    /**
+     * Actualiza la hitbox del personaje
+     */
     protected void actualizaHitBox() {
         if (sprite != null) {
             hitbox = new Rect((int)(getPosX() + 0.2 * sprite[0].getWidth()), (int)(getPosY() + 0.2 * sprite[0].getHeight()), (int)(getPosX() + 0.8 * sprite[0].getWidth()), (int)(getPosY() + 0.8 * sprite[0].getHeight()));
         }
     }
 
+    /**
+     * Dibuja el Personaje en el Canvas
+     * @param c el Canvas
+     */
     public void dibujarPersonaje(Canvas c) {
         Paint p = new Paint();
         p.setColor(Color.RED);
@@ -74,6 +90,9 @@ public class Personaje {
         cambiaFrame();
     }
 
+    /**
+     * Cambia el frame del Personaje
+     */
     public void cambiaFrame() {
 //        if (velocidad > 0) {
 //            tmpCambioFrame = tmpCambioFrame * velocidad;
@@ -93,6 +112,9 @@ public class Personaje {
         }
     }
 
+    /**
+     * Reproduce el efecto de sonido de caminar si los efectos están activados
+     */
     protected void sonidoCaminar() {
         if (blEfectos) {
             if (Math.abs(tiempoActual - ultimaReprod) >= 500) {
@@ -102,6 +124,7 @@ public class Personaje {
         }
     }
 
+    @Deprecated
     public void caminar(Joystick.Direccion direccion) {
 //        move = true;
         switch (direccion) {
@@ -123,6 +146,11 @@ public class Personaje {
         }
     }
 
+    /**
+     * Rota el personaje en la direccion indicada
+     * Realiza más comprobaciones que 'rotarPersonaje'
+     * @param direccion la direccion
+     */
     public void rotar(Joystick.Direccion direccion) {
         rotarPersonaje(direccion);
         if (direccion != Joystick.Direccion.NINGUNA) {
@@ -130,6 +158,12 @@ public class Personaje {
         }
     }
 
+    /**
+     * Rota un array de bitmap los grados indicados y lo devuelve
+     * @param base el Bitmap a rotar
+     * @param grados los grados que se rota
+     * @return el Bitmap rotado
+     */
     protected Bitmap[] rotarSprite(Bitmap[] base, int grados) {
         Bitmap bitmap[] = new Bitmap[base.length];
         Matrix matrix = new Matrix();
@@ -140,6 +174,10 @@ public class Personaje {
         return bitmap;
     }
 
+    /**
+     * Rota el personaje en la direccion indicada
+     * @param direccion la direccion
+     */
     protected void rotarPersonaje(Joystick.Direccion direccion) {
         if (move) {
             switch (direccion) {
@@ -174,82 +212,129 @@ public class Personaje {
         }
     }
 
+    /**
+     * Devuelve la coordenada X del Personaje
+     * @return la coordenada X
+     */
     public int getPosX() {
         return posX;
     }
 
+    /**
+     * Establece la coordenada X del Personaje
+     * @param posX la coordenada X
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
+    /**
+     * Devuelve la coordenada Y del Personaje
+     * @return la coordenada Y
+     */
     public int getPosY() {
         return posY;
     }
 
+    /**
+     * Establece la coordenada Y del Personaje
+     * @param posY la coordenada Y
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     * Devuelve la velocidad a la que se mueve el Personaje
+     * @return la velocidad
+     */
     public int getVelocidad() {
         return velocidad;
     }
 
+    /**
+     * Establece la velocidad a la que se mueve
+     * @param velocidad la velocidad
+     */
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
     }
 
+    /**
+     * Devulve la vida del Personaje
+     * @return la vida
+     */
     public int getVida() {
         return vida;
     }
 
+    /**
+     * Establece la vida del Personaje
+     * @param vida la vida
+     */
     public void setVida(int vida) {
         this.vida = vida;
     }
 
-    public Bitmap[] getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Bitmap[] sprite) {
-        this.sprite = sprite;
-    }
-
+    /**
+     * Devuelve el ancho de la pantalla
+     * @return el ancho de la pantalla
+     */
     public int getAnchoPantalla() {
         return anchoPantalla;
     }
 
+    /**
+     * Establece el ancho de la pantalla
+     * @param anchoPantalla el ancho de la pantalla
+     */
     public void setAnchoPantalla(int anchoPantalla) {
         this.anchoPantalla = anchoPantalla;
     }
 
+    /**
+     * Devuelve el alto de la pantalla
+     * @return el alto de la pantalla
+     */
     public int getAltoPantalla() {
         return altoPantalla;
     }
 
+    /**
+     * Establece el alto de la pantalla
+     * @param altoPantalla el alto
+     */
     public void setAltoPantalla(int altoPantalla) {
         this.altoPantalla = altoPantalla;
     }
 
-    public long getTiempoActual() {
-        return tiempoActual;
-    }
-
-    public void setTiempoActual(long tiempoActual) {
-        this.tiempoActual = tiempoActual;
-    }
-
+    /**
+     * Devuelve el ancho del sprite
+     * @return
+     */
     public int getWidth() {
         return sprite[0].getWidth();
     }
 
+    /**
+     * Devuelve el alto del sprite
+     * @return
+     */
     public int getHeight() {
         return sprite[0].getHeight();
     }
 
+    /**
+     * Devuelve la hitbox
+     * @return
+     */
     public Rect getHitbox() {
         return hitbox;
     }
 
+    /**
+     * Si el último golpe a sido hace más de 200ms daña al Personaje
+     */
     public void damaged() {
         if (Math.abs(tiempoActual - lastGolpe) >= 200) {
             vida--;

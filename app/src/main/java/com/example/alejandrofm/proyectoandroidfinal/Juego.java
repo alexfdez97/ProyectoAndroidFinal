@@ -31,6 +31,10 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     private Utils utils;
     private boolean music, effects;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param context el contexto de la aplicacion
+     */
     public Juego(Context context) {
         super(context);
         this.surfaceHolder = getHolder();

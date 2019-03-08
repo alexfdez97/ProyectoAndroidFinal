@@ -12,6 +12,13 @@ public class HealthBar {
     private int anchoPantalla, altoPantalla;
     private int posX, posY;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param health la vida
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicación
+     */
     public HealthBar(int health, int anchoPantalla, int altoPantalla, Context context) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -19,7 +26,10 @@ public class HealthBar {
         utils = new Utils(context);
         cargarBitmaps();
     }
-    
+
+    /**
+     * Carga los bitmaps para el funcionamiento de la clase
+     */
     private void cargarBitmaps() {
         Bitmap temp = utils.getBitmapFromAssets("health.png");
         int anchoVariable = 0;
@@ -30,6 +40,12 @@ public class HealthBar {
         }
     }
 
+    /**
+     * Dibuja la barra
+     * @param posX coordenada X
+     * @param posY coordenada Y
+     * @param c el Canvas donde se dibuja
+     */
     public void dibujaBar(int posX, int posY, Canvas c) {
         this.posX = posX;
         this.posY = posX;
@@ -44,22 +60,42 @@ public class HealthBar {
         }
     }
 
+    /**
+     * Devuelve la vida de la barra
+     * @return la vida
+     */
     public int getVida() {
         return vida;
     }
 
+    /**
+     * Establece la vida de la barra
+     * @param vida la vida
+     */
     public void setVida(int vida) {
         this.vida = vida;
     }
 
+    /**
+     * Devuelve el ancho de la barra
+     * @return el ancho
+     */
     public int getWidth() {
         return healthsBmps[0].getWidth();
     }
 
+    /**
+     * Devuelve la coordenada X de la barra
+     * @return X
+     */
     public int getX() {
         return posX;
     }
 
+    /**
+     * Devuelve la coordenada Y de la barra
+     * @return Y
+     */
     public int getY() {
         return posY;
     }

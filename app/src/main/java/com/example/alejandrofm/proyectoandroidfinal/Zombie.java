@@ -17,6 +17,17 @@ public class Zombie extends Personaje {
     private Bitmap[] atackDown = new Bitmap[9];
     private Bitmap[] atackUp = new Bitmap[9];
 
+    /**
+     * Inicializa las propiedades de la clase y de su clase padre
+     * @param x la coordenada X del Zombie
+     * @param y la coordenada Y del Zombie
+     * @param velocidad la velocidad del Zombie
+     * @param vida la vida del Zombie
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param efectos indica si los efectos están activos
+     * @param context el contexto de la aplicación
+     */
     public Zombie(int x, int y, int velocidad, int vida, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
         this.velocidad = velocidad;
@@ -53,6 +64,11 @@ public class Zombie extends Personaje {
         super.dibujarPersonaje(c);
     }
 
+    /**
+     * Hace que el zombie se mueva hacia el Protagonista
+     * @see Protagonista
+     * @param protagonista el Protagonista hacia el que se mueve
+     */
     public void caminar(Protagonista protagonista) {
         Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
         Point pZombie = new Point(this.getPosX(), this.getPosY());
@@ -143,6 +159,11 @@ public class Zombie extends Personaje {
         Log.i("velocidad", this.velocidad+"");
     }
 
+    /**
+     * Hace que el Zombie ataque al Protagonista
+     * @see Protagonista
+     * @param protagonista el Protagonista al que ataca
+     */
     private void ataca(Protagonista protagonista) {
         if (indiceFrame > 8) {
                 indiceFrame = 0;
@@ -165,30 +186,47 @@ public class Zombie extends Personaje {
             }
     }
 
+    /**
+     * Incrementa la X del Zombie y cambia el sprite
+     */
     private void incrementaX() {
         posX += velocidad;
         sprite = moveRight;
         sonidoCaminar();
     }
 
+    /**
+     * Decrementa la X del Zombie y cambia el sprite
+     */
     private void decrementaX() {
         posX -= velocidad;
         sprite = moveLeft;
         sonidoCaminar();
     }
 
+    /**
+     * Incrementa la Y del Zombie y cambia el sprite
+     */
     private void incrementaY() {
         posY += velocidad;
         sprite = moveDown;
         sonidoCaminar();
     }
 
+    /**
+     * Decrementa la Y del Zombie y cambia el sprite
+     */
     private void decrementaY() {
         posY -= velocidad;
         sprite = moveUp;
         sonidoCaminar();
     }
 
+    /**
+     * Carga el bitmap según el tipo específicado
+     * @param tipo el tipo de imagen a cargar
+     * @return el array de Bitmaps de ese tipo
+     */
     protected Bitmap[] cargarSpriteZombie(String tipo) {
         Bitmap bitmap;
         int cantidadBmps = 17;

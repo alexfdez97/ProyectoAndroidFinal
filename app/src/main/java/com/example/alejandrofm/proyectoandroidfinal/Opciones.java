@@ -14,6 +14,13 @@ public class Opciones extends Escena {
     private Boton btnResetRecords;
     private Texto txtMusica, txtEfectos;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param anchoPantalla el ancho de la pantala
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicación
+     * @param idEscena el id de la escena
+     */
     public Opciones(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
@@ -32,6 +39,10 @@ public class Opciones extends Escena {
         }
     }
 
+    /**
+     * Guarda las preferencias en el fichero de preferencias
+     * @see SharedPreferences
+     */
     private void guardarPreferencias() {
         SharedPreferences preferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

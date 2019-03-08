@@ -16,6 +16,13 @@ public class Texto {
     private int x, y;
     private int anchoPantalla, altoPantalla;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param texto el texto
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicacion
+     */
     public Texto(String texto, int anchoPantalla, int altoPantalla, Context context) {
         utils = new Utils(context);
         this.anchoPantalla = anchoPantalla;
@@ -25,12 +32,23 @@ public class Texto {
         bmpTexto = Bitmap.createScaledBitmap(bmpTexto, texto.length() * (anchoPantalla * 1/40), (altoPantalla * 1/10) * 2/3, false);
     }
 
+    /**
+     * Dibuja el texto en la coordenada XY del Canvas
+     * @param posX coordenada X
+     * @param posY coordenada Y
+     * @param c el Canvas
+     */
     public void dibujarTexto(int posX, int posY, Canvas c) {
         this.x = posX;
         this.y = posY;
         c.drawBitmap(bmpTexto, posX, posY, null);
     }
 
+    /**
+     * Transforma el texto a imagen
+     * @param texto el texto
+     * @return la imagen
+     */
     private Bitmap textoAImagen(String texto) {
         texto = texto.toLowerCase();
         char letrasFromTexto[] = texto.toCharArray();
@@ -51,6 +69,12 @@ public class Texto {
         return inicio;
     }
 
+    /**
+     * Combina dos Bitmaps horizontalmente
+     * @param bmp1 Bitmap1
+     * @param bmp2 Bitmap2
+     * @return Bitmap1+Bitmap2
+     */
     private Bitmap combinarImagenes(Bitmap bmp1, Bitmap bmp2) {
         Bitmap bmpUnion = null;
 
@@ -74,6 +98,9 @@ public class Texto {
         return bmpUnion;
     }
 
+    /**
+     * Carga los Bitmaps necesarios
+     */
     private void cargarBitmaps() {
         Bitmap tileset = utils.getBitmapFromAssets("menu/ui.png");
         int tempX = 158;

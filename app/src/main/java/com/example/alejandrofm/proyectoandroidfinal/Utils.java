@@ -11,12 +11,21 @@ import java.io.InputStream;
 
 public class Utils {
 
-    Context context;
+    private Context context;
 
+    /**
+     * Inicializa las propiedades de la clase
+     * @param context el contexto de la aplicación
+     */
     public Utils(Context context){
-        this.context=context;
+        this.context = context;
     }
 
+    /**
+     * Recoge una imagen de la carpeta assets
+     * @param fichero la ruta del archivo (entendiendo como raíz la propia carpeta assets)
+     * @return el Bitmap correspondiente
+     */
     public Bitmap getBitmapFromAssets(String fichero) {
         try {
             InputStream is = context.getAssets().open(fichero);
@@ -26,6 +35,13 @@ public class Utils {
         }
     }
 
+    /**
+     * Carga las preferencias del fichero de preferencias y devuelve un array de booleanos
+     * [0] --> Indica si la música está activada
+     * [1] --> Indica si los efectos sonoros están activados
+     * @see SharedPreferences
+     * @return el array de booleanos
+     */
     public boolean[] cargarPreferencias() {
         boolean prefs[] = new boolean[2];
         SharedPreferences sharedPreferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
@@ -34,6 +50,12 @@ public class Utils {
         return prefs;
     }
 
+    /**
+     * Calcula la distancia entre dos puntos
+     * @param p1 el punto1
+     * @param p2 el punto2
+     * @return la distancia entre los dos puntos
+     */
     public int dist(Point p1, Point p2) {
         int dist = (int)Math.sqrt(Math.pow(p2.x - p1.x, 2)
                 + Math.pow(p2.y - p1.y, 2));

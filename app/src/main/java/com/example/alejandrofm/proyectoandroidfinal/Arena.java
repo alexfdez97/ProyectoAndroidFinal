@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
@@ -37,11 +36,11 @@ public class Arena extends Escena {
     private HashMap<Integer, PointF> pulsaciones = new HashMap<>();
 
     /**
-     * Constructor de Arena, declara el Mapa y el Protagonista
-     * @param anchoPantalla es el ancho de la pantalla del dispositivo
-     * @param altoPantalla es el alto de la pantalla del dispositivo
-     * @param context es el contexto de la aplicación
-     * @param idEscena es el id de la Escena actual
+     * Inicializa las propiedades de la clase
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicación
+     * @param idEscena el id de la escena
      */
     public Arena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
@@ -53,7 +52,6 @@ public class Arena extends Escena {
         txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
-//        generarZombies(protagonista, 1);
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
@@ -136,11 +134,19 @@ public class Arena extends Escena {
         return -1;
     }
 
+    /**
+     * Avanza a la siguiente ronda y genera sus zombies correspondientes
+     * @param protagonista el protagonista del juego
+     */
     private void inicioRonda(Protagonista protagonista) {
         numeroRonda++;
         generarZombies(protagonista, numeroRonda);
     }
 
+    /**
+     * Inicializa y dibuja el texto en el que se cuenta la ronda actual de la partida
+     * @param canvas el canvas en el que se dibuja
+     */
     private void textoInicioRonda(Canvas canvas) {
         try {
             Texto textoRonda = new Texto(context.getString(R.string.strRound) + " " + numeroRonda, anchoPantalla , altoPantalla, context);
@@ -148,6 +154,13 @@ public class Arena extends Escena {
         } catch (NullPointerException ex) { }
     }
 
+    /**
+     * Genera los zombies que se le indican
+     * @param protagonista persiguen a este Protagonista
+     * @param cantidad numero de zombies en partida
+     * @see Zombie
+     * @see Protagonista
+     */
     private void generarZombies(Protagonista protagonista, int cantidad) {
         Random random = new Random();
         for (int i = 0; i < cantidad; i++) {
@@ -160,7 +173,7 @@ public class Arena extends Escena {
     }
 
     /**
-     * Dibuja en el Canvas
+     * Dibuja en el canvas lo relacionado con la partida
      * @param c es el canvas
      */
     @Override
@@ -195,11 +208,12 @@ public class Arena extends Escena {
         } catch (NullPointerException ex) { }
     }
 
+    /**
+     * Actualiza las propiedades y físicas, comprueba colisiones...
+     */
     @Override
     public void actualizarFisica() {
         try  {
-//            puntuation++;
-//            txtPointsCounter.setTexto(String.format("%06d", puntuation));
             compruebaZombies();
             for (Bala bala:balas) {
                 bala.mueveBala();
@@ -210,18 +224,32 @@ public class Arena extends Escena {
         } catch (NullPointerException ex) { }
     }
 
+    /**
+     * Dibuja todos los zombies de la lista en sus posiciones XY
+     * @param c el canvas en el que los dibuja
+     */
     private void dibujaZombies(Canvas c) {
         for (Zombie zombie:zombies) {
             zombie.dibujarPersonaje(c);
         }
     }
 
+    /**
+     * Mueve los zombies por la Arena
+     * @param protagonista el Protagonista al que persiguen
+     * @see Protagonista
+     * @see Zombie
+     */
     private void mueveZombies(Protagonista protagonista) {
         for (Zombie zombie:zombies) {
             zombie.caminar(protagonista);
         }
     }
 
+    /**
+     * Dibuja el efecto de fogonazo del arma
+     * @param c el Canvas donde lo dibuja
+     */
     private void dibujaFogonazo(Canvas c) {
         if (jDerecho != null) {
             switch (jDerecho.getDireccion()) {
@@ -241,6 +269,9 @@ public class Arena extends Escena {
         }
     }
 
+    /**
+     * Carga los Bitmap del fogonazo
+     */
     private void cargaFogonazos() {
         int grados = 0;
         for (int i = 0; i < fogonazos.length; i++) {
@@ -252,19 +283,25 @@ public class Arena extends Escena {
         }
     }
 
+    /**
+     * Dibuja las balas en el Canvas
+     * @param c el canvas donde las dibuja
+     */
     private void dibujaBalas(Canvas c) {
         for (Bala bala:balas) {
             bala.dibujarBala(c);
         }
     }
 
+    /**
+     * Comprueba si alguna bala colisiona con algún zombie
+     */
     private void compruebaColisionBalas() {
         Iterator<Zombie> zIteratos = zombies.iterator();
         while (zIteratos.hasNext()) {
             Zombie zombie = zIteratos.next();
             for (Bala bala:balas) {
                 if (Rect.intersects(bala.getHitbox(), zombie.getHitbox())) {
-                    Log.i("zombiVi", zombie.getVida()+"");
                     zombie.damaged();
                     puntuation += 100;
                     txtPointsCounter.setTexto(String.format("%06d", puntuation));
@@ -276,23 +313,26 @@ public class Arena extends Escena {
         }
     }
 
+    /**
+     * Comprueba si queda algún zombie vivo, si no es así inicia una nueva ronda
+     */
     private void compruebaZombies() {
         if (zombies.size() == 0) {
             inicioRonda(protagonista);
         }
     }
 
-    private void compruebaBalas() {
-        for (Bala bala : balas) {
-            if (bala.getX() > anchoPantalla) {
-                balas.remove(bala);
-            } else if (bala.getX() < anchoPantalla + bala.getWidth()) {
-                balas.remove(bala);
-            } else if (bala.getY() > altoPantalla) {
-                balas.remove(bala);
-            } else if (bala.getY() < altoPantalla + bala.getHeight()) {
-                balas.remove(bala);
-            }
-        }
-    }
+//    private void compruebaBalas() {
+//        for (Bala bala : balas) {
+//            if (bala.getX() > anchoPantalla) {
+//                balas.remove(bala);
+//            } else if (bala.getX() < anchoPantalla + bala.getWidth()) {
+//                balas.remove(bala);
+//            } else if (bala.getY() > altoPantalla) {
+//                balas.remove(bala);
+//            } else if (bala.getY() < altoPantalla + bala.getHeight()) {
+//                balas.remove(bala);
+//            }
+//        }
+//    }
 }

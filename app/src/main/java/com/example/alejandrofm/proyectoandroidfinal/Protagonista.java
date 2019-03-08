@@ -11,6 +11,15 @@ public class Protagonista extends Personaje {
     private Joystick jIzquierdo, jDerecho;
     private Vibrator vibrator;
 
+    /**
+     * Inicializa las propiedades de la clase y de su clase padre
+     * @param x la coordenada X del Protagonista
+     * @param y la coordenada Y del Protagonista
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param efectos indica si los efectos sonoros están activados
+     * @param context el contexto de la aplicacion
+     */
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
         vida = 100;
@@ -53,6 +62,10 @@ public class Protagonista extends Personaje {
         }
     }
 
+    /**
+     * Hace que el personaje camine en la dirección que se le pasa
+     * @param direccion la direccion hacia la que se mueve
+     */
     public void caminar(Joystick.Direccion direccion) {
         float velocidad = jIzquierdo.getDesplazamiento() / 40;
         move = true;
@@ -89,6 +102,12 @@ public class Protagonista extends Personaje {
         super.actualizaHitBox();
     }
 
+    /**
+     * Carga los sprites del protagonista según el tipo que se le pase
+     * @param tipo el tipo de sprite
+     * @param arma el tipo de arma
+     * @return el array de Bitmap correspondiente
+     */
     protected Bitmap[] cargarSpriteProtagonista(String tipo, String arma) {
         Bitmap bitmap;
         Bitmap[] asset = new Bitmap[20];
@@ -99,22 +118,42 @@ public class Protagonista extends Personaje {
         return asset;
     }
 
+    /**
+     * Devuelve joystick izquierdo
+     * @return el joystick
+     */
     public Joystick getjIzquierdo() {
         return jIzquierdo;
     }
 
+    /**
+     * Establece el joystick izquierdo
+     * @param jIzquierdo el joystick
+     */
     public void setjIzquierdo(Joystick jIzquierdo) {
         this.jIzquierdo = jIzquierdo;
     }
 
+    /**
+     * Devuelve el joystick derecho
+     * @return el joystick
+     */
     public Joystick getjDerecho() {
         return jDerecho;
     }
 
+    /**
+     * Establece el joystick derecho
+     * @param jDerecho el joystick
+     */
     public void setjDerecho(Joystick jDerecho) {
         this.jDerecho = jDerecho;
     }
 
+    /**
+     * Devuelve la coordenada X de la boquilla del arma
+     * @return la coordenada
+     */
     public int getArmaX() {
         switch (jDerecho.getDireccion()) {
             case ESTE:
@@ -129,6 +168,10 @@ public class Protagonista extends Personaje {
         return this.getPosX();
     }
 
+    /**
+     * Devuelve la coordenada Y de la boquilla del arma
+     * @return la coordenada
+     */
     public int getArmaY() {
         switch (jDerecho.getDireccion()) {
             case ESTE:
@@ -143,6 +186,9 @@ public class Protagonista extends Personaje {
         return this.getPosY();
     }
 
+    /**
+     * Llama al padre y vibra
+     */
     @Override
     public void damaged() {
         super.damaged();
