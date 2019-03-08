@@ -3,6 +3,7 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.util.Log;
 
 public class Zombie extends Personaje {
@@ -42,6 +43,7 @@ public class Zombie extends Personaje {
         atackLeft = rotarSprite(atackRigth, 180);
         sprite = moveDown;
         ultimoGolpe = tiempoActual + 500;
+        super.actualizaHitBox();
     }
 
     @Override
@@ -50,48 +52,103 @@ public class Zombie extends Personaje {
     }
 
     public void caminar(Protagonista protagonista) {
-        if ((Math.abs(this.getPosX() - protagonista.getPosX()) < velocidad) || (Math.abs(this.getPosY() - protagonista.getPosY()) < velocidad)) {
+        Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
+        Point pZombie = new Point(this.getPosX(), this.getPosY());
+//        if ((Math.abs(this.getPosX() - protagonista.getPosX()) < velocidad) || (Math.abs(this.getPosY() - protagonista.getPosY()) < velocidad)) {
+//            velocidad = 1;
+//        } else {
+//            velocidad = velocidadInicial;
+//        }
+
+//        if () {
+//
+//        }
+
+        Log.i("velocidad", "Distancia: " + utils.dist(pProta, pZombie));
+        if ((utils.dist(pProta, pZombie) - 1) < velocidad) {
             velocidad = 1;
         } else {
             velocidad = velocidadInicial;
         }
-
         pasos++;
 
-        if (pasos < 100 && (this.getPosX() != protagonista.getPosX())) {
-            if (this.getPosX() != protagonista.getPosX()) {
-                if (this.getPosX() > protagonista.getPosX()) {
-                    decrementaX();
-                } else if (this.getPosX() < protagonista.getPosX()) {
+        if (pasos < 100) {
+            if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
+                if (this.getPosX() < protagonista.getPosX()) {
                     incrementaX();
-                }
-            }
-        } else if (this.getPosY() != protagonista.getPosY()) {
-            if (this.getPosY() != protagonista.getPosY()) {
-                if (this.getPosY() > protagonista.getPosY()) {
-                    decrementaY();
+                } else if (this.getPosX() > protagonista.getPosX()) {
+                    decrementaX();
                 } else if (this.getPosY() < protagonista.getPosY()) {
                     incrementaY();
+                } else if (this.getPosY() > protagonista.getPosY()) {
+                    decrementaY();
+                }
+            } else {
+                if (this.getPosX() != protagonista.getPosX()) {
+                    if (this.getPosX() < protagonista.getPosX()) {
+                        incrementaX();
+                    } else if (this.getPosX() > protagonista.getPosX()) {
+                        decrementaX();
+                    }
+                } else if (this.getPosY() != protagonista.getPosY()) {
+                    if (this.getPosY() < protagonista.getPosY()) {
+                        incrementaY();
+                    } else if (this.getPosY() > protagonista.getPosY()) {
+                        decrementaY();
+                    }
+                } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                    ataca(protagonista);
+                }
+            }
+        } else {
+            if (this.getPosY() != protagonista.getPosY() && this.getPosX() != protagonista.getPosX()) {
+                if (this.getPosY() < protagonista.getPosY()) {
+                    incrementaY();
+                } else if (this.getPosY() > protagonista.getPosY()) {
+                    decrementaY();
+                } else if (this.getPosX() < protagonista.getPosX()) {
+                    incrementaX();
+                } else if (this.getPosX() > protagonista.getPosX()) {
+                    decrementaX();
+                }
+            } else {
+                if (this.getPosY() != protagonista.getPosY()) {
+                    if (this.getPosY() < protagonista.getPosY()) {
+                        incrementaY();
+                    } else if (this.getPosY() > protagonista.getPosY()) {
+                        decrementaY();
+                    }
+                } else if (this.getPosX() != protagonista.getPosX()) {
+                    if (this.getPosX() < protagonista.getPosX()) {
+                        incrementaX();
+                    } else if (this.getPosX() > protagonista.getPosX()) {
+                        decrementaX();
+                    }
+                } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                    ataca(protagonista);
                 }
             }
             if (pasos > 200) {
                 pasos = 0;
             }
-        } else if (this.getPosX() != protagonista.getPosX() || this.getPosY() != protagonista.getPosY()) {
-            if (this.getPosX() > protagonista.getPosX()) {
-                decrementaX();
-            } else if (this.getPosX() < protagonista.getPosX()) {
-                incrementaX();
-            } else if (this.getPosY() > protagonista.getPosY()) {
-                decrementaY();
-            } else if (this.getPosY() < protagonista.getPosY()) {
-                incrementaY();
-            }
-        } else {
-            if (indiceFrame > 8) {
+        }
+        super.actualizaHitBox();
+        Log.i("velocidad", this.velocidad+"");
+    }
+
+    private void ataca(Protagonista protagonista) {
+        if (indiceFrame > 8) {
                 indiceFrame = 0;
             }
-            sprite = atackRigth;
+            if (sprite == moveRight) {
+                sprite = atackRigth;
+            } else if (sprite == moveUp) {
+                sprite = atackUp;
+            } else if (sprite == moveDown) {
+                sprite = atackDown;
+            } else if (sprite == moveLeft) {
+                sprite = atackLeft;
+            }
             if (Math.abs(tiempoActual - ultimoGolpe) >= 500) {
                 protagonista.damaged();
                 if (blEfectos) {
@@ -99,7 +156,6 @@ public class Zombie extends Personaje {
                 }
                 ultimoGolpe = System.currentTimeMillis();
             }
-        }
     }
 
     private void incrementaX() {

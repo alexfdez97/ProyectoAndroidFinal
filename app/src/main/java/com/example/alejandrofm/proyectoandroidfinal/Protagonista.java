@@ -3,7 +3,6 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -34,6 +33,7 @@ public class Protagonista extends Personaje {
         moveLeft = rotarSprite(moveRight, 180);
         sprite = idleRight;
         vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        super.actualizaHitBox();
     }
 
     @Override
@@ -86,6 +86,7 @@ public class Protagonista extends Personaje {
                 sonidoCaminar();
             }
         }
+        super.actualizaHitBox();
     }
 
     protected Bitmap[] cargarSpriteProtagonista(String tipo, String arma) {

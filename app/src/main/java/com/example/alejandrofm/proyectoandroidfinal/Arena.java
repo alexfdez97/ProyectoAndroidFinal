@@ -5,14 +5,17 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Arena extends Escena {
 
-    private ArrayList<Puntero> punteros = new ArrayList<>();
     private ArrayList<Zombie> zombies = new ArrayList<>();
     private Utils utils;
     private Joystick jIzquierdo, jDerecho;
@@ -27,6 +30,9 @@ public class Arena extends Escena {
     private Context context;
     private boolean fuego = false;
     private Matrix matrix = new Matrix();
+    private int numeroRonda = 0;
+    private boolean inicioRonda = true;
+    private HashMap<Integer, PointF> pulsaciones = new HashMap<>();
 
     /**
      * Constructor de Arena, declara el Mapa y el Protagonista
@@ -64,6 +70,7 @@ public class Arena extends Escena {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_POINTER_DOWN:
             case MotionEvent.ACTION_DOWN:
+                pulsaciones.put(id, new PointF(x, y));
                 if (x < getAnchoPantalla() / 2) {
                     jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
                     jIzquierdo.setIdPuntero(id);
@@ -78,6 +85,7 @@ public class Arena extends Escena {
                 break;
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP:
+                pulsaciones.remove(id);
                 if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
                     jIzquierdo.setPulsado(false);
                     jIzquierdo = null;
@@ -88,23 +96,37 @@ public class Arena extends Escena {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                for (int i = 0; i < event.getPointerCount(); i++) {
-                    if (jIzquierdo != null && jIzquierdo.getIdPuntero() == i) {
-                        jIzquierdo.setCoordsJFlechas(event.getX(i), event.getY(i));
+                for (int index:pulsaciones.keySet()) {
+                    float xx,yy;
+                    if (event.getPointerCount()>1){
+                        xx=event.getX(index);
+                        yy=event.getY(index);
+                    }else {
+                        xx=event.getX(0);
+                        yy=event.getY(0);
                     }
-                    if (jDerecho != null && jDerecho.getIdPuntero() == i) {
-                        jDerecho.setCoordsJFlechas(event.getX(i), event.getY(i));
-                        if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
-                            if (Math.abs(lastBala - currentTime) >= 1000) {
-                                balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-                                if (efectos) {
-                                    soundPool.play(efectoDisparo, 1, 1, 1, 0 ,1);
-                                }
-                                lastBala = System.currentTimeMillis();
-                                fuego = true;
-                            }
+
+                    if (pulsaciones.containsKey(index)) {
+                        if (jIzquierdo != null && jIzquierdo.getIdPuntero() == index) {
+
+                            jIzquierdo.setCoordsJFlechas(xx,yy);
                         }
-                        currentTime = System.currentTimeMillis();
+                    }
+                    if (pulsaciones.containsKey(index)) {
+                        if (jDerecho != null && jDerecho.getIdPuntero() == index) {
+                            jDerecho.setCoordsJFlechas(xx,yy);
+                            if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
+                                if (Math.abs(lastBala - currentTime) >= 1000) {
+                                    balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
+                                    if (efectos) {
+                                        soundPool.play(efectoDisparo, 1, 1, 1, 0, 1);
+                                    }
+                                    lastBala = System.currentTimeMillis();
+                                    fuego = true;
+                                }
+                            }
+                            currentTime = System.currentTimeMillis();
+                        }
                     }
                 }
             break;
@@ -113,7 +135,15 @@ public class Arena extends Escena {
     }
 
     private void inicioRonda(Protagonista protagonista) {
+        numeroRonda++;
+        generarZombies(protagonista, numeroRonda);
+    }
 
+    private void textoInicioRonda(Canvas canvas) {
+        try {
+            Texto textoRonda = new Texto(context.getString(R.string.strRound) + " " + numeroRonda, anchoPantalla , altoPantalla, context);
+            textoRonda.dibujarTexto(anchoPantalla / 2 - textoRonda.getWidth() / 2, altoPantalla / 2 - textoRonda.getHeight() / 2, canvas);
+        } catch (NullPointerException ex) { }
     }
 
     private void generarZombies(Protagonista protagonista, int cantidad) {
@@ -122,7 +152,7 @@ public class Arena extends Escena {
             int velocidad = random.nextInt(4 + 1 - 1) + 1;
             int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla) + anchoPantalla;
             int posY = random.nextInt(altoPantalla + 500 - altoPantalla) + altoPantalla;
-            zombies.add(new Zombie(10, 10, velocidad, anchoPantalla, altoPantalla, efectos, context));
+            zombies.add(new Zombie(posX, posY, velocidad, anchoPantalla, altoPantalla, efectos, context));
         }
     }
 
@@ -135,6 +165,9 @@ public class Arena extends Escena {
         try  {
             c.drawColor(Color.BLACK);
             mapa.dibujaMapa(c);
+            if (inicioRonda) {
+                textoInicioRonda(c);
+            }
             dibujaBalas(c);
             if (fuego) {
                 dibujaFogonazo(c);

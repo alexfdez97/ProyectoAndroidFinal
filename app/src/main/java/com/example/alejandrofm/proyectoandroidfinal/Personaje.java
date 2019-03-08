@@ -4,12 +4,12 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.provider.MediaStore;
-import android.util.Log;
 
 public class Personaje {
     protected int posX, posY, velocidad, vida;
@@ -22,6 +22,7 @@ public class Personaje {
     protected Bitmap[] idleDown;
     protected Bitmap[] idleLeft;
     protected Bitmap[] idleRight;
+    protected Rect hitbox;
     protected Utils utils;
     protected Joystick.Direccion direccionAnterior;
     protected boolean move;
@@ -53,8 +54,21 @@ public class Personaje {
         sonidoPunch = this.efectos.load(context, R.raw.punch, 1);
     }
 
+    protected void actualizaHitBox() {
+        if (sprite != null) {
+            hitbox = new Rect((int)(getPosX() + 0.2 * sprite[0].getWidth()), (int)(getPosY() + 0.2 * sprite[0].getHeight()), (int)(getPosX() + 0.8 * sprite[0].getWidth()), (int)(getPosY() + 0.8 * sprite[0].getHeight()));
+        }
+    }
+
     public void dibujarPersonaje(Canvas c) {
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(5);
         c.drawBitmap(sprite[indiceFrame], posX, posY, null);
+        if (hitbox != null) {
+            c.drawRect(hitbox, p);
+        }
         cambiaFrame();
     }
 
@@ -113,16 +127,6 @@ public class Personaje {
             direccionAnterior = direccion;
         }
     }
-
-//    protected Bitmap[] cargarSpriteProtagonista(String tipo, String arma) {
-//        Bitmap bitmap;
-//        Bitmap[] asset = new Bitmap[20];
-//        for (int i = 0; i < 20; i++) {
-//            bitmap = utils.getBitmapFromAssets("protagonista/" + arma +"/" + tipo +"/survivor-" + tipo + "_" + arma + "_" + i + ".png");
-//            asset[i] = Bitmap.createScaledBitmap(bitmap, anchoPantalla * 1/10, altoPantalla * 1/6, false);
-//        }
-//        return asset;
-//    }
 
     protected Bitmap[] rotarSprite(Bitmap[] base, int grados) {
         Bitmap bitmap[] = new Bitmap[base.length];

@@ -3,7 +3,10 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Bala {
 
@@ -20,6 +23,7 @@ public class Bala {
     private int posY;
     private int velocidadBala = 20;
     private int anchoPantalla, altoPantalla;
+    private Rect hitbox;
 
     public Bala(TipoMunicion tipo, Joystick.Direccion direccion, int posX, int posY, int anchoPantalla, int altoPantalla, Context context) {
         this.posX = posX;
@@ -29,10 +33,16 @@ public class Bala {
         utils = new Utils(context);
         this.direccion = direccion;
         cargarBitmaps(tipo);
+        actualizaHitbox();
     }
 
     public void dibujarBala(Canvas c) {
         c.drawBitmap(bala, posX, posY, null);
+        Paint p = new Paint();
+        p.setColor(Color.RED);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(2);
+        c.drawRect(hitbox, p);
     }
 
     public void mueveBala() {
@@ -50,6 +60,11 @@ public class Bala {
                 posX -= velocidadBala;
                 break;
         }
+        actualizaHitbox();
+    }
+
+    private void actualizaHitbox() {
+        hitbox = new Rect((int)(posX + 0.2 * bala.getWidth()), (int)(posY + 0.2 * bala.getHeight()), (int)(posX + 0.8 * bala.getWidth()), (int)(posY + 0.8 * bala.getHeight()));
     }
 
     private void cargarBitmaps(TipoMunicion tipo) {

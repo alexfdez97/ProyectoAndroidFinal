@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,5 +32,11 @@ public class Utils {
         prefs[0] = sharedPreferences.getBoolean("musica", true);
         prefs[1] = sharedPreferences.getBoolean("efectos", true);
         return prefs;
+    }
+
+    public int dist(Point p1, Point p2) {
+        int dist = (int)Math.sqrt(Math.pow(p2.x - p1.x, 2)
+                + Math.pow(p2.y - p1.y, 2));
+        return dist;
     }
 }

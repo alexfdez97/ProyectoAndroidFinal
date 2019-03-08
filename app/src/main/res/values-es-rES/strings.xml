@@ -10,4 +10,5 @@
     <string name="strMenu">Menu</string>
     <string name="strRollback">Volver</string>
     <string name="strExit">Salir</string>
+    <string name="strRound">Ronda</string>
 </resources>
