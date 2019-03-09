@@ -3,7 +3,6 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +102,8 @@ public class Texto {
      */
     private void cargarBitmaps() {
         Bitmap tileset = utils.getBitmapFromAssets("menu/ui.png");
+        Bitmap dosPuntos = utils.getBitmapFromAssets("menu/doblep.png");
+        Bitmap guion = utils.getBitmapFromAssets("menu/guion.png");
         int tempX = 158;
         int tempY = 10;
         char c = 'a';
@@ -125,7 +126,6 @@ public class Texto {
             }
             if (j < 9) {
                 letras.put(num, Bitmap.createBitmap(tileset, tempX, tempY, 16, 24));
-                Log.i("pasa", num + "");
             } else {
                 letras.put('0', Bitmap.createBitmap(tileset, tempX, tempY, 16, 24));
             }
@@ -133,6 +133,8 @@ public class Texto {
             num++;
         }
         letras.put(' ', Bitmap.createBitmap(16, 20, Bitmap.Config.ARGB_8888));
+        letras.put(':', Bitmap.createBitmap(dosPuntos, 0, 0, 16, 24));
+        letras.put('-', Bitmap.createBitmap(guion, 0, 0, 16, 24));
     }
 
     public void setTexto(String texto) {

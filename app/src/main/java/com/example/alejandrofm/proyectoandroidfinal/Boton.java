@@ -31,6 +31,7 @@ public class Boton {
      * @param texto el texto que aparece dentro del botón (Admite carácteres de la a-z dentro de la tabla ASCII)
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
+     * @param efectos indica si los efectos sonoros están activados
      * @param context el contexto de la aplicación
      */
     public Boton(String texto, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {

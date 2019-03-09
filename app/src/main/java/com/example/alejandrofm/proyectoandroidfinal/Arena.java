@@ -1,13 +1,13 @@
 package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -34,6 +34,10 @@ public class Arena extends Escena {
     private int numeroRonda = 0;
     private boolean inicioRonda = true;
     private HashMap<Integer, PointF> pulsaciones = new HashMap<>();
+    private Boton btnMenu = null;
+    private Boton btnSalir = null;
+    private Texto txtPartidaEnd = null;
+    private boolean partidaFinalizada = false;
 
     /**
      * Inicializa las propiedades de la clase
@@ -53,6 +57,7 @@ public class Arena extends Escena {
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
         cargaFogonazos();
+        protagonista.setVida(1);
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
     }
@@ -67,69 +72,89 @@ public class Arena extends Escena {
         float x = event.getX(event.getActionIndex());
         float y = event.getY(event.getActionIndex());
         int id = event.getPointerId(event.getActionIndex());
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-            case MotionEvent.ACTION_DOWN:
-                pulsaciones.put(id, new PointF(x, y));
-                if (x < getAnchoPantalla() / 2) {
-                    jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
-                    jIzquierdo.setIdPuntero(id);
-                    jIzquierdo.setPulsado(true);
-                    protagonista.setjIzquierdo(jIzquierdo);
-                } else {
-                    jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
-                    jDerecho.setIdPuntero(id);
-                    jDerecho.setPulsado(true);
-                    protagonista.setjDerecho(jDerecho);
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_UP:
-                pulsaciones.remove(id);
-                if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
-                    jIzquierdo.setPulsado(false);
-                    jIzquierdo = null;
-                }
-                if (jDerecho != null && jDerecho.getIdPuntero() == id) {
-                    jDerecho.setPulsado(false);
-                    jDerecho = null;
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                for (int index:pulsaciones.keySet()) {
-                    float xx,yy;
-                    if (event.getPointerCount()>1){
-                        xx=event.getX(index);
-                        yy=event.getY(index);
-                    }else {
-                        xx=event.getX(0);
-                        yy=event.getY(0);
+        if (!partidaFinalizada) {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_POINTER_DOWN:
+                case MotionEvent.ACTION_DOWN:
+                    pulsaciones.put(id, new PointF(x, y));
+                    if (x < getAnchoPantalla() / 2) {
+                        jIzquierdo = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
+                        jIzquierdo.setIdPuntero(id);
+                        jIzquierdo.setPulsado(true);
+                        protagonista.setjIzquierdo(jIzquierdo);
+                    } else {
+                        jDerecho = new Joystick(getContext(), x, y, getAnchoPantalla(), getAltoPantalla());
+                        jDerecho.setIdPuntero(id);
+                        jDerecho.setPulsado(true);
+                        protagonista.setjDerecho(jDerecho);
                     }
-
-                    if (pulsaciones.containsKey(index)) {
-                        if (jIzquierdo != null && jIzquierdo.getIdPuntero() == index) {
-
-                            jIzquierdo.setCoordsJFlechas(xx,yy);
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                case MotionEvent.ACTION_UP:
+                    pulsaciones.remove(id);
+                    if (jIzquierdo != null && jIzquierdo.getIdPuntero() == id) {
+                        jIzquierdo.setPulsado(false);
+                        jIzquierdo = null;
+                    }
+                    if (jDerecho != null && jDerecho.getIdPuntero() == id) {
+                        jDerecho.setPulsado(false);
+                        jDerecho = null;
+                    }
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    for (int index : pulsaciones.keySet()) {
+                        float xx, yy;
+                        if (event.getPointerCount() > 1) {
+                            xx = event.getX(index);
+                            yy = event.getY(index);
+                        } else {
+                            xx = event.getX(0);
+                            yy = event.getY(0);
                         }
-                    }
-                    if (pulsaciones.containsKey(index)) {
-                        if (jDerecho != null && jDerecho.getIdPuntero() == index) {
-                            jDerecho.setCoordsJFlechas(xx,yy);
-                            if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
-                                if (Math.abs(lastBala - currentTime) >= 1000) {
-                                    balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
-                                    if (efectos) {
-                                        soundPool.play(efectoDisparo, 1, 1, 1, 0, 1);
-                                    }
-                                    lastBala = System.currentTimeMillis();
-                                    fuego = true;
-                                }
+
+                        if (pulsaciones.containsKey(index)) {
+                            if (jIzquierdo != null && jIzquierdo.getIdPuntero() == index) {
+
+                                jIzquierdo.setCoordsJFlechas(xx, yy);
                             }
-                            currentTime = System.currentTimeMillis();
+                        }
+                        if (pulsaciones.containsKey(index)) {
+                            if (jDerecho != null && jDerecho.getIdPuntero() == index) {
+                                jDerecho.setCoordsJFlechas(xx, yy);
+                                if (jDerecho.getDireccion() != Joystick.Direccion.NINGUNA) {
+                                    if (Math.abs(lastBala - currentTime) >= 1000) {
+                                        balas.add(new Bala(Bala.TipoMunicion.PISTOLA, jDerecho.getDireccion(), protagonista.getArmaX(), protagonista.getArmaY(), anchoPantalla, altoPantalla, context));
+                                        if (efectos) {
+                                            soundPool.play(efectoDisparo, 1, 1, 1, 0, 1);
+                                        }
+                                        lastBala = System.currentTimeMillis();
+                                        fuego = true;
+                                    }
+                                }
+                                currentTime = System.currentTimeMillis();
+                            }
                         }
                     }
-                }
-            break;
+                    break;
+            }
+        } else {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_POINTER_DOWN:
+                case MotionEvent.ACTION_DOWN:
+                    btnMenu.isPulsado(event);
+                    btnSalir.isPulsado(event);
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                case MotionEvent.ACTION_UP:
+                    if (btnMenu.isPulsado() && btnMenu.isPulsado(event)) {
+                        btnMenu.setPulsado(false);
+                        return 0;
+                    }
+                    if (btnSalir.isPulsado() && btnSalir.isPulsado(event)) {
+                        btnSalir.setPulsado(false);
+                        System.exit(0);
+                    }
+            }
         }
         return -1;
     }
@@ -181,29 +206,37 @@ public class Arena extends Escena {
         try  {
             c.drawColor(Color.BLACK);
             mapa.dibujaMapa(c);
-            if (inicioRonda) {
-                textoInicioRonda(c);
-            }
-            dibujaBalas(c);
-            if (fuego) {
-                dibujaFogonazo(c);
-                fuego = false;
-            }
-            protagonista.dibujarPersonaje(c);
-            txtHealth.dibujarTexto(anchoPantalla * 1/80, altoPantalla * 1/80, c);
-            hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1/4, altoPantalla * 1/80 , c);
-            txtPuntuation.dibujarTexto(hBar.getX() + hBar.getWidth() + anchoPantalla * 1/20, altoPantalla * 1/80, c);
-            txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1/80, altoPantalla * 1/80, c);
-            dibujaZombies(c);
-            if (jIzquierdo != null) {
-                if (jIzquierdo.isPulsado()) {
-                    jIzquierdo.dibujaJoystick(c);
+            if (!partidaFinalizada) {
+                if (inicioRonda) {
+                    textoInicioRonda(c);
                 }
-            }
-            if (jDerecho != null) {
-                if (jDerecho.isPulsado()) {
-                    jDerecho.dibujaJoystick(c);
+                dibujaBalas(c);
+                if (fuego) {
+                    dibujaFogonazo(c);
+                    fuego = false;
                 }
+                protagonista.dibujarPersonaje(c);
+                txtHealth.dibujarTexto(anchoPantalla * 1 / 80, altoPantalla * 1 / 80, c);
+                hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1 / 4, altoPantalla * 1 / 80, c);
+                txtPuntuation.dibujarTexto(hBar.getX() + hBar.getWidth() + anchoPantalla * 1 / 20, altoPantalla * 1 / 80, c);
+                txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1 / 80, altoPantalla * 1 / 80, c);
+                dibujaZombies(c);
+                if (jIzquierdo != null) {
+                    if (jIzquierdo.isPulsado()) {
+                        jIzquierdo.dibujaJoystick(c);
+                    }
+                }
+                if (jDerecho != null) {
+                    if (jDerecho.isPulsado()) {
+                        jDerecho.dibujaJoystick(c);
+                    }
+                }
+            } else {
+                btnMenu.dibujarBoton(anchoPantalla / 2 - btnMenu.getWidth() / 2, altoPantalla * 3/5 - btnMenu.getHeight() / 2, c);
+                btnSalir.dibujarBoton(anchoPantalla / 2 - btnSalir.getWidth() / 2, altoPantalla * 4/5 - btnSalir.getHeight() / 2, c);
+                txtPuntuation.dibujarTexto(anchoPantalla / 2 - txtPuntuation.getWidth() / 2 - txtPointsCounter.getWidth() / 2, altoPantalla * 2/5 - txtPuntuation.getHeight(), c);
+                txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1/80, txtPuntuation.getY(), c);
+                txtPartidaEnd.dibujarTexto(anchoPantalla / 2 - txtPartidaEnd.getWidth() / 2, altoPantalla * 1/5 - btnMenu.getHeight() / 2, c);
             }
         } catch (NullPointerException ex) { }
     }
@@ -214,13 +247,22 @@ public class Arena extends Escena {
     @Override
     public void actualizarFisica() {
         try  {
-            compruebaZombies();
-            for (Bala bala:balas) {
-                bala.mueveBala();
+            if (!partidaFinalizada) {
+                compruebaZombies();
+                for (Bala bala : balas) {
+                    bala.mueveBala();
+                }
+                mueveZombies(protagonista);
+                hBar.setVida(protagonista.getVida());
+                compruebaColisionBalas();
+                compruebaFinalPartida();
+            } else {
+                balas.clear();
+                zombies.clear();
+                protagonista = null;
+                jIzquierdo = null;
+                jDerecho = null;
             }
-            mueveZombies(protagonista);
-            hBar.setVida(protagonista.getVida());
-            compruebaColisionBalas();
         } catch (NullPointerException ex) { }
     }
 
@@ -319,6 +361,34 @@ public class Arena extends Escena {
     private void compruebaZombies() {
         if (zombies.size() == 0) {
             inicioRonda(protagonista);
+        }
+    }
+
+    /**
+     * Comprueba si la partida debe acabar
+     */
+    private void compruebaFinalPartida() {
+        if (protagonista.getVida() <= 0) {
+            if (btnMenu == null || btnSalir == null || txtPartidaEnd == null) {
+                btnMenu = new Boton(context.getString(R.string.strMenu), anchoPantalla, altoPantalla, efectos, context);
+                btnSalir = new Boton(context.getString(R.string.strExit), anchoPantalla, altoPantalla, efectos, context);
+                txtPartidaEnd = new Texto(context.getString(R.string.strGameOver), anchoPantalla * 2, altoPantalla * 2, context);
+            }
+            BaseDatos bd = null;
+            SQLiteDatabase lite = null;
+            try {
+                bd = new BaseDatos(context, "records", null, 1);
+                lite = bd.getWritableDatabase();
+                lite.execSQL("INSERT INTO records (points) VALUES (" + puntuation +")");
+            } finally {
+                if (lite != null) {
+                    lite.close();
+                }
+                if (bd != null) {
+                    bd.close();
+                }
+            }
+            partidaFinalizada = true;
         }
     }
 

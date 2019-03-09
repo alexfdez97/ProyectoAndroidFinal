@@ -11,4 +11,6 @@
     <string name="strRollback">Return</string>
     <string name="strExit">Exit</string>
     <string name="strRound">Round</string>
+    <string name="strGameOver" translatable="false">Game Over</string>
+    <string name="strDate">Date</string>
 </resources>

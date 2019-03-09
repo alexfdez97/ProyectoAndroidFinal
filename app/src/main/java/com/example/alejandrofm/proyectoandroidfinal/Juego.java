@@ -131,6 +131,11 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             if (nuevaEscena != escenaActual.idEscena) {
                 switch (nuevaEscena) {
                     case 0:
+                        if (escenaActual.getIdEscena() == 1) {
+                            if (music) {
+                                arenaMusic.stop();
+                            }
+                        }
                         escenaActual = menu;
                         if (music) {
                             menuMusic.start();
@@ -150,6 +155,12 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                     case 3:
                         escenaActual = new Tutorial(anchoPantalla, altoPantalla, context, 3);
                         menuMusic.pause();
+                        break;
+                    case 4:
+                        Records records = new Records(anchoPantalla, altoPantalla, context, 4);
+                        records.setParallax(menu.getParallax());
+                        records.setEfectos(effects);
+                        escenaActual = records;
                         break;
                     case 50:
                         menuMusic.pause();

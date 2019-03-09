@@ -2,6 +2,7 @@ package com.example.alejandrofm.proyectoandroidfinal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
@@ -25,8 +26,8 @@ public class Opciones extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
         btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, efectos, context);
-        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla, altoPantalla, context);
-        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla, altoPantalla, context);
+        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla * 3 / 2, altoPantalla * 2, context);
+        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla * 3 / 2, altoPantalla * 2, context);
         if (musica) {
             btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
         } else {
@@ -67,8 +68,6 @@ public class Opciones extends Escena {
         int accion = event.getActionMasked();
         switch (accion) {
             case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
                 btnRollback.isPulsado(event);
                 btnMusic.isPulsado(event);
                 btnEfect.isPulsado(event);
@@ -105,7 +104,7 @@ public class Opciones extends Escena {
                 }
                 if (btnResetRecords.isPulsado() && btnResetRecords.isPulsado(event)) {
                     btnResetRecords.setPulsado(false);
-                    //TODO codigo reset records
+                    context.deleteDatabase("records");
                 }
                 break;
         }
@@ -119,11 +118,11 @@ public class Opciones extends Escena {
             this.parallax.dibujaParallax(c);
             btnRollback.dibujarIconoBoton(0 + btnRollback.getWidth() / 2, 0 + btnRollback.getHeight() / 2, c);
             btnResetRecords.dibujarBoton(anchoPantalla * 1/3, altoPantalla * 3/4, c);
-            txtEfectos.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 1/4 + (btnEfect.getHeight() / 2), c);
-            txtMusica.dibujarTexto(anchoPantalla * 1/3, altoPantalla * 2/4 + (btnMusic.getHeight() / 2), c);
             int xIconos = btnResetRecords.getX() + btnResetRecords.getWidth() - btnEfect.getWidth();
-            btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY() - (btnEfect.getHeight() / 2), c);
-            btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY() - (btnMusic.getHeight() / 2), c);
+            txtEfectos.dibujarTexto(anchoPantalla * 1/4, altoPantalla * 1/4, c);
+            txtMusica.dibujarTexto(anchoPantalla * 1/4, altoPantalla * 2/4, c);
+            btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
+            btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
         } catch (NullPointerException ex) { }
     }
 
