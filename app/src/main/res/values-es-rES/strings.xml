@@ -12,4 +12,13 @@
     <string name="strExit">Salir</string>
     <string name="strRound">Ronda</string>
     <string name="strDate">Fecha</string>
+    <string name="strInfoPuntuation">Esta es tu puntuacion</string>
+    <string name="strInfoHealth">Esta es tu salud restante</string>
+    <string name="strSwipeR">Desliza en la parte derecha para disparar</string>
+    <string name="strSwipeL">Desliza en la parte izquierda para moverte</string>
+    <string name="strInfoHealth2">Cuando un zombie te golpea tu vida baja</string>
+    <string name="strPressContinue">Pulsa la pantalla para continuar</string>
+    <string name="strObjetive">El objetivo es matar zombis</string>
+    <string name="strDamage">El telefono vibra cuando recibes un golpe</string>
+    <string name="strEnjoy">Diviertete</string>
 </resources>

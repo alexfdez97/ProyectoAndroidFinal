@@ -52,11 +52,11 @@ public class Bala {
      */
     public void dibujarBala(Canvas c) {
         c.drawBitmap(bala, posX, posY, null);
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(2);
-        c.drawRect(hitbox, p);
+//        Paint p = new Paint();
+//        p.setColor(Color.RED);
+//        p.setStyle(Paint.Style.STROKE);
+//        p.setStrokeWidth(2);
+//        c.drawRect(hitbox, p);
     }
 
     /**

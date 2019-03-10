@@ -79,14 +79,14 @@ public class Personaje {
      * @param c el Canvas
      */
     public void dibujarPersonaje(Canvas c) {
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(5);
+//        Paint p = new Paint();
+//        p.setColor(Color.RED);
+//        p.setStyle(Paint.Style.STROKE);
+//        p.setStrokeWidth(5);
         c.drawBitmap(sprite[indiceFrame], posX, posY, null);
-        if (hitbox != null) {
-            c.drawRect(hitbox, p);
-        }
+//        if (hitbox != null) {
+//            c.drawRect(hitbox, p);
+//        }
         cambiaFrame();
     }
 

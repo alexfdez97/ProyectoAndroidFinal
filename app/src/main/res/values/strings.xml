@@ -13,4 +13,13 @@
     <string name="strRound">Round</string>
     <string name="strGameOver" translatable="false">Game Over</string>
     <string name="strDate">Date</string>
+    <string name="strInfoPuntuation">This is your puntuation</string>
+    <string name="strInfoHealth">This is your remaining health</string>
+    <string name="strSwipeL">Swipe in the left of screen to move</string>
+    <string name="strSwipeR">Swipe in the right of screen to shoot</string>
+    <string name="strInfoHealth2">When a zombie hit you your health down</string>
+    <string name="strPressContinue">Press screen to continue</string>
+    <string name="strObjetive">The objective is kill zombies</string>
+    <string name="strDamage">The phone vibrate when you recibe damage</string>
+    <string name="strEnjoy">Have fun</string>
 </resources>

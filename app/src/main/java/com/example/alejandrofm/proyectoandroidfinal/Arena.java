@@ -18,10 +18,10 @@ import java.util.Random;
 public class Arena extends Escena {
 
     private ArrayList<Zombie> zombies = new ArrayList<>();
-    private Utils utils;
-    private Joystick jIzquierdo, jDerecho;
-    private Protagonista protagonista;
-    private Mapa mapa;
+    protected Utils utils;
+    protected Joystick jIzquierdo, jDerecho;
+    protected Protagonista protagonista;
+    protected Mapa mapa;
     private Texto txtHealth, txtPuntuation, txtPointsCounter;
     private HealthBar hBar;
     private Bitmap fogonazos[] = new Bitmap[4];
@@ -31,13 +31,13 @@ public class Arena extends Escena {
     private Context context;
     private boolean fuego = false;
     private Matrix matrix = new Matrix();
-    private int numeroRonda = 0;
+    protected int numeroRonda = 0;
     private boolean inicioRonda = true;
     private HashMap<Integer, PointF> pulsaciones = new HashMap<>();
     private Boton btnMenu = null;
     private Boton btnSalir = null;
     private Texto txtPartidaEnd = null;
-    private boolean partidaFinalizada = false;
+    protected boolean partidaFinalizada = false;
 
     /**
      * Inicializa las propiedades de la clase
@@ -163,7 +163,7 @@ public class Arena extends Escena {
      * Avanza a la siguiente ronda y genera sus zombies correspondientes
      * @param protagonista el protagonista del juego
      */
-    private void inicioRonda(Protagonista protagonista) {
+    protected void inicioRonda(Protagonista protagonista) {
         numeroRonda++;
         generarZombies(protagonista, numeroRonda);
     }
@@ -186,7 +186,7 @@ public class Arena extends Escena {
      * @see Zombie
      * @see Protagonista
      */
-    private void generarZombies(Protagonista protagonista, int cantidad) {
+    protected void generarZombies(Protagonista protagonista, int cantidad) {
         Random random = new Random();
         for (int i = 0; i < cantidad; i++) {
             int velocidad = random.nextInt(4 + 1 - 1) + 1;
@@ -374,21 +374,25 @@ public class Arena extends Escena {
                 btnSalir = new Boton(context.getString(R.string.strExit), anchoPantalla, altoPantalla, efectos, context);
                 txtPartidaEnd = new Texto(context.getString(R.string.strGameOver), anchoPantalla * 2, altoPantalla * 2, context);
             }
-            BaseDatos bd = null;
-            SQLiteDatabase lite = null;
-            try {
-                bd = new BaseDatos(context, "records", null, 1);
-                lite = bd.getWritableDatabase();
-                lite.execSQL("INSERT INTO records (points) VALUES (" + puntuation +")");
-            } finally {
-                if (lite != null) {
-                    lite.close();
-                }
-                if (bd != null) {
-                    bd.close();
-                }
-            }
+            guardaRecords();
             partidaFinalizada = true;
+        }
+    }
+
+    protected void guardaRecords() {
+        BaseDatos bd = null;
+        SQLiteDatabase lite = null;
+        try {
+            bd = new BaseDatos(context, "records", null, 1);
+            lite = bd.getWritableDatabase();
+            lite.execSQL("INSERT INTO records (points) VALUES (" + puntuation +")");
+        } finally {
+            if (lite != null) {
+                lite.close();
+            }
+            if (bd != null) {
+                bd.close();
+            }
         }
     }
 

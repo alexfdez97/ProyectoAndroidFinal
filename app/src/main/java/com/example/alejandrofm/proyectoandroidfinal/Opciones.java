@@ -26,8 +26,8 @@ public class Opciones extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
         btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, efectos, context);
-        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla * 3 / 2, altoPantalla * 2, context);
-        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla * 3 / 2, altoPantalla * 2, context);
+        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla * 4 / 3, altoPantalla * 2, context);
+        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla * 4 / 3, altoPantalla * 2, context);
         if (musica) {
             btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
         } else {
@@ -119,8 +119,8 @@ public class Opciones extends Escena {
             btnRollback.dibujarIconoBoton(0 + btnRollback.getWidth() / 2, 0 + btnRollback.getHeight() / 2, c);
             btnResetRecords.dibujarBoton(anchoPantalla * 1/3, altoPantalla * 3/4, c);
             int xIconos = btnResetRecords.getX() + btnResetRecords.getWidth() - btnEfect.getWidth();
-            txtEfectos.dibujarTexto(anchoPantalla * 1/4, altoPantalla * 1/4, c);
-            txtMusica.dibujarTexto(anchoPantalla * 1/4, altoPantalla * 2/4, c);
+            txtEfectos.dibujarTexto(btnResetRecords.getX(), altoPantalla * 1/4 + txtEfectos.getHeight() / 2, c);
+            txtMusica.dibujarTexto(btnResetRecords.getX(), altoPantalla * 2/4 + txtMusica.getHeight() / 2, c);
             btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
             btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
         } catch (NullPointerException ex) { }
