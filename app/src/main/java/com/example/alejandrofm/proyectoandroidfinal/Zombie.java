@@ -16,6 +16,7 @@ public class Zombie extends Personaje {
     private Bitmap[] atackLeft = new Bitmap[9];
     private Bitmap[] atackDown = new Bitmap[9];
     private Bitmap[] atackUp = new Bitmap[9];
+    private boolean cambioVelocidad = false;
 
     /**
      * Inicializa las propiedades de la clase y de su clase padre
@@ -70,6 +71,12 @@ public class Zombie extends Personaje {
      * @param protagonista el Protagonista hacia el que se mueve
      */
     public void caminar(Protagonista protagonista) {
+        if (blEfectos) {
+            int rand = (int)Math.random() * 10;
+            if (rand == 5) {
+                efectos.play(sonidoZRising, 0.6f, 0.6f, 1, 0, 1);
+            }
+        }
         Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
         Point pZombie = new Point(this.getPosX(), this.getPosY());
 //        if ((Math.abs(this.getPosX() - protagonista.getPosX()) < velocidad) || (Math.abs(this.getPosY() - protagonista.getPosY()) < velocidad)) {
@@ -82,16 +89,20 @@ public class Zombie extends Personaje {
 //
 //        }
 
-        Log.i("velocidad", "Distancia: " + utils.dist(pProta, pZombie));
         if ((utils.dist(pProta, pZombie) - 1) < velocidad) {
             velocidad = 1;
         } else {
             velocidad = velocidadInicial;
         }
         pasos++;
+//        if (pasos > 100) {
+//            velocidad = 1;
+//        } else if (pasos == 2) {
+//            velocidad = 1;
+//        } else {
+//            velocidad = velocidadInicial;
+//        }
         if (!Rect.intersects(this.hitbox, protagonista.getHitbox())) {
-
-
             if (pasos < 100) {
                 if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
                     if (this.getPosX() < protagonista.getPosX()) {
@@ -246,5 +257,11 @@ public class Zombie extends Personaje {
             }
         }
         return asset;
+    }
+
+    @Override
+    public void damaged() {
+        super.damaged();
+        efectos.play(sonidoZPain,0.2f,0.2f,1,0,1);
     }
 }

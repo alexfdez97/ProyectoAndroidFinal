@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class Arena extends Escena {
     private Boton btnSalir = null;
     private Texto txtPartidaEnd = null;
     protected boolean partidaFinalizada = false;
+    protected Explosion explosion;
 
     /**
      * Inicializa las propiedades de la clase
@@ -57,9 +59,9 @@ public class Arena extends Escena {
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
         cargaFogonazos();
-        protagonista.setVida(1);
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
+        explosion = new Explosion(altoPantalla * 1/6, altoPantalla * 1/6, efectos, context);
     }
 
     /**
@@ -190,8 +192,8 @@ public class Arena extends Escena {
         Random random = new Random();
         for (int i = 0; i < cantidad; i++) {
             int velocidad = random.nextInt(4 + 1 - 1) + 1;
-            int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla) + anchoPantalla;
-            int posY = random.nextInt(altoPantalla + 500 - altoPantalla) + altoPantalla;
+            int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla + 1) + anchoPantalla;
+            int posY = random.nextInt(altoPantalla + 500 - altoPantalla + 1) + altoPantalla;
             int vida = cantidad;
             zombies.add(new Zombie(posX, posY, velocidad, vida, anchoPantalla, altoPantalla, efectos, context));
         }

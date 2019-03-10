@@ -37,6 +37,8 @@ public class Personaje {
     protected SoundPool efectos;
     protected int sonidoCaminar;
     protected int sonidoPunch;
+    protected int sonidoZPain;
+    protected int sonidoZRising;
     final private int maximoSonidos = 10;
 
     /**
@@ -63,6 +65,8 @@ public class Personaje {
         this.efectos = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
         sonidoCaminar = this.efectos.load(context, R.raw.caminando, 2);
         sonidoPunch = this.efectos.load(context, R.raw.punch, 1);
+        sonidoZPain = this.efectos.load(context, R.raw.zombie_pain, 1);
+        sonidoZRising = this.efectos.load(context, R.raw.zombie_rising, 1);
     }
 
     /**
@@ -340,5 +344,9 @@ public class Personaje {
             vida--;
             lastGolpe = System.currentTimeMillis();
         }
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

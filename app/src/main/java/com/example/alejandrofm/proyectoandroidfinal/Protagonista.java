@@ -193,6 +193,5 @@ public class Protagonista extends Personaje {
     public void damaged() {
         super.damaged();
         vibrator.vibrate(300);
-        Log.i("vida", this.vida+"");
     }
 }
