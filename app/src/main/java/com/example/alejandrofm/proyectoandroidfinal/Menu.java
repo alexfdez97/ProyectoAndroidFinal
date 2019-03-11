@@ -82,7 +82,7 @@ public class Menu extends Escena {
                 }
                 if (btnCreditos.isPulsado() && btnCreditos.isPulsado(event)) {
                     btnCreditos.setPulsado(false);
-                    return 0;
+                    return 5;
                 }
                 break;
         }

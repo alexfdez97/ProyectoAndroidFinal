@@ -22,4 +22,32 @@
     <string name="strObjetive">The objective is kill zombies</string>
     <string name="strDamage">The phone vibrate when you recibe damage</string>
     <string name="strEnjoy">Have fun</string>
+    <string name="strCredits">Credits</string>
+    <string name="strBullet">Bulley by Bevouliin.com</string>
+    <string name="strJoystick">Joystick by Kenney.nl</string>
+    <string name="strMap">Map by Kenney.nl</string>
+    <string name="strHelpIcon">Help icon Sbed OpenGameArt</string>
+    <string name="strInfoIcon">Info Icon and Speaker icon by Delapouite game-icons</string>
+    <string name="strTrophy">Trophy icon by Lorc game-icons</string>
+    <string name="strGui">Menu Gui by Buch OpenGameArt</string>
+    <string name="strAlejandromodified">Modified by Alejandro Fernandez</string>
+    <string name="strGameBy">Game by Alejandro Fernandez Martinez</string>
+    <string name="strImageAssets">Image assets</string>
+    <string name="strParallax">Parallax by craftpix.net</string>
+    <string name="strGraveyard">Graveyard found by LarryIRL opengameart</string>
+    <string name="strSurvivor">Survivor by Riley Gombart opengameart</string>
+    <string name="strZombie">Zombie by Riley Gombart opengameart</string>
+    <string name="strArrow">Arrow Icon by PixelBazar icon-icons</string>
+    <string name="strHealthBar">Health Bar by whilefun opengameart</string>
+    <string name="strSounds">Sound Assets</string>
+    <string name="strMenuMusic">Menu music</string>
+    <string name="strBethoven" translatable="false">Ludwig Van Beethoven</string>
+    <string name="strWikimedia">Source Wikimedia</string>
+    <string name="strSonata" translatable="false">Moonlight Sonata 1st movement</string>
+    <string name="strgamemusic">Game music</string>
+    <string name="strDarkF">DarkFallout by remanix opengameart</string>
+    <string name="strSoundible">Sound effects by Soundible</string>
+    <string name="strWalkingsound">Walking by Caroline Ford</string>
+    <string name="strRest">Remaining sound effects by Mike Koenig</string>
+    <string name="strGameIcon">Game icon by Josy dom alexis icon-icons</string>
 </resources>

@@ -162,6 +162,12 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                         records.setEfectos(effects);
                         escenaActual = records;
                         break;
+                    case 5:
+                        Creditos creditos = new Creditos(anchoPantalla, altoPantalla, context, 5);
+                        creditos.setParallax(menu.getParallax());
+                        creditos.setEfectos(effects);
+                        escenaActual = creditos;
+                        break;
                     case 50:
                         menuMusic.pause();
                         music = false;

@@ -104,6 +104,7 @@ public class Texto {
         Bitmap tileset = utils.getBitmapFromAssets("menu/ui.png");
         Bitmap dosPuntos = utils.getBitmapFromAssets("menu/doblep.png");
         Bitmap guion = utils.getBitmapFromAssets("menu/guion.png");
+        Bitmap punto = utils.getBitmapFromAssets("menu/punto.png");
         int tempX = 158;
         int tempY = 10;
         char c = 'a';
@@ -135,6 +136,7 @@ public class Texto {
         letras.put(' ', Bitmap.createBitmap(16, 20, Bitmap.Config.ARGB_8888));
         letras.put(':', Bitmap.createBitmap(dosPuntos, 0, 0, 16, 24));
         letras.put('-', Bitmap.createBitmap(guion, 0, 0, 16, 24));
+        letras.put('.', Bitmap.createBitmap(punto, 0, 0, 16, 24));
     }
 
     public void setTexto(String texto) {

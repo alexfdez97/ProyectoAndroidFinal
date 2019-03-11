@@ -190,8 +190,22 @@ public class Arena extends Escena {
         Random random = new Random();
         for (int i = 0; i < cantidad; i++) {
             int velocidad = random.nextInt(4 + 1 - 1) + 1;
-            int posX = random.nextInt(anchoPantalla + 500 - anchoPantalla + 1) + anchoPantalla;
-            int posY = random.nextInt(altoPantalla + 500 - altoPantalla + 1) + altoPantalla;
+            double lado = Math.random();
+            int posX = -500;
+            int posY = -500;
+            if (lado < 0.25) {
+                posX = -500;
+                posY = random.nextInt(altoPantalla + 500 - 0 + (-500)) + (-500);
+            } else if (lado < 0.5) {
+                posX = random.nextInt(anchoPantalla + 500 - 0 + (-500) + (-500));
+                posY = -500;
+            } else if (lado < 0.75) {
+                posX = anchoPantalla + 500;
+                posY = random.nextInt(altoPantalla + 500 - 0 + (-500)) + (-500);
+            } else if (lado < 1) {
+                posX = random.nextInt(anchoPantalla + 500 - 0 + (-500) + (-500));
+                posY = altoPantalla + 500;
+            }
             int vida = cantidad;
             zombies.add(new Zombie(posX, posY, velocidad, vida, anchoPantalla, altoPantalla, efectos, context));
         }
@@ -216,11 +230,11 @@ public class Arena extends Escena {
                     fuego = false;
                 }
                 protagonista.dibujarPersonaje(c);
+                dibujaZombies(c);
+                txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1 / 80, altoPantalla * 1 / 80, c);
                 txtHealth.dibujarTexto(anchoPantalla * 1 / 80, altoPantalla * 1 / 80, c);
                 hBar.dibujaBar(txtHealth.getWidth() + txtHealth.getWidth() * 1 / 4, altoPantalla * 1 / 80, c);
                 txtPuntuation.dibujarTexto(hBar.getX() + hBar.getWidth() + anchoPantalla * 1 / 20, altoPantalla * 1 / 80, c);
-                txtPointsCounter.dibujarTexto(txtPuntuation.getX() + txtPuntuation.getWidth() + anchoPantalla * 1 / 80, altoPantalla * 1 / 80, c);
-                dibujaZombies(c);
                 if (jIzquierdo != null) {
                     if (jIzquierdo.isPulsado()) {
                         jIzquierdo.dibujaJoystick(c);
@@ -256,6 +270,7 @@ public class Arena extends Escena {
                 hBar.setVida(protagonista.getVida());
                 compruebaColisionBalas();
                 compruebaFinalPartida();
+                compruebaBalas();
             } else {
                 balas.clear();
                 zombies.clear();
@@ -400,17 +415,14 @@ public class Arena extends Escena {
         }
     }
 
-//    private void compruebaBalas() {
-//        for (Bala bala : balas) {
-//            if (bala.getX() > anchoPantalla) {
-//                balas.remove(bala);
-//            } else if (bala.getX() < anchoPantalla + bala.getWidth()) {
-//                balas.remove(bala);
-//            } else if (bala.getY() > altoPantalla) {
-//                balas.remove(bala);
-//            } else if (bala.getY() < altoPantalla + bala.getHeight()) {
-//                balas.remove(bala);
-//            }
-//        }
-//    }
+    private void compruebaBalas() {
+        Iterator<Bala> iteratorBalas = balas.iterator();
+        while (iteratorBalas.hasNext()) {
+            Bala bala = iteratorBalas.next();
+            if (bala.getX() > anchoPantalla || bala.getY() > altoPantalla || bala.getX() < (bala.getWidth() * -1) || bala.getY() < (bala.getHeight() * -1)) {
+                iteratorBalas.remove();
+            }
+
+        }
+    }
 }

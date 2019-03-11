@@ -346,6 +346,13 @@ public class Personaje {
         }
     }
 
+    public void damaged(int daño) {
+        if (Math.abs(tiempoActual - lastGolpe) >= 200) {
+            vida -= daño;
+            lastGolpe = System.currentTimeMillis();
+        }
+    }
+
     public Context getContext() {
         return context;
     }

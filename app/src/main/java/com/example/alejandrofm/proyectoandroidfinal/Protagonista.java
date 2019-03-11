@@ -191,7 +191,7 @@ public class Protagonista extends Personaje {
      */
     @Override
     public void damaged() {
-        super.damaged();
+        super.damaged(5);
         vibrator.vibrate(300);
     }
 }

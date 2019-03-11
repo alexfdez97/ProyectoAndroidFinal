@@ -42,18 +42,18 @@ public class Zombie extends Personaje {
         this.velocidadInicial = velocidad;
         this.vida = vida;
         sprite = new Bitmap[17];
-        idleRight = new Bitmap[17];
-        idleDown = new Bitmap[17];
-        idleLeft = new Bitmap[17];
-        idleUp = new Bitmap[17];
+//        idleRight = new Bitmap[17];
+//        idleDown = new Bitmap[17];
+//        idleLeft = new Bitmap[17];
+//        idleUp = new Bitmap[17];
         moveLeft = new Bitmap[17];
         moveDown = new Bitmap[17];
         moveRight = new Bitmap[17];
         moveUp = new Bitmap[17];
-        idleRight = cargarSpriteZombie("idle");
-        idleUp = rotarSprite(idleRight, -90);
-        idleDown = rotarSprite(idleRight, 90);
-        idleLeft = rotarSprite(idleRight, 180);
+//        idleRight = cargarSpriteZombie("idle");
+//        idleUp = rotarSprite(idleRight, -90);
+//        idleDown = rotarSprite(idleRight, 90);
+//        idleLeft = rotarSprite(idleRight, 180);
         moveRight = cargarSpriteZombie("move");
         moveUp = rotarSprite(moveRight, -90);
         moveDown = rotarSprite(moveRight, 90);
@@ -121,16 +121,24 @@ public class Zombie extends Personaje {
             } else {
                 velocidad = velocidadInicial;
             }
+            boolean diferenciaX = Math.abs(this.getPosX() - protagonista.getPosX()) < velocidadInicial;
+            boolean diferenciaY = Math.abs(this.getPosY() - protagonista.getPosY()) < velocidadInicial;
             pasos++;
-//        if (pasos > 100) {
-//            velocidad = 1;
-//        } else if (pasos == 2) {
-//            velocidad = 1;
-//        } else {
-//            velocidad = velocidadInicial;
-//        }
             if (!Rect.intersects(this.hitbox, protagonista.getHitbox())) {
-                if (pasos < 100) {
+                if (diferenciaX ) {
+                    if (this.getPosY() < protagonista.getPosY()) {
+                        incrementaY();
+                    } else if (this.getPosY() > protagonista.getPosY()) {
+                        decrementaY();
+                    }
+                } else if (diferenciaY) {
+                    if (this.getPosX() < protagonista.getPosX()) {
+                        incrementaX();
+                    } else if (this.getPosX() > protagonista.getPosX()) {
+                        decrementaX();
+                    }
+                }
+                else if (pasos < 100) {
                     if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
                         if (this.getPosX() < protagonista.getPosX()) {
                             incrementaX();
