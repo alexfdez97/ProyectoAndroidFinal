@@ -39,7 +39,6 @@ public class Arena extends Escena {
     private Boton btnSalir = null;
     private Texto txtPartidaEnd = null;
     protected boolean partidaFinalizada = false;
-    protected Explosion explosion;
 
     /**
      * Inicializa las propiedades de la clase
@@ -61,7 +60,6 @@ public class Arena extends Escena {
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
-        explosion = new Explosion(altoPantalla * 1/6, altoPantalla * 1/6, efectos, context);
     }
 
     /**
@@ -344,13 +342,17 @@ public class Arena extends Escena {
         Iterator<Zombie> zIteratos = zombies.iterator();
         while (zIteratos.hasNext()) {
             Zombie zombie = zIteratos.next();
-            for (Bala bala:balas) {
-                if (Rect.intersects(bala.getHitbox(), zombie.getHitbox())) {
-                    zombie.damaged();
-                    puntuation += 100;
-                    txtPointsCounter.setTexto(String.format("%06d", puntuation));
-                    if (zombie.getVida() <= 0) {
-                        zIteratos.remove();
+            if (zombie.isMurio()) {
+                zIteratos.remove();
+            } else if (!zombie.isMuriendo()) {
+                for (Bala bala:balas) {
+                    if (Rect.intersects(bala.getHitbox(), zombie.getHitbox())) {
+                        zombie.damaged();
+                        puntuation += 100;
+                        txtPointsCounter.setTexto(String.format("%06d", puntuation));
+                        if (zombie.getVida() <= 0) {
+                            zombie.setMuriendo(true);
+                        }
                     }
                 }
             }

@@ -3,6 +3,7 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
@@ -17,6 +18,12 @@ public class Zombie extends Personaje {
     private Bitmap[] atackDown = new Bitmap[9];
     private Bitmap[] atackUp = new Bitmap[9];
     private boolean cambioVelocidad = false;
+    private boolean muriendo = false;
+    private boolean murio = false;
+    private int contParpadeo = 0;
+    private long lastParpadeo;
+    private Paint alphaPaint = new Paint();
+    private boolean parpadeo = true;
 
     /**
      * Inicializa las propiedades de la clase y de su clase padre
@@ -57,12 +64,31 @@ public class Zombie extends Personaje {
         atackLeft = rotarSprite(atackRigth, 180);
         sprite = moveDown;
         ultimoGolpe = tiempoActual + 500;
+        lastParpadeo = System.currentTimeMillis();
+        alphaPaint.setAlpha(42);
         super.actualizaHitBox();
     }
 
     @Override
     public void dibujarPersonaje(Canvas c) {
-        super.dibujarPersonaje(c);
+        if (!muriendo) {
+            super.dibujarPersonaje(c);
+        } else {
+
+            if (System.currentTimeMillis() - lastParpadeo > 500) {
+                parpadeo = !parpadeo;
+                lastParpadeo = System.currentTimeMillis();
+                contParpadeo++;
+                if (contParpadeo == 6) {
+                    murio = true;
+                }
+            }
+            if (parpadeo) {
+                c.drawBitmap(sprite[indiceFrame], posX, posY, alphaPaint);
+            } else {
+                c.drawBitmap(sprite[indiceFrame], posX, posY, null);
+            }
+        }
     }
 
     /**
@@ -77,8 +103,9 @@ public class Zombie extends Personaje {
                 efectos.play(sonidoZRising, 0.6f, 0.6f, 1, 0, 1);
             }
         }
-        Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
-        Point pZombie = new Point(this.getPosX(), this.getPosY());
+        if (!this.muriendo) {
+            Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
+            Point pZombie = new Point(this.getPosX(), this.getPosY());
 //        if ((Math.abs(this.getPosX() - protagonista.getPosX()) < velocidad) || (Math.abs(this.getPosY() - protagonista.getPosY()) < velocidad)) {
 //            velocidad = 1;
 //        } else {
@@ -89,12 +116,12 @@ public class Zombie extends Personaje {
 //
 //        }
 
-        if ((utils.dist(pProta, pZombie) - 1) < velocidad) {
-            velocidad = 1;
-        } else {
-            velocidad = velocidadInicial;
-        }
-        pasos++;
+            if ((utils.dist(pProta, pZombie) - 1) < velocidad) {
+                velocidad = 1;
+            } else {
+                velocidad = velocidadInicial;
+            }
+            pasos++;
 //        if (pasos > 100) {
 //            velocidad = 1;
 //        } else if (pasos == 2) {
@@ -102,71 +129,72 @@ public class Zombie extends Personaje {
 //        } else {
 //            velocidad = velocidadInicial;
 //        }
-        if (!Rect.intersects(this.hitbox, protagonista.getHitbox())) {
-            if (pasos < 100) {
-                if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
-                    if (this.getPosX() < protagonista.getPosX()) {
-                        incrementaX();
-                    } else if (this.getPosX() > protagonista.getPosX()) {
-                        decrementaX();
-                    } else if (this.getPosY() < protagonista.getPosY()) {
-                        incrementaY();
-                    } else if (this.getPosY() > protagonista.getPosY()) {
-                        decrementaY();
-                    }
-                } else {
-                    if (this.getPosX() != protagonista.getPosX()) {
+            if (!Rect.intersects(this.hitbox, protagonista.getHitbox())) {
+                if (pasos < 100) {
+                    if (this.getPosX() != protagonista.getPosX() && this.getPosY() != protagonista.getPosY()) {
                         if (this.getPosX() < protagonista.getPosX()) {
                             incrementaX();
                         } else if (this.getPosX() > protagonista.getPosX()) {
                             decrementaX();
-                        }
-                    } else if (this.getPosY() != protagonista.getPosY()) {
-                        if (this.getPosY() < protagonista.getPosY()) {
+                        } else if (this.getPosY() < protagonista.getPosY()) {
                             incrementaY();
                         } else if (this.getPosY() > protagonista.getPosY()) {
                             decrementaY();
                         }
-                    } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
-                        ataca(protagonista);
+                    } else {
+                        if (this.getPosX() != protagonista.getPosX()) {
+                            if (this.getPosX() < protagonista.getPosX()) {
+                                incrementaX();
+                            } else if (this.getPosX() > protagonista.getPosX()) {
+                                decrementaX();
+                            }
+                        } else if (this.getPosY() != protagonista.getPosY()) {
+                            if (this.getPosY() < protagonista.getPosY()) {
+                                incrementaY();
+                            } else if (this.getPosY() > protagonista.getPosY()) {
+                                decrementaY();
+                            }
+                        } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                            ataca(protagonista);
+                        }
+                    }
+                } else {
+                    if (this.getPosY() != protagonista.getPosY() && this.getPosX() != protagonista.getPosX()) {
+                        if (this.getPosY() < protagonista.getPosY()) {
+                            incrementaY();
+                        } else if (this.getPosY() > protagonista.getPosY()) {
+                            decrementaY();
+                        } else if (this.getPosX() < protagonista.getPosX()) {
+                            incrementaX();
+                        } else if (this.getPosX() > protagonista.getPosX()) {
+                            decrementaX();
+                        }
+                    } else {
+                        if (this.getPosY() != protagonista.getPosY()) {
+                            if (this.getPosY() < protagonista.getPosY()) {
+                                incrementaY();
+                            } else if (this.getPosY() > protagonista.getPosY()) {
+                                decrementaY();
+                            }
+                        } else if (this.getPosX() != protagonista.getPosX()) {
+                            if (this.getPosX() < protagonista.getPosX()) {
+                                incrementaX();
+                            } else if (this.getPosX() > protagonista.getPosX()) {
+                                decrementaX();
+                            }
+                        } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
+                            ataca(protagonista);
+                        }
+                    }
+                    if (pasos > 200) {
+                        pasos = 0;
                     }
                 }
             } else {
-                if (this.getPosY() != protagonista.getPosY() && this.getPosX() != protagonista.getPosX()) {
-                    if (this.getPosY() < protagonista.getPosY()) {
-                        incrementaY();
-                    } else if (this.getPosY() > protagonista.getPosY()) {
-                        decrementaY();
-                    } else if (this.getPosX() < protagonista.getPosX()) {
-                        incrementaX();
-                    } else if (this.getPosX() > protagonista.getPosX()) {
-                        decrementaX();
-                    }
-                } else {
-                    if (this.getPosY() != protagonista.getPosY()) {
-                        if (this.getPosY() < protagonista.getPosY()) {
-                            incrementaY();
-                        } else if (this.getPosY() > protagonista.getPosY()) {
-                            decrementaY();
-                        }
-                    } else if (this.getPosX() != protagonista.getPosX()) {
-                        if (this.getPosX() < protagonista.getPosX()) {
-                            incrementaX();
-                        } else if (this.getPosX() > protagonista.getPosX()) {
-                            decrementaX();
-                        }
-                    } else if (this.getPosX() == protagonista.getPosX() && this.getPosY() == protagonista.getPosY()) {
-                        ataca(protagonista);
-                    }
-                }
-                if (pasos > 200) {
-                    pasos = 0;
-                }
+                ataca(protagonista);
             }
-        } else {
-            ataca(protagonista);
+            super.actualizaHitBox();
         }
-        super.actualizaHitBox();
         Log.i("velocidad", this.velocidad+"");
     }
 
@@ -263,5 +291,21 @@ public class Zombie extends Personaje {
     public void damaged() {
         super.damaged();
         efectos.play(sonidoZPain,0.2f,0.2f,1,0,1);
+    }
+
+    public boolean isMuriendo() {
+        return muriendo;
+    }
+
+    public void setMuriendo(boolean muriendo) {
+        this.muriendo = muriendo;
+    }
+
+    public boolean isMurio() {
+        return murio;
+    }
+
+    public void setMurio(boolean murio) {
+        this.murio = murio;
     }
 }
