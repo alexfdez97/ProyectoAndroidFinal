@@ -61,7 +61,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (escenaActual != null) {
-            if (music && escenaActual.getIdEscena() == 0) {
+            if (music && escenaActual.getIdEscena() != 1) {
                 menuMusic.start();
             } else {
                 menuMusic.pause();
@@ -69,7 +69,7 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             if (music && escenaActual.getIdEscena() == 1) {
                 arenaMusic.start();
             } else {
-                arenaMusic.stop();
+                arenaMusic.pause();
             }
         } else {
             if (music) {
@@ -100,7 +100,6 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             opciones = new Opciones(width, height, context, 2);
         }
 
-//        hilo.setSurfaceSize(width, height);
         hilo.setFuncionando(true);
         if (hilo.getState() == Thread.State.NEW) {
             hilo.start();
@@ -133,7 +132,8 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
                     case 0:
                         if (escenaActual.getIdEscena() == 1) {
                             if (music) {
-                                arenaMusic.stop();
+                                arenaMusic.pause();
+                                arenaMusic.seekTo(0);
                             }
                         }
                         escenaActual = menu;
@@ -236,10 +236,5 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             funcionando = flag;
         }
 
-        public void setSurfaceSize () {
-            synchronized (surfaceHolder) {
-
-            }
-        }
     }
 }

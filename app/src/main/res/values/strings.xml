@@ -26,11 +26,11 @@
     <string name="strBullet">Bulley by Bevouliin.com</string>
     <string name="strJoystick">Joystick by Kenney.nl</string>
     <string name="strMap">Map by Kenney.nl</string>
-    <string name="strHelpIcon">Help icon Sbed OpenGameArt</string>
+    <string name="strHelpIcon">Help icon by Sbed OpenGameArt</string>
     <string name="strInfoIcon">Info Icon and Speaker icon by Delapouite game-icons</string>
     <string name="strTrophy">Trophy icon by Lorc game-icons</string>
     <string name="strGui">Menu Gui by Buch OpenGameArt</string>
-    <string name="strAlejandromodified">Modified by Alejandro Fernandez</string>
+    <string name="strAlejandromodified">Icons and gui modified by Alejandro Fernandez</string>
     <string name="strGameBy">Game by Alejandro Fernandez Martinez</string>
     <string name="strImageAssets">Image assets</string>
     <string name="strParallax">Parallax by craftpix.net</string>
@@ -47,7 +47,9 @@
     <string name="strgamemusic">Game music</string>
     <string name="strDarkF">DarkFallout by remanix opengameart</string>
     <string name="strSoundible">Sound effects by Soundible</string>
-    <string name="strWalkingsound">Walking by Caroline Ford</string>
+    <string name="strWalkingsound">Walking effect by Caroline Ford</string>
     <string name="strRest">Remaining sound effects by Mike Koenig</string>
     <string name="strGameIcon">Game icon by Josy dom alexis icon-icons</string>
+    <string name="strBy">by</string>
+    <string name="strScreenExit">Press screen to back to menu</string>
 </resources>

@@ -42,18 +42,10 @@ public class Zombie extends Personaje {
         this.velocidadInicial = velocidad;
         this.vida = vida;
         sprite = new Bitmap[17];
-//        idleRight = new Bitmap[17];
-//        idleDown = new Bitmap[17];
-//        idleLeft = new Bitmap[17];
-//        idleUp = new Bitmap[17];
         moveLeft = new Bitmap[17];
         moveDown = new Bitmap[17];
         moveRight = new Bitmap[17];
         moveUp = new Bitmap[17];
-//        idleRight = cargarSpriteZombie("idle");
-//        idleUp = rotarSprite(idleRight, -90);
-//        idleDown = rotarSprite(idleRight, 90);
-//        idleLeft = rotarSprite(idleRight, 180);
         moveRight = cargarSpriteZombie("move");
         moveUp = rotarSprite(moveRight, -90);
         moveDown = rotarSprite(moveRight, 90);
@@ -106,15 +98,6 @@ public class Zombie extends Personaje {
         if (!this.muriendo) {
             Point pProta = new Point(protagonista.getPosX(), protagonista.getPosY());
             Point pZombie = new Point(this.getPosX(), this.getPosY());
-//        if ((Math.abs(this.getPosX() - protagonista.getPosX()) < velocidad) || (Math.abs(this.getPosY() - protagonista.getPosY()) < velocidad)) {
-//            velocidad = 1;
-//        } else {
-//            velocidad = velocidadInicial;
-//        }
-
-//        if () {
-//
-//        }
 
             if ((utils.dist(pProta, pZombie) - 1) < velocidad) {
                 velocidad = 1;
@@ -203,7 +186,6 @@ public class Zombie extends Personaje {
             }
             super.actualizaHitBox();
         }
-        Log.i("velocidad", this.velocidad+"");
     }
 
     /**

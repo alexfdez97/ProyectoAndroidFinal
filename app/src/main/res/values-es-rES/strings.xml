@@ -29,7 +29,7 @@
     <string name="strInfoIcon">Icono info y altavoz por Delapouite game-icons</string>
     <string name="strTrophy">Icono trofeo por Lorc game-icons</string>
     <string name="strGui">Menu gui por buch opengameart</string>
-    <string name="strAlejandromodified">Modificado por Alejandro Fernandez</string>
+    <string name="strAlejandromodified">iconos y gui Modificados por Alejandro Fernandez</string>
     <string name="strGameBy">Juego por alejandro fernandez martinez</string>
     <string name="strImageAssets">Recursos de imagen</string>
     <string name="strParallax">Parallax por craftpix.net</string>
@@ -44,7 +44,9 @@
     <string name="strgamemusic">Musica juego</string>
     <string name="strDarkF">DarkFallout por remanix opengameart</string>
     <string name="strSoundible">Efectos de sonido por Soundible</string>
-    <string name="strWalkingsound">Caminando por Caroline Ford</string>
+    <string name="strWalkingsound">efecto de caminar por Caroline Ford</string>
     <string name="strRest">Demas efectos de sonido por Mike Koenig</string>
     <string name="strGameIcon">Icono del juego por Josy dom alexis icon-icons</string>
+    <string name="strBy">por</string>
+    <string name="strScreenExit">Pulsa la pantalla para volver al menu</string>
 </resources>
