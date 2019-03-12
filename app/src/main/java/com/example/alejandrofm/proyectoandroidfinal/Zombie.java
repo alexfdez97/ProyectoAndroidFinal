@@ -22,6 +22,7 @@ public class Zombie extends Personaje {
     private int contParpadeo = 0;
     private long lastParpadeo;
     private long lastHit = 0;
+    private long lastRise = 0;
     private Paint alphaPaint = new Paint();
     private boolean parpadeo = true;
 
@@ -110,9 +111,11 @@ public class Zombie extends Personaje {
      */
     public void caminar(Protagonista protagonista) {
         if (blEfectos) {
-            int rand = (int)Math.random() * 10;
-            if (rand == 5) {
-                efectos.play(sonidoZRising, 0.6f, 0.6f, 1, 0, 1);
+            if (Math.abs(tiempoActual - lastRise) > 3000) {
+                if (Math.random() > 0.8) {
+                    efectos.play(sonidoZRising, 0.6f, 0.6f, 2, 0, 1);
+                }
+                lastRise = System.currentTimeMillis();
             }
         }
         if (!this.muriendo) {
@@ -229,7 +232,7 @@ public class Zombie extends Personaje {
             if (Math.abs(tiempoActual - ultimoGolpe) >= 500) {
                 protagonista.damaged();
                 if (blEfectos) {
-                    efectos.play(sonidoPunch, 0.3f, 0.3f, 1, 0, 1);
+                    efectos.play(sonidoPunch, 0.3f, 0.3f, 2, 0, 1);
                 }
                 ultimoGolpe = System.currentTimeMillis();
             }

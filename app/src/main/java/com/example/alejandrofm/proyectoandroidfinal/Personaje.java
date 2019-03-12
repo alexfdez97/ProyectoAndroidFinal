@@ -63,10 +63,10 @@ public class Personaje {
         this.altoPantalla = altoPantalla;
         ultimaReprod = tiempoActual + 500;
         this.efectos = new SoundPool(maximoSonidos, AudioManager.STREAM_MUSIC, 0);
-        sonidoCaminar = this.efectos.load(context, R.raw.caminando, 2);
-        sonidoPunch = this.efectos.load(context, R.raw.punch, 1);
-        sonidoZPain = this.efectos.load(context, R.raw.zombie_pain, 1);
-        sonidoZRising = this.efectos.load(context, R.raw.zombie_rising, 1);
+        sonidoCaminar = this.efectos.load(context, R.raw.caminando, 1);
+        sonidoPunch = this.efectos.load(context, R.raw.punch, 2);
+        sonidoZPain = this.efectos.load(context, R.raw.zombie_pain, 2);
+        sonidoZRising = this.efectos.load(context, R.raw.zombie_rising, 2);
     }
 
     /**

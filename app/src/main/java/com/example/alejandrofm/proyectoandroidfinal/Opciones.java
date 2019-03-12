@@ -153,9 +153,9 @@ public class Opciones extends Escena {
                 btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
                 btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
             } else {
-                txtConfirmacion.dibujarTexto(anchoPantalla / 2 - txtConfirmacion.getWidth() / 2, altoPantalla * 2/5 - txtConfirmacion.getHeight() / 2, c);
-                btnSi.dibujarBoton(anchoPantalla * 2 / 6 - btnSi.getWidth() / 2, altoPantalla * 4/5 + btnSi.getHeight() / 2, c);
-                btnNo.dibujarBoton(anchoPantalla * 4 / 6 - btnNo.getWidth() / 2, altoPantalla * 4/5 + btnNo.getHeight() / 2, c);
+                txtConfirmacion.dibujarTexto(anchoPantalla / 2 - txtConfirmacion.getWidth() / 2, altoPantalla * 1/3 - txtConfirmacion.getHeight() / 2, c);
+                btnSi.dibujarBoton(anchoPantalla * 2 / 6 - btnSi.getWidth() / 2, altoPantalla * 2/3 - btnSi.getHeight() / 2, c);
+                btnNo.dibujarBoton(anchoPantalla * 4 / 6 - btnNo.getWidth() / 2, altoPantalla * 2/3 - btnNo.getHeight() / 2, c);
             }
         } catch (NullPointerException ex) { }
     }
