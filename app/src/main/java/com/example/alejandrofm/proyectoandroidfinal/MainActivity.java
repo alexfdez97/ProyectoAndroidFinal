@@ -3,6 +3,7 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 

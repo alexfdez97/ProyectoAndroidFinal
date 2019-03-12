@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_zombie_round"
         android:supportsRtl="true"
         android:resizeableActivity="false"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity" android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

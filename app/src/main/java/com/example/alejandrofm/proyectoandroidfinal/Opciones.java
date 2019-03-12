@@ -29,8 +29,8 @@ public class Opciones extends Escena {
         btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, efectos, context);
         btnSi = new Boton(context.getString(R.string.strYes), anchoPantalla / 2, altoPantalla, efectos, context);
         btnNo = new Boton(context.getString(R.string.strNo), anchoPantalla / 2, altoPantalla, efectos, context);
-        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla * 4 / 3, altoPantalla * 2, context);
-        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla * 4 / 3, altoPantalla * 2, context);
+        txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla, altoPantalla * 2, context);
+        txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla, altoPantalla * 2, context);
         txtConfirmacion = new Texto(context.getString(R.string.strConfirmation), anchoPantalla * 2, altoPantalla * 2, context);
         if (musica) {
             btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
@@ -154,8 +154,8 @@ public class Opciones extends Escena {
                 btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
             } else {
                 txtConfirmacion.dibujarTexto(anchoPantalla / 2 - txtConfirmacion.getWidth() / 2, altoPantalla * 2/5 - txtConfirmacion.getHeight() / 2, c);
-                btnSi.dibujarBoton(anchoPantalla * 2 / 6 - btnSi.getWidth() / 2, altoPantalla * 4/5 - btnSi.getHeight() / 2, c);
-                btnNo.dibujarBoton(anchoPantalla * 4 / 6 - btnNo.getWidth() / 2, altoPantalla * 4/5 - btnNo.getHeight() / 2, c);
+                btnSi.dibujarBoton(anchoPantalla * 2 / 6 - btnSi.getWidth() / 2, altoPantalla * 4/5 + btnSi.getHeight() / 2, c);
+                btnNo.dibujarBoton(anchoPantalla * 4 / 6 - btnNo.getWidth() / 2, altoPantalla * 4/5 + btnNo.getHeight() / 2, c);
             }
         } catch (NullPointerException ex) { }
     }
