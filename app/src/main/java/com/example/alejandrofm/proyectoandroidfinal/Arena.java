@@ -38,6 +38,7 @@ public class Arena extends Escena {
     private Boton btnMenu = null;
     private Boton btnSalir = null;
     private Texto txtPartidaEnd = null;
+    private Sprites spritesZombie;
     protected boolean partidaFinalizada = false;
 
     /**
@@ -57,6 +58,7 @@ public class Arena extends Escena {
         txtPuntuation = new Texto(context.getString(R.string.strPuntuation), anchoPantalla, altoPantalla, context);
         txtPointsCounter = new Texto(String.format("%06d", puntuation), anchoPantalla, altoPantalla, context);
         hBar = new HealthBar(100, anchoPantalla * 2/4, altoPantalla * 2/4, context);
+        spritesZombie = new Sprites(Sprites.Tipo.ZOMBIE, anchoPantalla, altoPantalla, context);
         cargaFogonazos();
         currentTime = System.currentTimeMillis();
         lastBala = currentTime + 2000;
@@ -207,7 +209,7 @@ public class Arena extends Escena {
                 posY = altoPantalla + 500;
             }
             int vida = cantidad;
-            zombies.add(new Zombie(posX, posY, velocidad, vida, anchoPantalla, altoPantalla, efectos, context));
+            zombies.add(new Zombie(posX, posY, velocidad, vida, anchoPantalla, altoPantalla, efectos, context, spritesZombie));
         }
     }
 
@@ -360,14 +362,15 @@ public class Arena extends Escena {
             if (zombie.isMurio()) {
                 zIteratos.remove();
             } else if (!zombie.isMuriendo()) {
-                for (Bala bala:balas) {
-                    if (Rect.intersects(bala.getHitbox(), zombie.getHitbox())) {
+                for (Bala bala : balas) {
+                    if (Rect.intersects(bala.getHitbox(), zombie.getHitbox()) && currentTime - zombie.getLastHit() > 900) {
                         zombie.damaged();
                         puntuation += 100;
                         txtPointsCounter.setTexto(String.format("%06d", puntuation));
                         if (zombie.getVida() <= 0) {
                             zombie.setMuriendo(true);
                         }
+                        zombie.setLastHit(currentTime);
                     }
                 }
             }
@@ -422,7 +425,6 @@ public class Arena extends Escena {
             if (bala.getX() > anchoPantalla || bala.getY() > altoPantalla || bala.getX() < (bala.getWidth() * -1) || bala.getY() < (bala.getHeight() * -1)) {
                 iteratorBalas.remove();
             }
-
         }
     }
 }

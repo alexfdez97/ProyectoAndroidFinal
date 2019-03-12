@@ -17,11 +17,11 @@ public class Zombie extends Personaje {
     private Bitmap[] atackLeft = new Bitmap[9];
     private Bitmap[] atackDown = new Bitmap[9];
     private Bitmap[] atackUp = new Bitmap[9];
-    private boolean cambioVelocidad = false;
     private boolean muriendo = false;
     private boolean murio = false;
     private int contParpadeo = 0;
     private long lastParpadeo;
+    private long lastHit = 0;
     private Paint alphaPaint = new Paint();
     private boolean parpadeo = true;
 
@@ -54,7 +54,27 @@ public class Zombie extends Personaje {
         atackUp = rotarSprite(atackRigth, -90);
         atackDown = rotarSprite(atackRigth, 90);
         atackLeft = rotarSprite(atackRigth, 180);
-        sprite = moveDown;
+        inicializadorComun();
+    }
+
+    public Zombie(int x, int y, int velocidad, int vida, int anchoPantalla, int altoPantalla, boolean efectos, Context context, Sprites sprites) {
+        super(x, y, anchoPantalla, altoPantalla, efectos, context);
+        this.velocidad = velocidad;
+        this.velocidadInicial = velocidad;
+        this.vida = vida;
+        moveLeft = sprites.getMoveLeft();
+        moveRight = sprites.getMoveRight();
+        moveUp = sprites.getMoveUp();
+        moveDown = sprites.getMoveDown();
+        atackLeft = sprites.getAtackLeft();
+        atackDown = sprites.getAtackDown();
+        atackRigth = sprites.getAtackRigth();
+        atackUp = sprites.getAtackUp();
+        inicializadorComun();
+    }
+
+    private void inicializadorComun() {
+        sprite = moveRight;
         ultimoGolpe = tiempoActual + 500;
         lastParpadeo = System.currentTimeMillis();
         alphaPaint.setAlpha(42);
@@ -297,5 +317,13 @@ public class Zombie extends Personaje {
 
     public void setMurio(boolean murio) {
         this.murio = murio;
+    }
+
+    public long getLastHit() {
+        return lastHit;
+    }
+
+    public void setLastHit(long lastHit) {
+        this.lastHit = lastHit;
     }
 }
