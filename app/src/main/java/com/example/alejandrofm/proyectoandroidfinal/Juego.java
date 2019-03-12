@@ -205,6 +205,18 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
 
     }
 
+    public void onBackPressed() {
+        escenaActual.onBackPressed();
+        if (escenaActual.getIdEscena() != 0 && escenaActual.getIdEscena() != 1) {
+            if (music) {
+                if (escenaActual.getIdEscena() == 3) {
+                    menuMusic.start();
+                }
+            }
+            escenaActual = menu;
+        }
+    }
+
 
     class Hilo extends Thread {
         public Hilo() {

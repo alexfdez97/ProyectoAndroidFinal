@@ -8,7 +8,7 @@
     <string name="strHealth">Vida</string>
     <string name="strPuntuation">Puntuacion</string>
     <string name="strMenu">Menu</string>
-    <string name="strRollback">Volver</string>
+    <string name="strResume">Reanudar</string>
     <string name="strExit">Salir</string>
     <string name="strRound">Ronda</string>
     <string name="strDate">Fecha</string>
@@ -25,7 +25,7 @@
     <string name="strBullet">Balas por Bevouliin.com</string>
     <string name="strJoystick">Joystick por Kenney.nl</string>
     <string name="strMap">Mapa por Kenney.nl</string>
-    <string name="strHelpIcon">icono ayuda Sbed OpenGameArt</string>
+    <string name="strHelpIcon">icono ayuda por Sbed OpenGameArt</string>
     <string name="strInfoIcon">Icono info y altavoz por Delapouite game-icons</string>
     <string name="strTrophy">Icono trofeo por Lorc game-icons</string>
     <string name="strGui">Menu gui por buch opengameart</string>
@@ -49,4 +49,7 @@
     <string name="strGameIcon">Icono del juego por Josy dom alexis icon-icons</string>
     <string name="strBy">por</string>
     <string name="strScreenExit">Pulsa la pantalla para volver al menu</string>
+    <string name="strYes">Si</string>
+    <string name="strWantExit">salir</string>
+    <string name="strConfirmation">confirmacion</string>
 </resources>

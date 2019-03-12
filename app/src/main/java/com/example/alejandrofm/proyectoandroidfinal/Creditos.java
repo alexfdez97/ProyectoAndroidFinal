@@ -53,7 +53,7 @@ public class Creditos extends Escena {
         for (int i = 0; i < cadenas.length ; i++) {
             int ancho = anchoPantalla;
             int alto = altoPantalla;
-            if (i == 14 || i == 17) {
+            if (i == 14 || i == 17 || i == 3) {
                 ancho = anchoPantalla * 3/4;
             } else if (i == 0 || i == 2 || i == 18) {
                 ancho = anchoPantalla * 2;

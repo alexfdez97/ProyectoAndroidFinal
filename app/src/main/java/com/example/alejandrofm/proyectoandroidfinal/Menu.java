@@ -11,11 +11,14 @@ import android.view.MotionEvent;
 public class Menu extends Escena {
 
     private Boton btnJugar, btnOpciones;
+    private Boton btnSi, btnNo;
     private IconoBoton btnAyuda, btnCreditos, btnRecords;
+    private Texto txtSalir;
     private Utils utils;
     private Parallax parallax;
     private float luz;
     private MediaPlayer menuMusic;
+    private boolean backPressed = false;
 
     /**
      * Inicializa las propiedades de la clase
@@ -34,59 +37,88 @@ public class Menu extends Escena {
         btnRecords = new IconoBoton(IconoBoton.Tipo.RECORDS, anchoPantalla, altoPantalla, efectos, context);
         btnCreditos = new IconoBoton(IconoBoton.Tipo.CREDITOS, anchoPantalla, altoPantalla, efectos, context);
         menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
+        btnSi = new Boton(context.getString(R.string.strYes), anchoPantalla * 3/4, altoPantalla * 3/2, efectos, context);
+        btnNo = new Boton(context.getString(R.string.strNo), anchoPantalla * 3/4, altoPantalla * 3/2, efectos, context);
+        txtSalir = new Texto(context.getString(R.string.strExit), anchoPantalla * 3, altoPantalla * 3, context);
     }
 
     @Override
     public void dibujar(Canvas c) {
         try {
             parallax.dibujaParallax(c);
-            btnJugar.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 3/12, c);
-            btnOpciones.dibujarBoton(anchoPantalla * 2/6, altoPantalla * 7/12, c);
-            int altoBotonesInferiores = (btnOpciones.getHeight() + btnOpciones.getY()) + (altoPantalla - (btnOpciones.getHeight() + btnOpciones.getY())) / 2 - btnAyuda.getHeight() / 2;
-            btnAyuda.dibujarIconoBoton(btnOpciones.getX() / 2 - btnAyuda.getHeight() / 2, altoBotonesInferiores, c);
-            btnCreditos.dibujarIconoBoton((btnOpciones.getX() + btnOpciones.getWidth()) + (anchoPantalla - (btnOpciones.getWidth() + btnOpciones.getX())) / 2 - btnCreditos.getWidth() / 2, altoBotonesInferiores, c);
-            btnRecords.dibujarIconoBoton(btnOpciones.getX() + btnOpciones.getWidth() / 2 - btnRecords.getWidth() / 2, altoBotonesInferiores, c);
+            if (!backPressed) {
+                btnJugar.dibujarBoton(anchoPantalla * 2 / 6, altoPantalla * 3 / 12, c);
+                btnOpciones.dibujarBoton(anchoPantalla * 2 / 6, altoPantalla * 7 / 12, c);
+                int altoBotonesInferiores = (btnOpciones.getHeight() + btnOpciones.getY()) + (altoPantalla - (btnOpciones.getHeight() + btnOpciones.getY())) / 2 - btnAyuda.getHeight() / 2;
+                btnAyuda.dibujarIconoBoton(btnOpciones.getX() / 2 - btnAyuda.getHeight() / 2, altoBotonesInferiores, c);
+                btnCreditos.dibujarIconoBoton((btnOpciones.getX() + btnOpciones.getWidth()) + (anchoPantalla - (btnOpciones.getWidth() + btnOpciones.getX())) / 2 - btnCreditos.getWidth() / 2, altoBotonesInferiores, c);
+                btnRecords.dibujarIconoBoton(btnOpciones.getX() + btnOpciones.getWidth() / 2 - btnRecords.getWidth() / 2, altoBotonesInferiores, c);
+            } else {
+                txtSalir.dibujarTexto(anchoPantalla / 2 - txtSalir.getWidth() / 2, altoPantalla * 1/3 - txtSalir.getHeight() / 2, c);
+                btnSi.dibujarBoton(anchoPantalla * 2/8 - btnSi.getWidth() / 2, altoPantalla * 2/3 - btnSi.getHeight() / 2, c);
+                btnNo.dibujarBoton(anchoPantalla * 6/8 - btnNo.getWidth() / 2, altoPantalla * 2/3 - btnNo.getHeight() / 2, c);
+            }
         } catch (NullPointerException ex) { }
     }
 
     @Override
     public int onTouchPersonalizado(MotionEvent event) {
-        int indicePuntero = event.getActionIndex();
         int accion = event.getActionMasked();
-        switch (accion) {
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-                btnJugar.isPulsado(event);
-                btnOpciones.isPulsado(event);
-                btnAyuda.isPulsado(event);
-                btnRecords.isPulsado(event);
-                btnCreditos.isPulsado(event);
-                break;
-            case MotionEvent.ACTION_UP:
-                if (btnJugar.isPulsado() && btnJugar.isPulsado(event)) {
-                    btnJugar.setPulsado(false);
-                    return 1;
-                }
-                if (btnOpciones.isPulsado() && btnOpciones.isPulsado(event)) {
-                    btnOpciones.setPulsado(false);
-                    return 2;
-                }
-                if (btnAyuda.isPulsado() && btnAyuda.isPulsado(event)) {
-                    btnAyuda.setPulsado(false);
-                    return 3;
-                }
-                if (btnRecords.isPulsado() && btnRecords.isPulsado(event)) {
-                    btnRecords.setPulsado(false);
-                    return 4;
-                }
-                if (btnCreditos.isPulsado() && btnCreditos.isPulsado(event)) {
-                    btnCreditos.setPulsado(false);
-                    return 5;
-                }
-                break;
+        if (!backPressed) {
+            switch (accion) {
+                case MotionEvent.ACTION_DOWN:
+                    btnJugar.isPulsado(event);
+                    btnOpciones.isPulsado(event);
+                    btnAyuda.isPulsado(event);
+                    btnRecords.isPulsado(event);
+                    btnCreditos.isPulsado(event);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (btnJugar.isPulsado() && btnJugar.isPulsado(event)) {
+                        btnJugar.setPulsado(false);
+                        return 1;
+                    }
+                    if (btnOpciones.isPulsado() && btnOpciones.isPulsado(event)) {
+                        btnOpciones.setPulsado(false);
+                        return 2;
+                    }
+                    if (btnAyuda.isPulsado() && btnAyuda.isPulsado(event)) {
+                        btnAyuda.setPulsado(false);
+                        return 3;
+                    }
+                    if (btnRecords.isPulsado() && btnRecords.isPulsado(event)) {
+                        btnRecords.setPulsado(false);
+                        return 4;
+                    }
+                    if (btnCreditos.isPulsado() && btnCreditos.isPulsado(event)) {
+                        btnCreditos.setPulsado(false);
+                        return 5;
+                    }
+                    break;
+            }
+        } else {
+            switch (accion) {
+                case MotionEvent.ACTION_DOWN:
+                    btnSi.isPulsado(event);
+                    btnNo.isPulsado(event);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (btnSi.isPulsado() && btnSi.isPulsado(event)) {
+                        btnSi.setPulsado(false);
+                        System.exit(0);
+                    }
+                    if (btnNo.isPulsado() && btnNo.isPulsado(event)) {
+                        btnNo.setPulsado(false);
+                        backPressed = !backPressed;
+                    }
+            }
         }
         return idEscena;
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressed = !backPressed;
     }
 
     @Override

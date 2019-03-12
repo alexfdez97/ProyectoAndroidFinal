@@ -21,4 +21,6 @@ public interface IEscena {
      * @return el id de la escena
      */
     public int onTouchPersonalizado(MotionEvent event);
+
+    public void onBackPressed();
 }

@@ -8,12 +8,13 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean music = true;
     private boolean effects = true;
+    private Juego juego;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cargarOpciones();
-        Juego juego = new Juego(this);
+        juego = new Juego(this);
         juego.setKeepScreenOn(true);
         setContentView(juego);
     }
@@ -33,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(opciones);
+    }
+
+    @Override
+    public void onBackPressed() {
+        juego.onBackPressed();
     }
 
     public boolean isMusic() {

@@ -168,4 +168,9 @@ public class Escena implements IEscena {
     public int onTouchPersonalizado(MotionEvent event) {
         return idEscena;
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

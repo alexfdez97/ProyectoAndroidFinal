@@ -8,7 +8,7 @@
     <string name="strHealth">Health</string>
     <string name="strPuntuation">Puntuation</string>
     <string name="strMenu">Menu</string>
-    <string name="strRollback">Return</string>
+    <string name="strResume">Resume</string>
     <string name="strExit">Exit</string>
     <string name="strRound">Round</string>
     <string name="strGameOver" translatable="false">Game Over</string>
@@ -52,4 +52,8 @@
     <string name="strGameIcon">Game icon by Josy dom alexis icon-icons</string>
     <string name="strBy">by</string>
     <string name="strScreenExit">Press screen to back to menu</string>
+    <string name="strYes">Yes</string>
+    <string name="strNo" translatable="false">No</string>
+    <string name="strWantExit">exit</string>
+    <string name="strConfirmation">Confirmation</string>
 </resources>
