@@ -123,7 +123,6 @@ public class Personaje {
 
     @Deprecated
     public void caminar(Joystick.Direccion direccion) {
-//        move = true;
         switch (direccion) {
             case NORTE:
                 posY--;
