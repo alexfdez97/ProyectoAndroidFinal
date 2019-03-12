@@ -12,8 +12,9 @@ public class Opciones extends Escena {
 
     private Parallax parallax;
     private IconoBoton btnRollback, btnMusic, btnEfect;
-    private Boton btnResetRecords;
-    private Texto txtMusica, txtEfectos;
+    private Boton btnResetRecords, btnSi, btnNo;
+    private Texto txtMusica, txtEfectos, txtConfirmacion;
+    private boolean inConfirmation = false;
 
     /**
      * Inicializa las propiedades de la clase
@@ -26,8 +27,11 @@ public class Opciones extends Escena {
         super(anchoPantalla, altoPantalla, context, idEscena);
         btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
         btnResetRecords = new Boton(context.getString(R.string.strReset), anchoPantalla, altoPantalla, efectos, context);
+        btnSi = new Boton(context.getString(R.string.strYes), anchoPantalla / 2, altoPantalla, efectos, context);
+        btnNo = new Boton(context.getString(R.string.strNo), anchoPantalla / 2, altoPantalla, efectos, context);
         txtMusica = new Texto(context.getString(R.string.strMusic), anchoPantalla * 4 / 3, altoPantalla * 2, context);
         txtEfectos = new Texto(context.getString(R.string.strEffects), anchoPantalla * 4 / 3, altoPantalla * 2, context);
+        txtConfirmacion = new Texto(context.getString(R.string.strConfirmation), anchoPantalla * 2, altoPantalla * 2, context);
         if (musica) {
             btnMusic = new IconoBoton(IconoBoton.Tipo.SPEAKERON, anchoPantalla, altoPantalla, efectos, context);
         } else {
@@ -66,47 +70,71 @@ public class Opciones extends Escena {
     @Override
     public int onTouchPersonalizado(MotionEvent event) {
         int accion = event.getActionMasked();
-        switch (accion) {
-            case MotionEvent.ACTION_DOWN:
-                btnRollback.isPulsado(event);
-                btnMusic.isPulsado(event);
-                btnEfect.isPulsado(event);
-                btnResetRecords.isPulsado(event);
-                break;
-            case MotionEvent.ACTION_UP:
-                if (btnRollback.isPulsado() && btnRollback.isPulsado(event)) {
-                    btnRollback.setPulsado(false);
-                    return 0;
-                }
-                if (btnMusic.isPulsado() && btnMusic.isPulsado(event)) {
-                    btnMusic.setPulsado(false);
-                    if (btnMusic.getTipo() == IconoBoton.Tipo.SPEAKERON) {
-                        btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
-                        guardarPreferencias();
-                        return 50;
-                    } else {
-                        btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
-                        guardarPreferencias();
-                        return 51;
+        if (!inConfirmation) {
+            switch (accion) {
+                case MotionEvent.ACTION_DOWN:
+                    btnRollback.isPulsado(event);
+                    btnMusic.isPulsado(event);
+                    btnEfect.isPulsado(event);
+                    btnResetRecords.isPulsado(event);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (btnRollback.isPulsado() && btnRollback.isPulsado(event)) {
+                        btnRollback.setPulsado(false);
+                        return 0;
                     }
-                }
-                if (btnEfect.isPulsado() && btnEfect.isPulsado(event)) {
-                    btnEfect.setPulsado(false);
-                    if (btnEfect.getTipo() == IconoBoton.Tipo.SPEAKERON) {
-                        btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
-                        guardarPreferencias();
-                        return 52;
-                    } else {
-                        btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
-                        guardarPreferencias();
-                        return 53;
+                    if (btnMusic.isPulsado() && btnMusic.isPulsado(event)) {
+                        btnMusic.setPulsado(false);
+                        if (btnMusic.getTipo() == IconoBoton.Tipo.SPEAKERON) {
+                            btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
+                            guardarPreferencias();
+                            return 50;
+                        } else {
+                            btnMusic.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
+                            guardarPreferencias();
+                            return 51;
+                        }
                     }
-                }
-                if (btnResetRecords.isPulsado() && btnResetRecords.isPulsado(event)) {
-                    btnResetRecords.setPulsado(false);
-                    context.deleteDatabase("records");
-                }
-                break;
+                    if (btnEfect.isPulsado() && btnEfect.isPulsado(event)) {
+                        btnEfect.setPulsado(false);
+                        if (btnEfect.getTipo() == IconoBoton.Tipo.SPEAKERON) {
+                            btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKEROFF);
+                            btnNo.setEfectos(false);
+                            btnSi.setEfectos(false);
+                            guardarPreferencias();
+                            return 52;
+                        } else {
+                            btnEfect.cambiarIcono(IconoBoton.Tipo.SPEAKERON);
+                            btnSi.setEfectos(true);
+                            btnNo.setEfectos(true);
+                            guardarPreferencias();
+                            return 53;
+                        }
+                    }
+                    if (btnResetRecords.isPulsado() && btnResetRecords.isPulsado(event)) {
+                        btnResetRecords.setPulsado(false);
+                        inConfirmation = true;
+                    }
+                    break;
+            }
+        } else {
+            switch (accion) {
+                case MotionEvent.ACTION_DOWN:
+                    btnSi.isPulsado(event);
+                    btnNo.isPulsado(event);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (btnSi.isPulsado() && btnSi.isPulsado(event)) {
+                        btnSi.setPulsado(false);
+                        context.deleteDatabase("records");
+                        inConfirmation = false;
+                    }
+                    if (btnNo.isPulsado() && btnNo.isPulsado(event)) {
+                        btnNo.setPulsado(false);
+                        inConfirmation = false;
+                    }
+                    break;
+            }
         }
         return idEscena;
     }
@@ -116,13 +144,19 @@ public class Opciones extends Escena {
         try {
             c.drawColor(Color.BLACK);
             this.parallax.dibujaParallax(c);
-            btnRollback.dibujarIconoBoton(0 + btnRollback.getWidth() / 2, 0 + btnRollback.getHeight() / 2, c);
-            btnResetRecords.dibujarBoton(anchoPantalla * 1/3, altoPantalla * 3/4, c);
-            int xIconos = btnResetRecords.getX() + btnResetRecords.getWidth() - btnEfect.getWidth();
-            txtEfectos.dibujarTexto(btnResetRecords.getX(), altoPantalla * 1/4 + txtEfectos.getHeight() / 2, c);
-            txtMusica.dibujarTexto(btnResetRecords.getX(), altoPantalla * 2/4 + txtMusica.getHeight() / 2, c);
-            btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
-            btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
+            if (!inConfirmation) {
+                btnRollback.dibujarIconoBoton(0 + btnRollback.getWidth() / 2, 0 + btnRollback.getHeight() / 2, c);
+                btnResetRecords.dibujarBoton(anchoPantalla * 1 / 3, altoPantalla * 3 / 4, c);
+                int xIconos = btnResetRecords.getX() + btnResetRecords.getWidth() - btnEfect.getWidth();
+                txtEfectos.dibujarTexto(btnResetRecords.getX(), altoPantalla * 1 / 4 + txtEfectos.getHeight() / 2, c);
+                txtMusica.dibujarTexto(btnResetRecords.getX(), altoPantalla * 2 / 4 + txtMusica.getHeight() / 2, c);
+                btnEfect.dibujarIconoBoton(xIconos, txtEfectos.getY(), c);
+                btnMusic.dibujarIconoBoton(xIconos, txtMusica.getY(), c);
+            } else {
+                txtConfirmacion.dibujarTexto(anchoPantalla / 2 - txtConfirmacion.getWidth() / 2, altoPantalla * 2/5 - txtConfirmacion.getHeight() / 2, c);
+                btnSi.dibujarBoton(anchoPantalla * 2 / 6 - btnSi.getWidth() / 2, altoPantalla * 4/5 - btnSi.getHeight() / 2, c);
+                btnNo.dibujarBoton(anchoPantalla * 4 / 6 - btnNo.getWidth() / 2, altoPantalla * 4/5 - btnNo.getHeight() / 2, c);
+            }
         } catch (NullPointerException ex) { }
     }
 

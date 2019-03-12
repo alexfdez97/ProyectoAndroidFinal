@@ -37,8 +37,8 @@ public class Menu extends Escena {
         btnRecords = new IconoBoton(IconoBoton.Tipo.RECORDS, anchoPantalla, altoPantalla, efectos, context);
         btnCreditos = new IconoBoton(IconoBoton.Tipo.CREDITOS, anchoPantalla, altoPantalla, efectos, context);
         menuMusic = MediaPlayer.create(context, R.raw.beethoven_moonlight_1st_movement);
-        btnSi = new Boton(context.getString(R.string.strYes), anchoPantalla * 3/4, altoPantalla * 3/2, efectos, context);
-        btnNo = new Boton(context.getString(R.string.strNo), anchoPantalla * 3/4, altoPantalla * 3/2, efectos, context);
+        btnSi = new Boton(context.getString(R.string.strYes), anchoPantalla / 2, altoPantalla, efectos, context);
+        btnNo = new Boton(context.getString(R.string.strNo), anchoPantalla / 2, altoPantalla, efectos, context);
         txtSalir = new Texto(context.getString(R.string.strExit), anchoPantalla * 3, altoPantalla * 3, context);
     }
 
