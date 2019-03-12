@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 /**
- * The type Sprites.
+ * El tipo Sprites.
  */
 public class Sprites {
 
     /**
-     * The enum Tipo.
+     * El enum Tipo.
      */
     public enum Tipo {
         /**
@@ -19,15 +19,45 @@ public class Sprites {
         ZOMBIE
     }
 
+    /**
+     * Sprites
+     */
     private Bitmap[] atackRigth = new Bitmap[9];
+    /**
+     * Sprites
+     */
     private Bitmap[] atackLeft = new Bitmap[9];
+    /**
+     * Sprites
+     */
     private Bitmap[] atackDown = new Bitmap[9];
+    /**
+     * Sprites
+     */
     private Bitmap[] atackUp = new Bitmap[9];
+    /**
+     * Sprites
+     */
     private Bitmap[] moveUp;
+    /**
+     * Sprites
+     */
     private Bitmap[] moveDown;
+    /**
+     * Sprites
+     */
     private Bitmap[] moveLeft;
+    /**
+     * Sprites
+     */
     private Bitmap[] moveRight;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
 
     /**
@@ -49,6 +79,9 @@ public class Sprites {
         }
     }
 
+    /**
+     * Carga los sprites del zombie
+     */
     private void cargarTipoZombie() {
         moveLeft = new Bitmap[17];
         moveDown = new Bitmap[17];
@@ -64,6 +97,11 @@ public class Sprites {
         atackLeft = rotarSprite(atackRigth, 180);
     }
 
+    /**
+     * Carga los sprites segun el tipo
+     * @param tipo el tipo
+     * @return los sprites [ ]
+     */
     private Bitmap[] cargarSpriteZombie(String tipo) {
         Bitmap bitmap;
         int cantidadBmps = 17;
@@ -85,6 +123,12 @@ public class Sprites {
         return asset;
     }
 
+    /**
+     * Rota los sprite
+     * @param base el sprite que se rota
+     * @param grados los grados que se rota
+     * @return devuelve el sprite rotado
+     */
     private Bitmap[] rotarSprite(Bitmap[] base, int grados) {
         Bitmap bitmap[] = new Bitmap[base.length];
         Matrix matrix = new Matrix();
@@ -96,144 +140,144 @@ public class Sprites {
     }
 
     /**
-     * Get atack rigth bitmap [ ].
+     * Devuelve  el atack rigth bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getAtackRigth() {
         return atackRigth;
     }
 
     /**
-     * Sets atack rigth.
+     * Establece atack rigth.
      *
-     * @param atackRigth the atack rigth
+     * @param atackRigth el atack rigth
      */
     public void setAtackRigth(Bitmap[] atackRigth) {
         this.atackRigth = atackRigth;
     }
 
     /**
-     * Get atack left bitmap [ ].
+     * Devuelve atack left bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getAtackLeft() {
         return atackLeft;
     }
 
     /**
-     * Sets atack left.
+     * Establece atack left.
      *
-     * @param atackLeft the atack left
+     * @param atackLeft el atack left
      */
     public void setAtackLeft(Bitmap[] atackLeft) {
         this.atackLeft = atackLeft;
     }
 
     /**
-     * Get atack down bitmap [ ].
+     * Devuelve atack down bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getAtackDown() {
         return atackDown;
     }
 
     /**
-     * Sets atack down.
+     * Establece atack down.
      *
-     * @param atackDown the atack down
+     * @param atackDown el atack down
      */
     public void setAtackDown(Bitmap[] atackDown) {
         this.atackDown = atackDown;
     }
 
     /**
-     * Get atack up bitmap [ ].
+     * Devuelve atack up bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getAtackUp() {
         return atackUp;
     }
 
     /**
-     * Sets atack up.
+     * Establece atack up.
      *
-     * @param atackUp the atack up
+     * @param atackUp el atack up
      */
     public void setAtackUp(Bitmap[] atackUp) {
         this.atackUp = atackUp;
     }
 
     /**
-     * Get move up bitmap [ ].
+     * Devuelve move up bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getMoveUp() {
         return moveUp;
     }
 
     /**
-     * Sets move up.
+     * Establece move up.
      *
-     * @param moveUp the move up
+     * @param moveUp el move up
      */
     public void setMoveUp(Bitmap[] moveUp) {
         this.moveUp = moveUp;
     }
 
     /**
-     * Get move down bitmap [ ].
+     * Devuelve move down bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getMoveDown() {
         return moveDown;
     }
 
     /**
-     * Sets move down.
+     * Establece move down.
      *
-     * @param moveDown the move down
+     * @param moveDown el move down
      */
     public void setMoveDown(Bitmap[] moveDown) {
         this.moveDown = moveDown;
     }
 
     /**
-     * Get move left bitmap [ ].
+     * Devuelve move left bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getMoveLeft() {
         return moveLeft;
     }
 
     /**
-     * Sets move left.
+     * Establece move left.
      *
-     * @param moveLeft the move left
+     * @param moveLeft el move left
      */
     public void setMoveLeft(Bitmap[] moveLeft) {
         this.moveLeft = moveLeft;
     }
 
     /**
-     * Get move right bitmap [ ].
+     * Devuelve move right bitmap [ ].
      *
-     * @return the bitmap [ ]
+     * @return el bitmap [ ]
      */
     public Bitmap[] getMoveRight() {
         return moveRight;
     }
 
     /**
-     * Sets move right.
+     * Establece move right.
      *
-     * @param moveRight the move right
+     * @param moveRight el move right
      */
     public void setMoveRight(Bitmap[] moveRight) {
         this.moveRight = moveRight;

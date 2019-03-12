@@ -8,27 +8,57 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+/**
+ * Clase Bala
+ */
 public class Bala {
 
+    /**
+     * El tipo de municion
+     */
     public enum TipoMunicion {
         RIFLE,
         PISTOLA,
         BIGPISTOLA
     }
 
+    /**
+     * La direccion de la bala
+     */
     private Joystick.Direccion direccion;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * La bala
+     */
     private Bitmap bala;
+    /**
+     * La posicion X
+     */
     private int posX;
+    /**
+     * La posicion Y
+     */
     private int posY;
+    /**
+     * La velocidad de la bala
+     */
     private int velocidadBala = 20;
+    /**
+     * Ancho y alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * La hitbox
+     */
     private Rect hitbox;
 
     /**
      * Inicializa las propiedades de la clase
-     * @param tipo la munición que se va a usar
-     * @param direccion la dirección hacia la que se mueve la Bala
+     * @param tipo la municion que se va a usar
+     * @param direccion la direccion hacia la que se mueve la Bala
      * @param posX coordenada X inicial de la Bala
      * @param posY coordenada Y inicial de la Bala
      * @param anchoPantalla el ancho de la pantalla
@@ -52,15 +82,10 @@ public class Bala {
      */
     public void dibujarBala(Canvas c) {
         c.drawBitmap(bala, posX, posY, null);
-//        Paint p = new Paint();
-//        p.setColor(Color.RED);
-//        p.setStyle(Paint.Style.STROKE);
-//        p.setStrokeWidth(2);
-//        c.drawRect(hitbox, p);
     }
 
     /**
-     * Mueve la bala en la dirección específicada
+     * Mueve la bala en la direccion especificada
      */
     public void mueveBala() {
         switch (direccion) {
@@ -88,7 +113,7 @@ public class Bala {
     }
 
     /**
-     * Carga el Bitmap de la bala según el tipo que se le haya indicado
+     * Carga el Bitmap de la bala segun el tipo que se le haya indicado
      * @param tipo la municion que se le pasa
      */
     private void cargarBitmaps(TipoMunicion tipo) {

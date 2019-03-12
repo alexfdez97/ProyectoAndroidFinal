@@ -4,20 +4,43 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
+/**
+ * Clase Nube
+ */
 public class Nube {
 
+    /**
+     * El Lado de inicio
+     */
     public enum LadoInicio {
         IZQUIERDA(0), DERECHA(18);
 
+        /**
+         * El value
+         */
         private final int value;
+
+        /**
+         * El value
+         * @param value el value
+         */
         private LadoInicio(int value) {
             this.value = value;
         }
 
+        /**
+         * Devuelve el value
+         * @return el value
+         */
         public int getValue() {
             return value;
         }
 
+        /**
+         * Construye el lado
+         * @param valor el valor
+         * @return el lado
+         */
         public static LadoInicio intToNube(int valor) {
             LadoInicio lado;
 
@@ -29,10 +52,26 @@ public class Nube {
             return lado;
         }
     }
+
+    /**
+     * El lado de inicio
+     */
     private LadoInicio ladoInicio;
+    /**
+     * Las posiciones X y Y
+     */
     private float posX, posY;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * El bitmap de nube
+     */
     private Bitmap nube;
+    /**
+     * La velocidad de la nube
+     */
     private float velocidad;
 
     /**
@@ -68,7 +107,7 @@ public class Nube {
     }
 
     /**
-     * Mueve la nube hacía el lado indicado
+     * Mueve la nube hacia el lado indicado
      */
     private void moverNube() {
         if (ladoInicio == LadoInicio.IZQUIERDA) {
@@ -78,22 +117,42 @@ public class Nube {
         }
     }
 
+    /**
+     * Devuelve la posicion X
+     * @return la posicion X
+     */
     public float getPosX() {
         return posX;
     }
 
+    /**
+     * Establace la posicion Y
+     * @param posX la posicion X
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
+    /**
+     * Devuelve la posicion Y
+     * @return la posicion Y
+     */
     public float getPosY() {
         return posY;
     }
 
+    /**
+     * Establace Y
+     * @param posY Y
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     * Devuelve el ancho de la nube
+     * @return el ancho
+     */
     public int getWidth() {
         return nube.getWidth();
     }

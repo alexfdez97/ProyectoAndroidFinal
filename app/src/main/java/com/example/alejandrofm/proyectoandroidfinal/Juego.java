@@ -12,23 +12,75 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * Clase Juego
+ */
 public class Juego extends SurfaceView implements SurfaceHolder.Callback, SensorEventListener {
 
+    /**
+     * El surface
+     */
     private SurfaceHolder surfaceHolder;
+    /**
+     * El contexto de la aplicacion
+     */
     private Context context;
+    /**
+     * El ancho de la pantalla
+     */
     private int anchoPantalla;
+    /**
+     * El alto de la pantalla
+     */
     private int altoPantalla;
+    /**
+     * Si esta funcionando
+     */
     private boolean funcionando = false;
+    /**
+     * La Escena actual
+     * @see Escena
+     */
     private Escena escenaActual;
+    /**
+     * El menu
+     */
     private Menu menu = null;
+    /**
+     * Las opciones
+     */
     private Opciones opciones;
+    /**
+     * El hilo
+     */
     private Hilo hilo;
+    /**
+     * El sensor manager
+     */
     private SensorManager sensorManager;
+    /**
+     * El sensor de luz
+     */
     private Sensor sensorLuz;
+    /**
+     * El nivel de luz
+     */
     private float luz = -1;
+    /**
+     * Menu MediaPlayer
+     */
     private MediaPlayer menuMusic;
+    /**
+     * Arena MediaPlayer
+     */
     private MediaPlayer arenaMusic;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * Si la musica/efectos estan activados
+     */
     private boolean music, effects;
 
     /**
@@ -217,7 +269,9 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
         }
     }
 
-
+    /**
+     * Clase Hilo
+     */
     class Hilo extends Thread {
         public Hilo() {
 
@@ -244,6 +298,10 @@ public class Juego extends SurfaceView implements SurfaceHolder.Callback, Sensor
             }
         }
 
+        /**
+         * Establece si el hilo esta funcionando
+         * @param flag la bandera
+         */
         public void setFuncionando(boolean flag) {
             funcionando = flag;
         }

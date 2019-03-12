@@ -3,6 +3,9 @@ package com.example.alejandrofm.proyectoandroidfinal;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+/**
+ * Interfaz IEscena
+ */
 public interface IEscena {
     /**
      * Actualiza las físicas, posiciones, propiedades...
@@ -22,5 +25,8 @@ public interface IEscena {
      */
     public int onTouchPersonalizado(MotionEvent event);
 
+    /**
+     * Lo llama el onBackPressed de la activity
+     */
     public void onBackPressed();
 }

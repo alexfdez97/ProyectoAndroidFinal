@@ -8,16 +8,46 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
+/**
+ * Clase Menu
+ */
 public class Menu extends Escena {
 
+    /**
+     * Los botones
+     */
     private Boton btnJugar, btnOpciones;
+    /**
+     * Los botones
+     */
     private Boton btnSi, btnNo;
+    /**
+     * Los iconoBoton
+     */
     private IconoBoton btnAyuda, btnCreditos, btnRecords;
+    /**
+     * El texto de salir
+     */
     private Texto txtSalir;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El Parallax
+     */
     private Parallax parallax;
+    /**
+     * El nivel de luz
+     */
     private float luz;
+    /**
+     * El mediaplayer de menu
+     */
     private MediaPlayer menuMusic;
+    /**
+     * Si se pulso onBackPressed
+     */
     private boolean backPressed = false;
 
     /**

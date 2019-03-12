@@ -6,9 +6,18 @@ import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.util.Log;
 
+/**
+ * Clase Protagonista
+ */
 public class Protagonista extends Personaje {
 
+    /**
+     * Los Joystick
+     */
     private Joystick jIzquierdo, jDerecho;
+    /**
+     * El vibrador
+     */
     private Vibrator vibrator;
 
     /**
@@ -17,7 +26,7 @@ public class Protagonista extends Personaje {
      * @param y la coordenada Y del Protagonista
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param efectos indica si los efectos sonoros están activados
+     * @param efectos indica si los efectos sonoros estan activados
      * @param context el contexto de la aplicacion
      */
     public Protagonista(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
@@ -63,7 +72,7 @@ public class Protagonista extends Personaje {
     }
 
     /**
-     * Hace que el personaje camine en la dirección que se le pasa
+     * Hace que el personaje camine en la direccion que se le pasa
      * @param direccion la direccion hacia la que se mueve
      */
     public void caminar(Joystick.Direccion direccion) {
@@ -103,7 +112,7 @@ public class Protagonista extends Personaje {
     }
 
     /**
-     * Carga los sprites del protagonista según el tipo que se le pase
+     * Carga los sprites del protagonista segun el tipo que se le pase
      * @param tipo el tipo de sprite
      * @param arma el tipo de arma
      * @return el array de Bitmap correspondiente

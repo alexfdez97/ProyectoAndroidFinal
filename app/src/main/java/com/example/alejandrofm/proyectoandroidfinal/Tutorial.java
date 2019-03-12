@@ -5,21 +5,67 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+/**
+ * Clase Tutorial
+ */
 public class Tutorial extends Arena {
 
+    /**
+     * Boton de volver
+     */
     private IconoBoton btnRollback;
+    /**
+     * Los textos
+     */
     private Texto txtDeslizaIzquierda;
+    /**
+     * Los textos
+     */
     private Texto txtDeslizaDerecha;
+    /**
+     * Los textos
+     */
     private Texto txtInfoPuntuacion;
+    /**
+     * Los textos
+     */
     private Texto txtInfoVida;
+    /**
+     * Los textos
+     */
     private Texto txtInfoVida2;
+    /**
+     * Los textos
+     */
     private Texto txtPressScreen;
+    /**
+     * Los textos
+     */
     private Texto txtObjective;
+    /**
+     * Los textos
+     */
     private Texto txtVibration;
+    /**
+     * Los textos
+     */
     private Texto txtFun;
+    /**
+     * El Bitmap de la flecha
+     */
     private Bitmap arrowTop;
+    /**
+     * La cantida de pulsaciones
+     */
     private int tap = 0;
 
+    /**
+     * Inicializa Tutorial
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto
+     * @param idEscena el id de la escena
+     */
     public Tutorial(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         protagonista.setVida(100);

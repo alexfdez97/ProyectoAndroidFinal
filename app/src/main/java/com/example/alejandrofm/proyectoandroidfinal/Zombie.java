@@ -8,22 +8,70 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
+/**
+ * Clase zombie
+ */
 public class Zombie extends Personaje {
 
+    /**
+     * La velocidad inicial
+     */
     private int velocidadInicial;
+    /**
+     * Cantida de pasos
+     */
     private int pasos = 0;
+    /**
+     * Tiempo del ultimo golpe
+     */
     private long ultimoGolpe;
+    /**
+     * Bitmap de ataque derecho
+     */
     private Bitmap[] atackRigth = new Bitmap[9];
+    /**
+     * Bitmap de ataque izquierdo
+     */
     private Bitmap[] atackLeft = new Bitmap[9];
+    /**
+     * Bitmap de ataque abajo
+     */
     private Bitmap[] atackDown = new Bitmap[9];
+    /**
+     * Bitmap de ataque arriba
+     */
     private Bitmap[] atackUp = new Bitmap[9];
+    /**
+     * Si esta muriendo
+     */
     private boolean muriendo = false;
+    /**
+     * Si se murio
+     */
     private boolean murio = false;
+    /**
+     * Cuenta las veces que parpadea
+     */
     private int contParpadeo = 0;
+    /**
+     * Tiempo de la ultima vez que parpadeo
+     */
     private long lastParpadeo;
+    /**
+     * Tiempo del ultimo gole
+     */
     private long lastHit = 0;
+    /**
+     * Tiempo del ultimo rugido
+     */
     private long lastRise = 0;
+    /**
+     * El alpha
+     */
     private Paint alphaPaint = new Paint();
+    /**
+     * Si parpadea
+     */
     private boolean parpadeo = true;
 
     /**
@@ -34,8 +82,8 @@ public class Zombie extends Personaje {
      * @param vida la vida del Zombie
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param efectos indica si los efectos están activos
-     * @param context el contexto de la aplicación
+     * @param efectos indica si los efectos estan activos
+     * @param context el contexto de la aplicacion
      */
     public Zombie(int x, int y, int velocidad, int vida, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
@@ -58,6 +106,18 @@ public class Zombie extends Personaje {
         inicializadorComun();
     }
 
+    /**
+     * Inicializa Zombie
+     * @param x la posicion X
+     * @param y las posicion Y
+     * @param velocidad la velocidad
+     * @param vida la vida
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param efectos los efectos
+     * @param context el contexto
+     * @param sprites los sprites
+     */
     public Zombie(int x, int y, int velocidad, int vida, int anchoPantalla, int altoPantalla, boolean efectos, Context context, Sprites sprites) {
         super(x, y, anchoPantalla, altoPantalla, efectos, context);
         this.velocidad = velocidad;
@@ -74,6 +134,9 @@ public class Zombie extends Personaje {
         inicializadorComun();
     }
 
+    /**
+     * Se llama en ambos constructores, inicializa
+     */
     private void inicializadorComun() {
         sprite = moveRight;
         ultimoGolpe = tiempoActual + 500;
@@ -275,7 +338,7 @@ public class Zombie extends Personaje {
     }
 
     /**
-     * Carga el bitmap según el tipo específicado
+     * Carga el bitmap segun el tipo especificado
      * @param tipo el tipo de imagen a cargar
      * @return el array de Bitmaps de ese tipo
      */
@@ -306,26 +369,50 @@ public class Zombie extends Personaje {
         efectos.play(sonidoZPain,0.2f,0.2f,1,0,1);
     }
 
+    /**
+     * Devuelve si esta muriendo
+     * @return si esta muriendo
+     */
     public boolean isMuriendo() {
         return muriendo;
     }
 
+    /**
+     * Establece si esta muriendo
+     * @param muriendo si esta muriendo
+     */
     public void setMuriendo(boolean muriendo) {
         this.muriendo = muriendo;
     }
 
+    /**
+     * Devuelve si se murio
+     * @return si se murio
+     */
     public boolean isMurio() {
         return murio;
     }
 
+    /**
+     * Establace si se murio
+     * @param murio si se murio
+     */
     public void setMurio(boolean murio) {
         this.murio = murio;
     }
 
+    /**
+     * Devuelve el ultimo golpe
+     * @return el ultimo golpe
+     */
     public long getLastHit() {
         return lastHit;
     }
 
+    /**
+     * Establace el ultimo golpe
+     * @param lastHit el ultimo golpe
+     */
     public void setLastHit(long lastHit) {
         this.lastHit = lastHit;
     }

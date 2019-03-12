@@ -11,34 +11,121 @@ import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
+/**
+ * Clase Personaje
+ */
 public class Personaje {
+    /**
+     * Posicion X, Y y velocidad y vida
+     */
     protected int posX, posY, velocidad, vida;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] sprite;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] moveUp;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] moveDown;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] moveLeft;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] moveRight;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] idleUp;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] idleDown;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] idleLeft;
+    /**
+     * Los sprites
+     */
     protected Bitmap[] idleRight;
+    /**
+     * La hitbox
+     */
     protected Rect hitbox;
+    /**
+     * Funciones utiles
+     */
     protected Utils utils;
+    /**
+     * La direccion anterior
+     */
     protected Joystick.Direccion direccionAnterior;
+    /**
+     * Indica si se esta moviendo
+     */
     protected boolean move;
+    /**
+     * Indica si los efectos estan activos
+     */
     protected boolean blEfectos;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     protected int anchoPantalla, altoPantalla;
+    /**
+     * El indice del frame
+     */
     protected int indiceFrame = 0;
+    /**
+     * El tiempo de cambio frame
+     */
     private int tmpCambioFrame = 60;
+    /**
+     * El tiempo actual
+     */
     protected long tiempoActual;
+    /**
+     * El ultimo golpe
+     */
     protected long lastGolpe;
+    /**
+     * El contexto de la aplicacion
+     */
     protected Context context;
+    /**
+     * La ultima reproduccion
+     */
     private long ultimaReprod;
+    /**
+     * El SoundPool
+     */
     protected SoundPool efectos;
+    /**
+     * Sonido de caminar
+     */
     protected int sonidoCaminar;
+    /**
+     * Sonido de puñetazo
+     */
     protected int sonidoPunch;
+    /**
+     * Sonido de dolor zombie
+     */
     protected int sonidoZPain;
+    /**
+     * Sonido de rugido zombie
+     */
     protected int sonidoZRising;
+    /**
+     * Maximo de sonidos
+     */
     final private int maximoSonidos = 20;
 
     /**
@@ -47,8 +134,8 @@ public class Personaje {
      * @param y la coordenada Y
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param efectos indica si los efectos están activados o no
-     * @param context el contexto de la aplicación
+     * @param efectos indica si los efectos estan activados o no
+     * @param context el contexto de la aplicacion
      */
     public Personaje(int x, int y, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.posX = x;
@@ -91,13 +178,6 @@ public class Personaje {
      * Cambia el frame del Personaje
      */
     public void cambiaFrame() {
-//        if (velocidad > 0) {
-//            tmpCambioFrame = tmpCambioFrame * velocidad;
-//        }
-//        if (tmpCambioFrame == 0) {
-//            tmpCambioFrame = 60;
-//        }
-//        Log.i("cambio", tmpCambioFrame+"");
         if (sprite != null) {
             if (System.currentTimeMillis() - tiempoActual > tmpCambioFrame) {
                 tiempoActual = System.currentTimeMillis();
@@ -110,7 +190,7 @@ public class Personaje {
     }
 
     /**
-     * Reproduce el efecto de sonido de caminar si los efectos están activados
+     * Reproduce el efecto de sonido de caminar si los efectos estan activados
      */
     protected void sonidoCaminar() {
         if (blEfectos) {
@@ -121,7 +201,10 @@ public class Personaje {
         }
     }
 
-    @Deprecated
+    /**
+     * Caminar basico en una direccion
+     * @param direccion la direccion
+     */
     public void caminar(Joystick.Direccion direccion) {
         switch (direccion) {
             case NORTE:
@@ -136,15 +219,12 @@ public class Personaje {
             case OESTE:
                 posX--;
                 break;
-//            case NINGUNA:
-//                move = false;
-//                break;
         }
     }
 
     /**
      * Rota el personaje en la direccion indicada
-     * Realiza más comprobaciones que 'rotarPersonaje'
+     * Realiza mas comprobaciones que 'rotarPersonaje'
      * @param direccion la direccion
      */
     public void rotar(Joystick.Direccion direccion) {
@@ -329,7 +409,7 @@ public class Personaje {
     }
 
     /**
-     * Si el último golpe a sido hace más de 200ms daña al Personaje
+     * Si el ultimo golpe a sido hace mas de 200ms daña al Personaje
      */
     public void damaged() {
         if (Math.abs(tiempoActual - lastGolpe) >= 200) {
@@ -338,6 +418,10 @@ public class Personaje {
         }
     }
 
+    /**
+     * Igual que el anterior pero daña una cantidad
+     * @param daño la cantidad
+     */
     public void damaged(int daño) {
         if (Math.abs(tiempoActual - lastGolpe) >= 200) {
             vida -= daño;
@@ -345,6 +429,10 @@ public class Personaje {
         }
     }
 
+    /**
+     * Devuelve el contexto
+     * @return el contexto
+     */
     public Context getContext() {
         return context;
     }

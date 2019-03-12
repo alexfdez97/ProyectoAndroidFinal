@@ -10,23 +10,53 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 
+/**
+ * Clase Escena
+ */
 public class Escena implements IEscena {
 
+    /**
+     * El ancho y el alto de la pantalla
+     */
     protected int anchoPantalla, altoPantalla;
+    /**
+     * El contexto de la aplicacion
+     */
     protected Context context;
+    /**
+     * El id de la escena
+     */
     protected int idEscena;
+    /**
+     * El bitmap de fondo
+     */
     protected Bitmap fondo;
+    /**
+     * Funciones utiles
+     */
     protected Utils utils;
+    /**
+     * Indican si los efectos/musica estan activados
+     */
     protected boolean efectos, musica;
+    /**
+     * El soundpool
+     */
     protected SoundPool soundPool;
+    /**
+     * El efecto de disparo
+     */
     protected int efectoDisparo;
+    /**
+     * El maximo de efectos
+     */
     final private int maxEfectos = 10;
 
     /**
      * Inicializa las propiedades de la clase
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param context el contexto de la aplicación
+     * @param context el contexto de la aplicacion
      * @param idEscena el id de la Escena
      */
     public Escena(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
@@ -123,7 +153,7 @@ public class Escena implements IEscena {
     }
 
     /**
-     * Devuelve si los efectos están activados
+     * Devuelve si los efectos estan activados
      * @return los efectos
      */
     public boolean isEfectos() {
@@ -131,7 +161,7 @@ public class Escena implements IEscena {
     }
 
     /**
-     * Establece si los efectos están activados
+     * Establece si los efectos estan activados
      * @param efectos los efecots
      */
     public void setEfectos(boolean efectos) {
@@ -139,16 +169,16 @@ public class Escena implements IEscena {
     }
 
     /**
-     * Devuelve si la música está activada
-     * @return la música
+     * Devuelve si la musica esta activada
+     * @return la musica
      */
     public boolean isMusica() {
         return musica;
     }
 
     /**
-     * Establece si la música está activada
-     * @param musica la música
+     * Establece si la musica esta activada
+     * @param musica la musica
      */
     public void setMusica(boolean musica) {
         this.musica = musica;

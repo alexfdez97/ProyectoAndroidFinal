@@ -9,8 +9,14 @@ import android.graphics.Point;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Clase Utils
+ */
 public class Utils {
 
+    /**
+     * El contexto
+     */
     private Context context;
 
     /**
@@ -23,7 +29,7 @@ public class Utils {
 
     /**
      * Recoge una imagen de la carpeta assets
-     * @param fichero la ruta del archivo (entendiendo como raíz la propia carpeta assets)
+     * @param fichero la ruta del archivo (entendiendo como raiz la propia carpeta assets)
      * @return el Bitmap correspondiente
      */
     public Bitmap getBitmapFromAssets(String fichero) {
@@ -37,8 +43,8 @@ public class Utils {
 
     /**
      * Carga las preferencias del fichero de preferencias y devuelve un array de booleanos
-     * [0] --> Indica si la música está activada
-     * [1] --> Indica si los efectos sonoros están activados
+     * [0] --> Indica si la musica esta activada
+     * [1] --> Indica si los efectos sonoros estan activados
      * @see SharedPreferences
      * @return el array de booleanos
      */

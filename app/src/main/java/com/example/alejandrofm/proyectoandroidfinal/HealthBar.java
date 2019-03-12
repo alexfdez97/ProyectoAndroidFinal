@@ -4,12 +4,30 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+/**
+ * Clase HealthBar
+ */
 public class HealthBar {
 
+    /**
+     * La vida
+     */
     private int vida;
+    /**
+     * Los Bitmaps [ ]
+     */
     private Bitmap[] healthsBmps = new Bitmap[4];
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El ancho de la pantalla y el alto
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * La posicion X y Y
+     */
     private int posX, posY;
 
     /**
@@ -17,7 +35,7 @@ public class HealthBar {
      * @param health la vida
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param context el contexto de la aplicación
+     * @param context el contexto de la aplicacion
      */
     public HealthBar(int health, int anchoPantalla, int altoPantalla, Context context) {
         this.anchoPantalla = anchoPantalla;

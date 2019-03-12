@@ -5,11 +5,29 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
+/**
+ * Clase Mapa
+ */
 public class Mapa {
+    /**
+     * Bitmaps del mapa
+     */
     private Bitmap asfalto, bordilloBot, bordilloTop, mapa;
+    /**
+     * Bitmaps del mapa
+     */
     private Bitmap[] superficies = new Bitmap[6];
+    /**
+     * Bitmaps del mapa
+     */
     private Bitmap[] cristales = new Bitmap[3];
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
 
     /**

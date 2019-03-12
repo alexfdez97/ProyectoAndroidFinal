@@ -7,13 +7,34 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+/**
+ * Clase Parallax
+ */
 public class Parallax {
 
+    /**
+     * El bitmap de cielo
+     */
     private Bitmap cielo;
+    /**
+     * El bitmap de graveyard
+     */
     private Bitmap graveyard;
+    /**
+     * Los Bitmap [ ] de nubes
+     */
     private Bitmap nubes[] = new Bitmap[2];
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El ancho de la pantalla y el alto
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * Lista de nubes
+     */
     private ArrayList<Nube> nubesEnPantalla = new ArrayList<>();
 
     /**
@@ -21,7 +42,7 @@ public class Parallax {
      * @param day si es dia o de noche
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param context el contexto de la aplicación
+     * @param context el contexto de la aplicacion
      */
     public Parallax(boolean day, int anchoPantalla, int altoPantalla,Context context) {
         this.anchoPantalla = anchoPantalla;
@@ -93,7 +114,7 @@ public class Parallax {
     }
 
     /**
-     * Comprueba si las nubes salieron de la pantalla, si es así la elimina y crea una nueva
+     * Comprueba si las nubes salieron de la pantalla, si es asi la elimina y crea una nueva
      */
     private void comprobarNubes() {
         for (int i = 0; i < nubesEnPantalla.size(); i++) {

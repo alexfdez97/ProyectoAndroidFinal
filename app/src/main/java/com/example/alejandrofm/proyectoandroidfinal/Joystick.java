@@ -5,19 +5,56 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+/**
+ * Clase Joystick
+ */
 public class Joystick {
+    /**
+     * La direccion del joystick
+     */
     public enum Direccion {
         NORTE, SUR, ESTE, OESTE, NINGUNA
     }
+
+    /**
+     * La direccion
+     */
     private Direccion direccion = Direccion.NINGUNA;
+    /**
+     * Los bitmaps del joystick
+     */
     private Bitmap joyVacio, joyFlechas;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * Las coordenadas de los joystick
+     */
     private float jVacioX, jVacioY, jFlechasX, jFlechasY;
+    /**
+     * Si el joystick es pulsado
+     */
     private boolean pulsado = false;
+    /**
+     * El id del puntero
+     */
     private int idPuntero;
+    /**
+     * Los radios necesarios para hacer calculos
+     */
     private float radioJVacio, radioHipotenusa;
+    /**
+     * Distancia entre la pulsacion y el centro del joystick
+     */
     private float desplazamiento;
+    /**
+     * Coordenadas calculadas del circulo exterior
+     */
     private float constraintX, constraintY;
+    /**
+     * Grados en los que se esta moviendo
+     */
     private float grados;
 
     /**
@@ -88,31 +125,58 @@ public class Joystick {
         }
     }
 
-
+    /**
+     * Devuelve si es pulsado
+     * @return es pulsado
+     */
     public boolean isPulsado() {
         return pulsado;
     }
 
+    /**
+     * Establece si es pulsado
+     * @param pulsado es pulsado
+     */
     public void setPulsado(boolean pulsado) {
         this.pulsado = pulsado;
     }
 
+    /**
+     * Devuelve le id del puntero
+     * @return el id
+     */
     public int getIdPuntero() {
         return idPuntero;
     }
 
+    /**
+     * Establece el id del puntero
+     * @param idPuntero el id
+     */
     public void setIdPuntero(int idPuntero) {
         this.idPuntero = idPuntero;
     }
 
+    /**
+     * Devuelve la direccion
+     * @return la direccion
+     */
     public Direccion getDireccion() {
         return direccion;
     }
 
+    /**
+     * Establece la direccion
+     * @param direccion la direccion
+     */
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
 
+    /**
+     * Devuelve el desplazamiento
+     * @return el desplazamiento
+     */
     public float getDesplazamiento() {
         return desplazamiento;
     }

@@ -10,29 +10,71 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase boton
+ */
 public class Boton {
 
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * Mapa de caracteres y bitmaps
+     */
     private HashMap<Character, Bitmap> letras = new HashMap<>();
+    /**
+     * Bitmap de boton pulsado
+     */
     private Bitmap botonPulsado;
+    /**
+     * Bitmap de boton base
+     */
     private Bitmap botonBase;
+    /**
+     * Bitmap final
+     */
     private Bitmap imagenTexto;
+    /**
+     * Indica si esta pulsado o no
+     */
     private boolean pulsado = false;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
+    /**
+     * Las coordenadas X y Y
+     */
     private int x, y;
+    /**
+     * El SoundPool
+     */
     private SoundPool sp;
+    /**
+     * El sonido del boton
+     */
     private int sonidoBoton;
+    /**
+     * El numero maximo de sonidos
+     */
     final private int maximoSonidos = 1;
+    /**
+     * Indica si ha sonado
+     */
     private boolean haSonado = false;
+    /**
+     * Indica si los efectos estan activos
+     */
     private boolean efectos;
 
     /**
      * Inicializa Boton
-     * @param texto el texto que aparece dentro del botón (Admite carácteres de la a-z dentro de la tabla ASCII)
+     * @param texto el texto que aparece dentro del boton (Admite caracteres de la a-z dentro de la tabla ASCII)
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param efectos indica si los efectos sonoros están activados
-     * @param context el contexto de la aplicación
+     * @param efectos indica si los efectos sonoros estan activados
+     * @param context el contexto de la aplicacion
      */
     public Boton(String texto, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         utils = new Utils(context);
@@ -93,9 +135,9 @@ public class Boton {
     }
 
     /**
-     * Recoge el parámetro texto y devuelve una imagen compuesta por ese texto (Admite carácteres de a-z de la tabla ASCII)
+     * Recoge el parametro texto y devuelve una imagen compuesta por ese texto (Admite caracteres de a-z de la tabla ASCII)
      * @param texto es el texto que se transforma
-     * @return el bitmap con los carácteres del texto
+     * @return el bitmap con los caracteres del texto
      */
     private Bitmap textoAImagen(String texto) {
         texto = texto.toLowerCase();
@@ -118,7 +160,7 @@ public class Boton {
     }
 
     /**
-     * Función que combina dos imagenes, se utiliza para unir las imágenes de los carácteres almacenados en la Hashtable
+     * Funcion que combina dos imagenes, se utiliza para unir las imagenes de los caracteres almacenados en la Hashtable
      * @param bmp1 el primer bitmap
      * @param bmp2 el segundo bitmap
      * @return bmpUnion la unión de 'bmp1' y 'bmp2'
@@ -147,7 +189,7 @@ public class Boton {
     }
 
     /**
-     * Comprueba si el Boton está pulsado y cambia el bitmap si es así
+     * Comprueba si el Boton esta pulsado y cambia el bitmap si es asi
      * @param event el evento onTouch
      * @return TRUE si está pulsado, FALSE si no
      */
@@ -162,42 +204,82 @@ public class Boton {
         return pulsado;
     }
 
+    /**
+     * Devuelve si el boton esta pulsado
+     * @return es pulsado
+     */
     public boolean isPulsado() {
         return pulsado;
     }
 
+    /**
+     * Establece si el boton es pulsado
+     * @param pulsado es pulsado
+     */
     public void setPulsado(boolean pulsado) {
         this.pulsado = pulsado;
     }
 
+    /**
+     * Devuelve la posicion X del boton
+     * @return la x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Establace la posicion X del boton
+     * @param x la x
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Devuelve la posicion Y del boton
+     * @return la y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Establace Y
+     * @param y la y
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Devuelve el ancho del boton
+     * @return el ancho
+     */
     public int getWidth() {
         return botonBase.getWidth();
     }
 
+    /**
+     * Devuelve le alto del boton
+     * @return el alto
+     */
     public int getHeight() {
         return botonBase.getHeight();
     }
 
+    /**
+     * Devuelve si los efectos estan activos
+     * @return los efectos
+     */
     public boolean isEfectos() {
         return efectos;
     }
 
+    /**
+     * Establece si los efectos estan activos
+     * @param efectos los efectos
+     */
     public void setEfectos(boolean efectos) {
         this.efectos = efectos;
     }

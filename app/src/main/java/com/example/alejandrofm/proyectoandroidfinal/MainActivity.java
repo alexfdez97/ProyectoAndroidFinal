@@ -5,10 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
+/**
+ * Clase Main
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private boolean music = true;
-    private boolean effects = true;
+    /**
+     * El juego
+     */
     private Juego juego;
 
     @Override
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         cargarOpciones();
     }
 
+    /**
+     * Carga las opciones predeterminadas
+     */
     private void cargarOpciones() {
         View decorView = getWindow().getDecorView();
         int opciones = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -40,21 +47,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         juego.onBackPressed();
-    }
-
-    public boolean isMusic() {
-        return music;
-    }
-
-    public void setMusic(boolean music) {
-        this.music = music;
-    }
-
-    public boolean isEffects() {
-        return effects;
-    }
-
-    public void setEffects(boolean effects) {
-        this.effects = effects;
     }
 }

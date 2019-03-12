@@ -7,23 +7,69 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 
+/**
+ * Clase IconoBoton
+ */
 public class IconoBoton {
 
+    /**
+     * El tipo de icono
+     */
     public enum Tipo {
         RECORDS, AYUDA, CREDITOS, VOLVER, SPEAKERON, SPEAKEROFF
     }
-    Tipo tipo;
+
+    /**
+     * El tipo
+     */
+    private Tipo tipo;
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El Bitmap del boton pulsado
+     */
     private Bitmap botonPulsado;
+    /**
+     * El Bitmap del boton base
+     */
     private Bitmap botonBase;
+    /**
+     * El Bitmap del icono
+     */
     private Bitmap icono;
+    /**
+     * Indica si el boton es pulsado
+     */
     private boolean pulsado;
+    /**
+     * El alto y el ancho de la pantalla
+     */
     private int altoPantalla, anchoPantalla;
+    /**
+     * La posicionX y la posicionY
+     */
     private int posX, posY;
+    /**
+     * Indica si los efectos de sonido estan activados
+     */
     private boolean efectos;
+    /**
+     * El soundpool
+     */
     private SoundPool sp;
+    /**
+     * El sonido del boton
+     */
     private int sonidoBoton;
+    /**
+     * El maximo de sonidos
+     */
     final private int maximoSonidos = 1;
+    /**
+     * Indica si ha sonado
+     */
     private boolean haSonado = false;
 
     /**
@@ -31,8 +77,8 @@ public class IconoBoton {
      * @param tipo el tipo de IconoBoton
      * @param anchoPantalla el ancho de la pantalla
      * @param altoPantalla el alto de la pantalla
-     * @param efectos si los efectos están activados
-     * @param context el contexto de la aplicación
+     * @param efectos si los efectos estan activados
+     * @param context el contexto de la aplicacion
      */
     public IconoBoton(Tipo tipo, int anchoPantalla, int altoPantalla, boolean efectos, Context context) {
         this.altoPantalla = altoPantalla;
@@ -109,9 +155,9 @@ public class IconoBoton {
     }
 
     /**
-     * Comprueba si el icono está pulsado
-     * @param event el evento que se usa para detectar la pulsación
-     * @return si el icono está pulsado
+     * Comprueba si el icono esta pulsado
+     * @param event el evento que se usa para detectar la pulsacion
+     * @return si el icono esta pulsado
      */
     public boolean isPulsado(MotionEvent event) {
         float eventX = event.getX();
@@ -125,53 +171,97 @@ public class IconoBoton {
     }
 
     /**
-     * Comprueba si el icono está pulsado
-     * @return si el icono está pulsado
+     * Comprueba si el icono esta pulsado
+     * @return si el icono esta pulsado
      */
     public boolean isPulsado() {
         return pulsado;
     }
 
+    /**
+     * Establace si el boton es pulsado
+     * @param pulsado es pulsado
+     */
     public void setPulsado(boolean pulsado) {
         this.pulsado = pulsado;
     }
 
+    /**
+     * Devuelve el ancho del boton
+     * @return el ancho
+     */
     public int getWidth() {
         return botonBase.getWidth();
     }
 
+    /**
+     * Devuelve el alto del boton
+     * @return el alto
+     */
     public int getHeight() {
         return botonBase.getHeight();
     }
 
+    /**
+     * Devuelve la posicion X del boton
+     * @return la X
+     */
     public int getPosX() {
         return posX;
     }
 
+    /**
+     * Establece la posicion X del boton
+     * @param posX la X
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
+    /**
+     * Devuelve la posicion Y del boton
+     * @return la Y
+     */
     public int getPosY() {
         return posY;
     }
 
+    /**
+     * Establece la posicion Y
+     * @param posY la Y
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     * Cambia el tipo de icono
+     * @param tipo el tipo
+     */
     public void cambiarIcono(Tipo tipo) {
         cargarTipo(tipo);
     }
 
+    /**
+     * Devuelve el tipo de icono
+     * @return el icono
+     */
     public Tipo getTipo() {
         return this.tipo;
     }
 
+    /**
+     * Devuelve si los efectos estan activos
+     * @return los efectos
+     */
     public boolean isEfectos() {
         return efectos;
     }
 
+    /**
+     * Establace los efectos
+     * @param efectos los efectos
+     */
     public void setEfectos(boolean efectos) {
         this.efectos = efectos;
     }

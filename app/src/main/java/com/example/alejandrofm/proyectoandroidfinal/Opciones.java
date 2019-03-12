@@ -8,19 +8,37 @@ import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.view.MotionEvent;
 
+/**
+ * Clase Opciones
+ */
 public class Opciones extends Escena {
 
+    /**
+     * El parallax
+     */
     private Parallax parallax;
+    /**
+     * Los icono boton
+     */
     private IconoBoton btnRollback, btnMusic, btnEfect;
+    /**
+     * Los botones
+     */
     private Boton btnResetRecords, btnSi, btnNo;
+    /**
+     * Los textos
+     */
     private Texto txtMusica, txtEfectos, txtConfirmacion;
+    /**
+     * Indica si se esta pidiendo confirmacion
+     */
     private boolean inConfirmation = false;
 
     /**
      * Inicializa las propiedades de la clase
      * @param anchoPantalla el ancho de la pantala
      * @param altoPantalla el alto de la pantalla
-     * @param context el contexto de la aplicación
+     * @param context el contexto de la aplicacion
      * @param idEscena el id de la escena
      */
     public Opciones(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
@@ -160,10 +178,18 @@ public class Opciones extends Escena {
         } catch (NullPointerException ex) { }
     }
 
+    /**
+     * Establece el Paralax
+     * @param parallax el parallax
+     */
     public void setParallax(Parallax parallax) {
         this.parallax = parallax;
     }
 
+    /**
+     * Devuelve le parallax
+     * @return el parallax
+     */
     public Parallax getParallax() {
         return parallax;
     }

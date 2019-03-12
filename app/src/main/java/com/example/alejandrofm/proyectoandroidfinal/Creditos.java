@@ -5,15 +5,39 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 
-
+/**
+ * Clase Creditos
+ */
 public class Creditos extends Escena {
 
+    /**
+     * Los textos [ ]
+     */
     private Texto textos[] = new Texto[30];
+    /**
+     * El parallax
+     */
     private Parallax parallax;
+    /**
+     * La posicion Y
+     */
     private int posY;
+    /**
+     * La separacion entre textos
+     */
     private int gap;
+    /**
+     * El movimiento
+     */
     private int mov = 0;
 
+    /**
+     * Inicializa Creditos
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto de la aplicacion
+     * @param idEscena el id de la escena
+     */
     public Creditos(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         posY = altoPantalla * 1/3;
@@ -91,6 +115,9 @@ public class Creditos extends Escena {
         } catch (NullPointerException ex) { }
     }
 
+    /**
+     * Reinicia los creditos
+     */
     private void reiniciarCreditos() {
         mov = altoPantalla;
     }
@@ -100,6 +127,10 @@ public class Creditos extends Escena {
         return 0;
     }
 
+    /**
+     * Establece el parallax
+     * @param parallax el parallax
+     */
     public void setParallax(Parallax parallax) {
         this.parallax = parallax;
     }

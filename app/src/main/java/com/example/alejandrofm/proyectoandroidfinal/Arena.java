@@ -15,31 +15,106 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * Clase Arena
+ */
 public class Arena extends Escena {
 
+    /**
+     * Lista de zombies
+     */
     private ArrayList<Zombie> zombies = new ArrayList<>();
+    /**
+     * Funciones utiles
+     */
     protected Utils utils;
+    /**
+     * Los joystick
+     */
     protected Joystick jIzquierdo, jDerecho;
+    /**
+     * El protagonista
+     */
     protected Protagonista protagonista;
+    /**
+     * El mapa
+     */
     protected Mapa mapa;
+    /**
+     * Los textos
+     */
     private Texto txtHealth, txtPuntuation, txtPointsCounter;
+    /**
+     * La barra de salud
+     */
     private HealthBar hBar;
+    /**
+     * Los Bitmap de fogonazos [ ]
+     */
     private Bitmap fogonazos[] = new Bitmap[4];
+    /**
+     * La puntuacion
+     */
     private int puntuation = 0;
+    /**
+     * La lista de balas
+     */
     private ArrayList<Bala> balas = new ArrayList<>();
+    /**
+     * Miden tiempo
+     */
     private long currentTime, lastBala;
+    /**
+     * El contexto de la aplicacion
+     */
     private Context context;
+    /**
+     * Indica si se dibuja el fogonazo o no
+     */
     private boolean fuego = false;
+    /**
+     * Indica si se ha pulsado onBackPressed
+     */
     private boolean backPressed = false;
+    /**
+     * Matrix que se usa para rotar Bitmaps
+     */
     private Matrix matrix = new Matrix();
+    /**
+     * Contador de ronda
+     */
     protected int numeroRonda = 0;
+    /**
+     * Indica si inicia una nueva ronda
+     */
     private boolean inicioRonda = true;
+    /**
+     * Mapa de pulsaciones en la pantalla
+     */
     private HashMap<Integer, PointF> pulsaciones = new HashMap<>();
+    /**
+     * Boton de volver al menu
+     */
     private Boton btnMenu = null;
+    /**
+     * Boton de reanudar la partida
+     */
     private Boton btnReanudar = null;
+    /**
+     * Boton de salir
+     */
     private Boton btnSalir = null;
+    /**
+     * Texto de partida finalzada
+     */
     private Texto txtPartidaEnd = null;
+    /**
+     * Los sprites
+     */
     private Sprites spritesZombie;
+    /**
+     * Indica si la partida ha finalzado
+     */
     protected boolean partidaFinalizada = false;
 
     /**
@@ -435,6 +510,9 @@ public class Arena extends Escena {
         }
     }
 
+    /**
+     * Guarda los records
+     */
     protected void guardaRecords() {
         BaseDatos bd = null;
         SQLiteDatabase lite = null;
@@ -452,6 +530,9 @@ public class Arena extends Escena {
         }
     }
 
+    /**
+     * Comprueba si las balas salen de la pantalla si es asi las borra
+     */
     private void compruebaBalas() {
         Iterator<Bala> iteratorBalas = balas.iterator();
         while (iteratorBalas.hasNext()) {

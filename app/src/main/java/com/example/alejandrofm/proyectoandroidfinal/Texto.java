@@ -7,12 +7,30 @@ import android.graphics.Canvas;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase Texto
+ */
 public class Texto {
 
+    /**
+     * Mapa de caractere y bitmaps
+     */
     private HashMap<Character, Bitmap> letras = new HashMap<>();
+    /**
+     * Funciones utiles
+     */
     private Utils utils;
+    /**
+     * El bitmap del texto
+     */
     private Bitmap bmpTexto;
+    /**
+     * Coordenadas X y Y
+     */
     private int x, y;
+    /**
+     * El ancho y el alto de la pantalla
+     */
     private int anchoPantalla, altoPantalla;
 
     /**
@@ -139,31 +157,59 @@ public class Texto {
         letras.put('.', Bitmap.createBitmap(punto, 0, 0, 16, 24));
     }
 
+    /**
+     * Establece el texto
+     * @param texto el texto
+     */
     public void setTexto(String texto) {
         bmpTexto = textoAImagen(texto);
         bmpTexto = Bitmap.createScaledBitmap(bmpTexto, texto.length() * (anchoPantalla * 1/40), (altoPantalla * 1/10) * 2/3, false);
     }
 
+    /**
+     * Devuelve el ancho
+     * @return el ancho
+     */
     public int getWidth() {
         return bmpTexto.getWidth();
     }
 
+    /**
+     * Devuelve el alto
+     * @return el alto
+     */
     public int getHeight() {
         return bmpTexto.getHeight();
     }
 
+    /**
+     * Devuelve el X
+     * @return el X
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * Devuelve le Y
+     * @return
+     */
     public int getY() {
         return this.y;
     }
 
+    /**
+     * Establace el Y
+     * @param y el Y
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Establece el X
+     * @param x el X
+     */
     public void setX(int x) {
         this.x = x;
     }

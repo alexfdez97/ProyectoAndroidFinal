@@ -10,17 +10,51 @@ import android.view.MotionEvent;
 
 import java.util.Date;
 
+/**
+ * Clase Records
+ */
 public class Records extends Escena {
 
+    /**
+     * El parallax
+     */
     private Parallax parallax;
+    /**
+     * El icono de volver
+     */
     private IconoBoton btnRollback;
+    /**
+     * El texto de records
+     */
     private Texto txtRecords;
+    /**
+     * El texto de puntuacion
+     */
     private Texto txtPuntuacion;
+    /**
+     * El texto de fecha
+     */
     private Texto txtFecha;
+    /**
+     * Textos de rankings
+     */
     private Texto rankings[] = new Texto[4];
+    /**
+     * Textos de puntos
+     */
     private Texto point[] = new Texto[4];
+    /**
+     * Textos de fechas
+     */
     private Texto fechas[] = new Texto[4];
 
+    /**
+     * Inicializa Records
+     * @param anchoPantalla el ancho de la pantalla
+     * @param altoPantalla el alto de la pantalla
+     * @param context el contexto
+     * @param idEscena el id de la escena
+     */
     public Records(int anchoPantalla, int altoPantalla, Context context, int idEscena) {
         super(anchoPantalla, altoPantalla, context, idEscena);
         btnRollback = new IconoBoton(IconoBoton.Tipo.VOLVER, anchoPantalla, altoPantalla, efectos, context);
@@ -33,6 +67,9 @@ public class Records extends Escena {
         cargarRecords();
     }
 
+    /**
+     * Carga los records llamando a la base de datos
+     */
     private void cargarRecords () {
         BaseDatos bd = null;
         SQLiteDatabase lite = null;
@@ -105,6 +142,10 @@ public class Records extends Escena {
         return idEscena;
     }
 
+    /**
+     * Establece el parallax
+     * @param parallax el parallax
+     */
     public void setParallax(Parallax parallax) {
         this.parallax = parallax;
     }

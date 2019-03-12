@@ -7,8 +7,18 @@ import android.support.annotation.Nullable;
 
 public class BaseDatos extends SQLiteOpenHelper {
 
+    /**
+     * Sentencia de creacion de la tabla
+     */
     private final String sqlCreateTable = "CREATE TABLE records (id INTEGER PRIMARY KEY AUTOINCREMENT, points INTEGER, date DATETIME DEFAULT CURRENT_TIMESTAMP)";
 
+    /**
+     * Inicializa BaseDatos
+     * @param context el contexto de la aplicacion
+     * @param name el nombre de la base de datos
+     * @param factory el factory
+     * @param version la version
+     */
     public BaseDatos(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
