@@ -113,7 +113,7 @@ public class Zombie extends Personaje {
         if (blEfectos) {
             if (Math.abs(tiempoActual - lastRise) > 3000) {
                 if (Math.random() > 0.8) {
-                    efectos.play(sonidoZRising, 0.6f, 0.6f, 2, 0, 1);
+                    efectos.play(sonidoZRising, 0.6f, 0.6f, 1, 0, 1);
                 }
                 lastRise = System.currentTimeMillis();
             }
@@ -232,7 +232,7 @@ public class Zombie extends Personaje {
             if (Math.abs(tiempoActual - ultimoGolpe) >= 500) {
                 protagonista.damaged();
                 if (blEfectos) {
-                    efectos.play(sonidoPunch, 0.3f, 0.3f, 2, 0, 1);
+                    efectos.play(sonidoPunch, 0.3f, 0.3f, 1, 0, 1);
                 }
                 ultimoGolpe = System.currentTimeMillis();
             }
